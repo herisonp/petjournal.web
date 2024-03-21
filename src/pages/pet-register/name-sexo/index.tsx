@@ -68,14 +68,14 @@ function NameSexo() {
                         onChange={handleNameChange}
                         required
                     />
-                    {nameError ? <span className="text-red-500 text-[12px] font-medium">Campo obrigatório</span> : <p className="text-gray/300 text-[12px] font-medium">*Campo obrigátorio</p>}
+                    {nameError ? <span className="text-red-500 text-[12px] font-medium">Campo obrigatório</span> : <p className="text-gray/300 text-[12px] font-medium ">*Campo obrigátorio</p>}
                 </div>
 
-                <div className="text-gray/400 mt-6">
+                <div className="text-gray/400 mt-6 justify-center">
                     <h2 className="text-center font-semibold text-base">Qual o sexo do seu Pet?</h2>
                     <div className="flex justify-center gap-4 mt-4 ">
                         <button 
-                            className={`flex justify-center flex-col items-center border border-solid ${maleSelector ? 'border-primary/purple' : 'border-gray/300'} gap-1 px-1 py-2 bg-white w-[133px] h-[133px] rounded-[32px] hover:border-solid hover:border-primary/purple hover:border-2`}
+                            className={`flex justify-center flex-col items-center border border-solid ${maleSelector ? 'border-primary/purple' : 'border-gray/300 border-dashed'} gap-1 px-1 py-2 bg-white w-[133px] h-[133px] rounded-[32px] hover:border-solid hover:border-primary/purple hover:border-2`}
                             type='button'
                             onClick={handleMaleSelector}
                         >
@@ -83,7 +83,7 @@ function NameSexo() {
                             <p className="text-sm font-semibold text-center">Macho</p>
                         </button>
                         <button 
-                            className={`flex justify-center flex-col items-center border border-solid ${femaleSelector ? 'border-primary/purple' : 'border-gray/300'} gap-1 px-1 py-2 bg-white w-[133px] h-[133px] rounded-[32px] hover:border-solid hover:border-primary/purple hover:border-2`}
+                            className={`flex justify-center flex-col items-center border border-solid ${femaleSelector ? 'border-primary/purple' : 'border-gray/300 border-dashed'} gap-1 px-1 py-2 bg-white w-[133px] h-[133px] rounded-[32px] hover:border-solid hover:border-primary/purple hover:border-2`}
                             type='button'
                             onClick={handleFemaleSelector}
                         >
@@ -91,7 +91,7 @@ function NameSexo() {
                             <p className="text-sm font-semibold text-center">Fêmea</p>
                         </button>
                     </div>
-                    {sexError ?  <span className="text-red-500">*Campo obrigatório</span>: <p className="text-gray/300 text-[12px] font-medium">*Campo obrigatório</p> }
+                    {sexError ?  <span className="text-red-500 text-[12px] font-medium ml-12">*Campo obrigatório</span>: <p className="text-gray/300 text-[12px] font-medium ml-12">*Campo obrigatório</p> }
                 </div>
                 <div className="mt-8 flex justify-center gap-4">
                     <button
