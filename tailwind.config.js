@@ -41,7 +41,8 @@ module.exports = {
         'primary/purple': '#7C54A7',
         'gray/400': '#222121',
         'gray/300': '#B2B2B2',
-        'gray/100': '#FAFAFA'
+        'gray/100': '#FAFAFA', 
+        'error/300': '#FF917A'
       }
     },
   },

@@ -2470,6 +2470,11 @@
   dependencies:
     "yallist" "^4.0.0"
 
+"lucide-react@^0.360.0":
+  "integrity" "sha512-MskvbEsAhD2zxgx/I05vXq1cjFQXrmhL97YFIi4wSaKH793ZMvU/Com4d+DE7OB3QMmZig1fY1q94aTX5skozw=="
+  "resolved" "https://registry.npmjs.org/lucide-react/-/lucide-react-0.360.0.tgz"
+  "version" "0.360.0"
+
 "lucide@^0.302.0":
   "integrity" "sha512-EM1u7oXDPz5sL0zvVbbjQNeqCkAt3SyPCJ2YtlNyXlEQR5wJqn0dholS+S+adzrqyaZrCw8Q1KwlSGhrBMGBGQ=="
   "resolved" "https://registry.npmjs.org/lucide/-/lucide-0.302.0.tgz"
@@ -3072,7 +3077,7 @@
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
   "version" "16.13.1"
 
-"react@^16.8.0 || ^17 || ^18", "react@^18.2.0", "react@>= 16.8.0 || 17.x.x || ^18.0.0-0", "react@18.2.0":
+"react@^16.5.1 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17 || ^18", "react@^18.2.0", "react@>= 16.8.0 || 17.x.x || ^18.0.0-0", "react@18.2.0":
   "integrity" "sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ=="
   "resolved" "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   "version" "18.2.0"

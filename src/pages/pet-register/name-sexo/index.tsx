@@ -1,9 +1,12 @@
 import { useState } from "react";
+import { CircleX } from "lucide-react";
 import Link from "next/link";
 import Female from "./assets/female";
 import HouseComponent from "./assets/house";
 import Icon from "./assets/logo";
 import Male from "./assets/Men";
+import { nameRegex } from "@/utils/Regex";
+import { useRouter } from 'next/router'
 
 function NameSexo() {
     const [maleSelector, setMaleSelector] = useState(false);
@@ -11,6 +14,8 @@ function NameSexo() {
     const [petName, setPetName] = useState('');
     const [nameError, setNameError] = useState(false);
     const [sexError, setSexError] = useState(false);
+
+    const router = useRouter();
 
     function handleMaleSelector() {
         setMaleSelector(true);
@@ -32,12 +37,15 @@ function NameSexo() {
 
     function handleSubmit(event: any) {
         event.preventDefault();
+        const isPetNameValid = petName.trim() && nameRegex.test(petName);
 
-        setNameError(!petName.trim());
+        setNameError(!isPetNameValid);
 
         setSexError(!maleSelector && !femaleSelector);
 
-        if (nameError || sexError) return;
+        if (isPetNameValid && (maleSelector || femaleSelector) && !sexError) {
+            router.push('/');
+        }
 
     }
 
@@ -60,16 +68,39 @@ function NameSexo() {
                 <div className="flex flex-col gap-2 text-gray/400 mt-8 ml-4">
                     <h2 className="text-center font-semibold text-base">Qual o nome do seu companheiro?</h2>
                     <label className="text-xs font-medium ml-1.5">Nome:</label>
-                    <input 
-                        type="text" 
-                        placeholder="Digite aqui..." 
-                        className="border border-dashed  border-gray/300 w-[327px] px-1 py-2 rounded-lg" 
-                        value={petName}
-                        onChange={handleNameChange}
-                        required
-                    />
-                    {nameError ? <span className="text-red-500 text-[12px] font-medium">Campo obrigatório</span> : <p className="text-gray/300 text-[12px] font-medium ">*Campo obrigátorio</p>}
-                </div>
+                    {
+                        nameError ?
+                        <div className="border border-solid  border-error/300 w-[327px] px-1 py-2 rounded-lg flex space-x-4" >
+                            <input 
+                            type="text" 
+                            placeholder="Digite aqui..." 
+                            value={petName}
+                            onChange={handleNameChange}
+                            required
+                        />
+                         <CircleX  size={25} color="#FF917A" strokeWidth={1}/>
+                        </div>
+                         : <input
+                            type="text"
+                            placeholder="Digite aqui..."
+                            className="border border-dashed border-gray/300 w-[327px] px-1 py-2 rounded-lg"
+                            value={petName}
+                            onChange={handleNameChange}
+                            required
+                        />
+                        
+                    }
+                    {nameError && (
+                        <span className="text-error/300 text-[12px] font-medium">
+                            *O nome fornecido deve ter entre 2 e 30 caracteres, não são permitidos caracteres especiais, nem números. Por favor, insira um nome válido.
+                        </span>
+                    )}
+                    {!nameError && (
+                        <p className="text-gray/300 text-[12px] font-medium ">
+                            *Campo obrigatório
+                        </p>
+                    )}
+                    </div>
 
                 <div className="text-gray/400 mt-6 justify-center">
                     <h2 className="text-center font-semibold text-base">Qual o sexo do seu Pet?</h2>
@@ -91,12 +122,13 @@ function NameSexo() {
                             <p className="text-sm font-semibold text-center">Fêmea</p>
                         </button>
                     </div>
-                    {sexError ?  <span className="text-red-500 text-[12px] font-medium ml-12">*Campo obrigatório</span>: <p className="text-gray/300 text-[12px] font-medium ml-12">*Campo obrigatório</p> }
+                    {sexError ?  <span className="text-error/300 text-[12px] font-medium ml-12">*Campo obrigatório</span>: <p className="text-gray/300 text-[12px] font-medium ml-12">*Campo obrigatório</p> }
                 </div>
                 <div className="mt-8 flex justify-center gap-4">
                     <button
                         type="button"
                         className="border  border-primary/purple   text-primary/purple px-4 py-2 rounded-lg  w-[156px] h-[48px] font-bold"
+                        onClick={() => router.back()}
                     >
                         Voltar
                     </button>
@@ -104,6 +136,7 @@ function NameSexo() {
                         type="submit"
                         className="bg-primary/purple text-white px-4 py-2 rounded-lg  w-[156px] h-[48px] font-bold"
                         onClick={handleSubmit}
+                        
                     >
                         Continuar
                     </button>
