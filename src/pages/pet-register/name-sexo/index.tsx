@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, useState, MouseEvent } from "react";
 import { CircleX } from "lucide-react";
 import Link from "next/link";
 import Female from "./assets/female";
@@ -20,34 +20,37 @@ function NameSexo() {
     function handleMaleSelector() {
         setMaleSelector(true);
         setFemaleSelector(false);
-        setSexError(false);
     }
 
     function handleFemaleSelector() {
         setFemaleSelector(true);
         setMaleSelector(false);
-        setSexError(false);
     }
 
-    function handleNameChange(event: any) {
+    function handleNameChange(event: ChangeEvent<HTMLInputElement>) {
         const value = event.target.value;
         setPetName(value);
         setNameError(!value.trim());
     }
 
-    function handleSubmit(event: any) {
+    const MIN_NAME_LENGTH = 2;
+    const MAX_NAME_LENGTH = 30;
+
+    function handleSubmit(event: MouseEvent<HTMLButtonElement>) {
         event.preventDefault();
-        const isPetNameValid = petName.trim() && nameRegex.test(petName);
+        const isPetNameValid = petName.trim().length >= MIN_NAME_LENGTH && petName.trim().length <= MAX_NAME_LENGTH && nameRegex.test(petName);
 
         setNameError(!isPetNameValid);
-
         setSexError(!maleSelector && !femaleSelector);
 
         if (isPetNameValid && (maleSelector || femaleSelector) && !sexError) {
             router.push('/');
         }
-
     }
+
+    const inputContainerClass = nameError
+    ? "border border-solid border-error/300 w-[327px] px-1 py-2 rounded-lg flex space-x-4"
+    : "border border-dashed border-gray/300 w-[327px] px-1 py-2 rounded-lg";
 
     return (
         <div className="flex flex-col font-quicksand text-primary/purple bg-gray/100">
@@ -68,28 +71,17 @@ function NameSexo() {
                 <div className="flex flex-col gap-2 text-gray/400 mt-8 ml-4">
                     <h2 className="text-center font-semibold text-base">Qual o nome do seu companheiro?</h2>
                     <label className="text-xs font-medium ml-1.5">Nome:</label>
-                    {
-                        nameError ?
-                        <div className="border border-solid  border-error/300 w-[327px] px-1 py-2 rounded-lg flex space-x-4" >
-                            <input 
+                  
+                    <div className={inputContainerClass} >
+                        <input 
                             type="text" 
                             placeholder="Digite aqui..." 
                             value={petName}
                             onChange={handleNameChange}
                             required
                         />
-                         <CircleX  size={25} color="#FF917A" strokeWidth={1}/>
-                        </div>
-                         : <input
-                            type="text"
-                            placeholder="Digite aqui..."
-                            className="border border-dashed border-gray/300 w-[327px] px-1 py-2 rounded-lg"
-                            value={petName}
-                            onChange={handleNameChange}
-                            required
-                        />
-                        
-                    }
+                        {nameError && <CircleX size={25} color="#FF917A" strokeWidth={1}/>}
+                    </div>
                     {nameError && (
                         <span className="text-error/300 text-[12px] font-medium">
                             *O nome fornecido deve ter entre 2 e 30 caracteres, não são permitidos caracteres especiais, nem números. Por favor, insira um nome válido.
