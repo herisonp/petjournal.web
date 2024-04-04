@@ -79,6 +79,7 @@ function NameSexo() {
                             value={petName}
                             onChange={handleNameChange}
                             required
+                            className="w-full bg-transparent focus:outline-none text-gray/400 font-semibold text-sm"
                         />
                         {nameError && <CircleX size={25} color="#FF917A" strokeWidth={1}/>}
                     </div>
