@@ -1,3 +1,4 @@
+'use client';
 import Image from 'next/image';
 import BottomTab from '@/components/BottomTab';
 //Images
@@ -15,7 +16,7 @@ import { Autoplay } from 'swiper';
 import 'swiper/css/pagination';
 import 'swiper/css';
 import Cookies from 'js-cookie';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import axios from './api/axios';
 
@@ -31,7 +32,7 @@ function Home() {
 
   useEffect(() => {
     if (typeof window !== 'undefined' && !accessToken) {
-      push('/register');
+      // push('/register');
     }
 
     axios

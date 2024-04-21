@@ -1,5 +1,6 @@
+'use client';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+import { useRouter, usePathname } from 'next/navigation';
 import homeIcon from '../../public/images/home.svg';
 import petsIcon from '../../public/images/pets.svg';
 import tutorIcon from '../../public/images/tutor.svg';
@@ -8,7 +9,8 @@ import activePetsIcon from '../../public/images/pets-active.svg';
 import activeTutorIcon from '../../public/images/tutor-active.svg';
 
 function BottomTab() {
-  const { pathname, push } = useRouter();
+  const { push } = useRouter();
+  const pathname = usePathname();
 
   const homePage = pathname === '/';
   const petsPage = pathname === '/pets';

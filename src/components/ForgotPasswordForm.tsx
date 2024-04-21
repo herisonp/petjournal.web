@@ -1,3 +1,4 @@
+'use client';
 // Hooks
 import { FormEvent, useState } from 'react';
 import useInput from '@/hooks/useInput';

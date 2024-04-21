@@ -1,10 +1,11 @@
+'use client';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import axios from '../pages/api/axios';
+import axios from '../app/api/axios';
 import { AxiosError } from 'axios';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
