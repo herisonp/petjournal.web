@@ -32,7 +32,7 @@ function Home() {
 
   useEffect(() => {
     if (typeof window !== 'undefined' && !accessToken) {
-      // push('/register');
+      push('/register');
     }
 
     axios
