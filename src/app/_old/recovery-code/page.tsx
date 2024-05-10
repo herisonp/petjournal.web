@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useRef, useState } from 'react';
 import clsx from 'clsx';
 
-function recoveryCode() {
+function RecoveryCode() {
   const [inputValues, setInputValues] = useState(Array(6).fill(''));
   const [verificationStatus, setVerificationStatus] = useState<
     'valid' | 'invalid' | 'none'
@@ -105,4 +105,4 @@ function recoveryCode() {
   );
 }
 
-export default recoveryCode;
+export default RecoveryCode;

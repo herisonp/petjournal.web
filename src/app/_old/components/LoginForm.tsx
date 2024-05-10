@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import axios from '../app/api/axios';
+import axios from '../app/_old/api/axios';
 import { AxiosError } from 'axios';
 import Cookies from 'js-cookie';
 import Image from 'next/image';

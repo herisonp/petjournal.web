@@ -18,7 +18,7 @@ import 'swiper/css';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import axios from './api/axios';
+import axios from './_old/api/axios';
 
 type userDataType = {
   firstName: String;
