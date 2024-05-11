@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { BannerHome } from './components/BannerHome';
 import { Header } from '../components/Header';
+import { Services } from './components/Services';
 
 // tela de ambiente de usuário (home)
 export default function DashboardPage() {
@@ -13,12 +14,7 @@ export default function DashboardPage() {
           <h2>Serviços</h2>
           <Link href="#">ver mais</Link>
         </div>
-        <ul className="grid grid-cols-2">
-          <li>Agenda</li>
-          <li>Localizar Serviços</li>
-          <li>Registro de Vacinas</li>
-          <li>Registro de Vermífugos</li>
-        </ul>
+        <Services />
       </main>
     </>
   );
