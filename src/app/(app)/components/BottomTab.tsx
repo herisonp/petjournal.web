@@ -1,41 +1,17 @@
-'use client';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { BottomTabItem } from './BottomTabItem';
 
 export function BottomTab() {
-  const pathname = usePathname();
   return (
     <div className="fixed bottom-0 left-0 bg-custom-purple w-full p-4">
       <ul className="flex w-full justify-around">
         <li>
-          <Link
-            href={'/'}
-            className={`${
-              pathname === '/' ? 'text-custom-blue' : 'text-white'
-            }`}
-          >
-            Home
-          </Link>
+          <BottomTabItem to="/" />
         </li>
         <li>
-          <Link
-            href={'/pets'}
-            className={`${
-              pathname === '/pets' ? 'text-custom-blue' : 'text-white'
-            }`}
-          >
-            Pets
-          </Link>
+          <BottomTabItem to="/pets" />
         </li>
         <li>
-          <Link
-            href={'/tutor'}
-            className={`${
-              pathname === '/tutor' ? 'text-custom-blue' : 'text-white'
-            }`}
-          >
-            Tutor
-          </Link>
+          <BottomTabItem to="/tutor" />
         </li>
       </ul>
     </div>
