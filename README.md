@@ -21,7 +21,7 @@ git clone https://github.com/PetJournal/petjournal.web.git
 2. Instale as dependências do projeto com o comando:
 
 ```bash
-yarn
+npm install
 ```
 
 3. Acesse a branch de desenvolvimento com o comando:
@@ -33,7 +33,7 @@ git checkout develop
 4. Rode a aplicação com o comando:
 
 ```bash
-yarn dev
+npm run dev
 ```
 
 5. Acesse as rotas disponíveis seguindo a estrutura `localhost:3000/<rota>`
