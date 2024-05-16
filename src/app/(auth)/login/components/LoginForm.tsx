@@ -1,26 +1,54 @@
 'use client';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import toggleShowPassword from '/public/images/show-password.svg';
+import { submitLogin } from '../submitLogin';
 
 export function LoginForm() {
+  const router = useRouter();
   const [remember, setRemember] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
-  const isButtonDisabled = !!error || !!loading;
+  const isButtonDisabled = !!loading;
+
+  async function handleSubmitLogin(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    try {
+      setLoading(true);
+      const formData = new FormData(event.currentTarget);
+
+      // TODO: validar dados do formulário
+      const loginData = {
+        email: formData.get('email') as string,
+        password: formData.get('password') as string,
+        remember: remember,
+      };
+
+      const { error } = await submitLogin(loginData);
+      if (error) throw error;
+
+      router.push('/');
+    } catch (error) {
+      // TODO: criar mensagens de erro
+      alert(error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
-    <form className="flex flex-col gap-y-4">
+    <form onSubmit={handleSubmitLogin} className="flex flex-col gap-y-4">
       <label>
         <div className="text-custom-purple text-sm font-medium">Login</div>
         <div className="border border-[#1b1b1b] rounded-[5px] py-2 px-1">
           <input
-            type="text"
+            type="email"
             className="w-full outline-0 text-[#292929] font-medium placeholder:text-[#BFBFBF]"
             placeholder="E-mail"
+            name="email"
           />
         </div>
         {/* {errors.email && (
@@ -34,6 +62,7 @@ export function LoginForm() {
             type={showPassword ? 'text' : 'password'}
             className="w-full outline-0 text-[#292929] font-medium placeholder:text-[#BFBFBF]"
             placeholder="Senha"
+            name="password"
           />
           <button
             type="button"
@@ -69,9 +98,7 @@ export function LoginForm() {
           Esqueci minha senha
         </Link>
       </div>
-      {error && (
-        <span className="text-center text-xs text-red-600">{error}</span>
-      )}
+
       <button
         className={`flex self-center font-medium items-center justify-center  rounded-[45px] px-11 py-3 mt-16 ${
           isButtonDisabled
