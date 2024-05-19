@@ -1,28 +1,55 @@
 'use client';
-
+import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/InputOPT';
+import { submitWaitingCode } from '@/services/submitWaitingCode';
 import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { FormEvent, useMemo, useState } from 'react';
 
 export function WaitingCodeForm() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [code, setCode] = useState('');
+  const router = useRouter();
+  const params = useSearchParams();
+  const email = params.get('email');
+
+  async function handleSubmitCode(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    try {
+      setIsLoading(true);
+      const isEmpty = code.length >= 6;
+      if (!isEmpty) throw 'Preencha todos os campos!';
+      if (!email) throw 'Um email é requerido';
+      const { error } = await submitWaitingCode({
+        email,
+        code,
+      });
+      if (error) throw error;
+      router.push('/change-password');
+    } catch (error) {
+      alert(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   return (
-    <form className="flex flex-col gap-4">
-      <div className="flex justify-between">
-        {Array(6)
-          .fill(0)
-          .map((_, index) => (
-            <input
-              key={index}
-              type="text"
-              maxLength={1}
-              pattern="\d*"
-              className="w-12 h-16 text-center border-2 rounded-md mt-8 border-custom-purple focus:ring-4 focus:ring-custom-purple focus:border-transparent focus:outline-none"
-              // className={clsx(
-              //   'w-12 h-16 text-center border-2 rounded-md mt-8',
-              //   inputValues[index]
-              //     ? 'border-custom-purple focus:ring-4 focus:ring-custom-purple focus:border-transparent focus:outline-none'
-              //     : 'border-gray-300 focus:ring-4 focus:ring-custom-purple focus:border-transparent focus:outline-none',
-              // )}
-            />
-          ))}
+    <form onSubmit={handleSubmitCode} className="flex flex-col gap-4">
+      <div className="flex justify-center overflow-hidden">
+        <InputOTP
+          maxLength={6}
+          value={code}
+          onChange={setCode}
+          className="flex items-center justify-center"
+        >
+          <InputOTPGroup className="flex justify-between gap-2">
+            <InputOTPSlot index={0} />
+            <InputOTPSlot index={1} />
+            <InputOTPSlot index={2} />
+            <InputOTPSlot index={3} />
+            <InputOTPSlot index={4} />
+            <InputOTPSlot index={5} />
+          </InputOTPGroup>
+        </InputOTP>
       </div>
       <Link href="/forget-password" className="underline">
         Reenviar código?
@@ -31,8 +58,9 @@ export function WaitingCodeForm() {
       <button
         className={`flex self-center font-medium items-center justify-center rounded-[45px] mt-4 px-11 py-3 bg-custom-purple text-white`}
         type="submit"
+        disabled={isLoading}
       >
-        Enviar
+        {isLoading ? 'Enviando...' : 'Enviar'}
       </button>
       <p className="text-center">
         Dica: Caso não encontre o e-mail na sua caixa de entrada, verifique a
