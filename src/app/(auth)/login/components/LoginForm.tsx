@@ -94,7 +94,7 @@ export function LoginForm() {
             <div className="absolute w-2 h-2 bg-custom-purple rounded-full left-[0.375rem]"></div>
           )}
         </label>
-        <Link className="underline" href="#">
+        <Link className="underline" href="/forget-password">
           Esqueci minha senha
         </Link>
       </div>
