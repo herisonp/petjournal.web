@@ -26,9 +26,11 @@ export async function submitLogin({
       },
     });
 
+    if (!res) throw new Error('Server error');
+
     const { error, accessToken } = await res.json();
 
-    if (error) throw error;
+    if (error) throw new Error(error);
 
     const shortDaysToExpire = 3 * 24 * 60 * 60 * 1000; // 3 days in milliseconds
     const longDaysToExpire = shortDaysToExpire * 10; // 30 days in milliseconds
@@ -39,8 +41,9 @@ export async function submitLogin({
     });
 
     return { accessToken };
-  } catch (error) {
+  } catch (err) {
+    const error = err as Error;
     console.log('submitLogin error', error);
-    return { error };
+    return { error: error.message };
   }
 }
