@@ -35,7 +35,7 @@ export function BottomTabItem({ to, label }: BottomTabItemProps) {
       )}
     >
       <Icon size={24} active={active} />
-      Home
+      {label}
     </Link>
   );
 }
