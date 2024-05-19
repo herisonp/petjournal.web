@@ -9,9 +9,10 @@ import { usePathname } from 'next/navigation';
 
 type BottomTabItemProps = {
   to: '/' | '/pets' | '/tutor';
+  label: string;
 };
 
-export function BottomTabItem({ to }: BottomTabItemProps) {
+export function BottomTabItem({ to, label }: BottomTabItemProps) {
   const pathname = usePathname();
   const buttonStyle = 'flex flex-col justify-center items-center';
 
@@ -34,7 +35,7 @@ export function BottomTabItem({ to }: BottomTabItemProps) {
       )}
     >
       <Icon size={24} active={active} />
-      Home
+      {label}
     </Link>
   );
 }

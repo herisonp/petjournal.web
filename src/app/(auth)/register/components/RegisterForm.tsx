@@ -1,6 +1,48 @@
+'use client';
+import { FormEvent, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { submitLogin } from '@/services/submitLogin';
+import { submitRegister } from '../submitRegister';
+
 export function RegisterForm() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [remember, setRemember] = useState(false);
+  const router = useRouter();
+
+  async function handleSubmitRegister(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setIsLoading(true);
+    const formData = new FormData(event.currentTarget);
+    try {
+      const newUser = {
+        firstName: formData.get('name') as string,
+        lastName: formData.get('lastname') as string,
+        email: formData.get('email') as string,
+        password: formData.get('password') as string,
+        passwordConfirmation: formData.get('password-confirm') as string,
+        phone: formData.get('phone') as string,
+        isPrivacyPolicyAccepted: remember,
+      };
+
+      const { error: errorRegister, data } = await submitRegister(newUser);
+      if (errorRegister) throw errorRegister;
+
+      const { error: errorLogin } = await submitLogin({
+        email: data.email,
+        password: newUser.password,
+      });
+      if (errorLogin) throw errorLogin;
+
+      router.push('/');
+    } catch (error) {
+      alert(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   return (
-    <form className="flex flex-col gap-y-4">
+    <form onSubmit={handleSubmitRegister} className="flex flex-col gap-y-4">
       <label>
         <div className="text-custom-purple text-sm font-medium">Nome</div>
         <div className="border border-[#1b1b1b] rounded-[5px] py-2 px-1">
@@ -75,29 +117,28 @@ export function RegisterForm() {
           />
         </div>
       </label>
-      <label className="flex items-center justify-center relative mt-4">
+      <label className="flex items-center relative">
         <input
           className="appearance-none w-5 h-5 rounded-full border-2 border-custom-purple mr-1"
           type="checkbox"
-          // checked={remember}
-          // onChange={(event) => setRemember(event.target.checked)}
+          checked={remember}
+          onChange={(event) => setRemember(event.target.checked)}
         />
-        <span>Eu concordo com a política de privacidade</span>
-        {/* {remember && (
-            <div className="absolute w-2 h-2 bg-custom-purple rounded-full left-[0.375rem]"></div>
-          )} */}
+        {remember && (
+          <div className="absolute w-2 h-2 bg-custom-purple rounded-full left-[0.375rem]"></div>
+        )}
+        <span>Eu concordo com a politica de privacidade</span>
       </label>
       <button
-        className={`flex self-center font-medium items-center justify-center  rounded-[45px] px-11 py-3 mt-4 bg-custom-purple text-white`}
-        // ${
-        //   isButtonDisabled
-        //     ? 'bg-transparent border-2 border-[#B2B2B2] text-[#B2B2B2]'
-        //     : 'bg-custom-purple text-white'
-        // }`}
+        className={`flex self-center font-medium items-center justify-center  rounded-[45px] px-11 py-3 mt-16 ${
+          isLoading
+            ? 'bg-transparent border-2 border-[#B2B2B2] text-[#B2B2B2]'
+            : 'bg-custom-purple text-white'
+        }`}
         type="submit"
-        // disabled={isButtonDisabled}
+        disabled={isLoading}
       >
-        {'Continuar'}
+        {isLoading ? 'Enviando...' : 'Continuar'}
       </button>
     </form>
   );

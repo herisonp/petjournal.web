@@ -5,13 +5,13 @@ export function BottomTab() {
     <div className="fixed bottom-0 left-0 bg-custom-purple w-full p-4">
       <ul className="flex w-full justify-around">
         <li>
-          <BottomTabItem to="/" />
+          <BottomTabItem label="Home" to="/" />
         </li>
         <li>
-          <BottomTabItem to="/pets" />
+          <BottomTabItem label="Pets" to="/pets" />
         </li>
         <li>
-          <BottomTabItem to="/tutor" />
+          <BottomTabItem label="Tutor" to="/tutor" />
         </li>
       </ul>
     </div>
