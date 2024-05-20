@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { WaitingCodeForm } from './components/WaitingCodeForm';
+import { Suspense } from 'react';
 
 export default function WaitingCodePage() {
   return (
@@ -20,7 +21,9 @@ export default function WaitingCodePage() {
         </p>
       </div>
       <div className="w-full max-w-sm mt-8">
-        <WaitingCodeForm />
+        <Suspense>
+          <WaitingCodeForm />
+        </Suspense>
       </div>
     </>
   );
