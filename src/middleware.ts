@@ -1,6 +1,11 @@
 import { NextResponse, type NextRequest } from 'next/server';
 
 export async function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+  const searchParams = request.nextUrl.searchParams;
+  if (pathname === '/waiting-code' && !searchParams.get('email')) {
+    return NextResponse.redirect(new URL('/login', request.url));
+  }
   return NextResponse.next();
 }
 

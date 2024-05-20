@@ -23,14 +23,15 @@ export async function submitRegister(user: submitRegisterProps) {
     });
     const data = await res.json();
     const error = data.error || null;
-    if (error) throw error;
+    if (error) throw new Error(error);
     return {
       data,
     };
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    const error = err as Error;
+    console.log('submitRegister', error);
     return {
-      error,
+      error: error.message,
     };
   }
 }

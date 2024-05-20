@@ -9,7 +9,7 @@ export async function signOut() {
     const accessToken = cookie?.value;
 
     if (!accessToken) {
-      throw 'Nenhum usuário autenticado...';
+      throw new Error('Nenhum usuário autenticado...');
     }
 
     cookies().delete('@petjournal/accessToken');
@@ -17,9 +17,11 @@ export async function signOut() {
     revalidatePath('/');
 
     redirect('/login', RedirectType.push);
-  } catch (error) {
+  } catch (err) {
+    const error = err as Error;
+    console.log('signOut', error);
     return {
-      error,
+      error: error.message,
     };
   }
 }

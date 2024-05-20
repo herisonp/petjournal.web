@@ -1,6 +1,7 @@
 'use server';
 import { api } from '@/services/api';
 import { cookies } from 'next/headers';
+import { setToken } from './setToken';
 
 interface submitLoginProps {
   email: string;
@@ -26,21 +27,21 @@ export async function submitLogin({
       },
     });
 
+    if (!res) throw new Error('Server error');
+
     const { error, accessToken } = await res.json();
 
-    if (error) throw error;
+    if (error) throw new Error(error);
 
-    const shortDaysToExpire = 3 * 24 * 60 * 60 * 1000; // 3 days in milliseconds
-    const longDaysToExpire = shortDaysToExpire * 10; // 30 days in milliseconds
-    const daysToExpire = rembered ? longDaysToExpire : shortDaysToExpire;
-
-    cookies().set('@petjournal/accessToken', accessToken, {
-      expires: Date.now() + daysToExpire,
+    await setToken({
+      token: accessToken,
+      rembered: rembered || false,
     });
 
     return { accessToken };
-  } catch (error) {
+  } catch (err) {
+    const error = err as Error;
     console.log('submitLogin error', error);
-    return { error };
+    return { error: error.message };
   }
 }
