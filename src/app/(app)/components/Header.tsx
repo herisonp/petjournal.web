@@ -1,7 +1,9 @@
-export function Header() {
+import { User } from '@/types/userType';
+
+export function Header({ user }: { user: User }) {
   return (
     <header className="flex justify-between mb-4">
-      <div>Olá, {'{ usuário }'}</div>
+      <p>Olá, {user.firstName}!</p>
       <div>{'{ tabicon }'}</div>
     </header>
   );

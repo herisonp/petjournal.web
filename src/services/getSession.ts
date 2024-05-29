@@ -2,6 +2,7 @@
 
 import { cookies } from 'next/headers';
 import { api } from './api';
+import { User } from '@/types/userType';
 
 export async function getSession() {
   try {
@@ -22,12 +23,13 @@ export async function getSession() {
 
     const { error, firstName, lastName } = await res.json();
     if (error) throw 'Token de acesso expirado ou inválido...';
+    const user: User = {
+      firstName,
+      lastName,
+    };
     const session = {
       accessToken,
-      user: {
-        firstName,
-        lastName,
-      },
+      user,
     };
     return {
       session,
