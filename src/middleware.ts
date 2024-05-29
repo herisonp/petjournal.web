@@ -1,10 +1,19 @@
 import { NextResponse, type NextRequest } from 'next/server';
+import { isWaitingCodeMiddleware } from './middlewares/isWaitingCodeMiddleware';
+import { isProtectedRoutes } from './middlewares/isProtectedRoutes';
+import { isAuthvalid } from './middlewares/isAuthValid';
+import { isAuthPages } from './middlewares/isAuthPages';
 
 export async function middleware(request: NextRequest) {
-  const pathname = request.nextUrl.pathname;
-  const searchParams = request.nextUrl.searchParams;
-  if (pathname === '/waiting-code' && !searchParams.get('email')) {
+  const authenticated = await isAuthvalid();
+  if (isWaitingCodeMiddleware(request)) {
     return NextResponse.redirect(new URL('/login', request.url));
+  }
+  if (!authenticated && isProtectedRoutes(request)) {
+    return NextResponse.rewrite(new URL('/login', request.url));
+  }
+  if (authenticated && isAuthPages(request)) {
+    return NextResponse.redirect(new URL('/', request.url));
   }
   return NextResponse.next();
 }
