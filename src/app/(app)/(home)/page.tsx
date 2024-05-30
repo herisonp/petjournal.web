@@ -2,14 +2,11 @@ import Link from 'next/link';
 import { BannerHome } from './components/BannerHome';
 import { Header } from '../components/Header';
 import { Services } from './components/Services';
-import { getSession } from '@/services/getSession';
 
-export default async function DashboardPage() {
-  const { session } = await getSession();
-  const user = session?.user!;
+export default function DashboardPage() {
   return (
     <>
-      <Header user={user} />
+      <Header />
       <main className="flex flex-col gap-4 w-full">
         <BannerHome />
         <div className="flex justify-between items-center mt-4">
