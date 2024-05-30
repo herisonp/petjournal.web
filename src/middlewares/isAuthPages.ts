@@ -1,6 +1,7 @@
 import { type NextRequest } from 'next/server';
+import { authRoutes } from './authRoutes';
 
 export function isAuthPages(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  return pathname === '/login' || pathname === '/register';
+  return authRoutes.some((path) => pathname.startsWith(path));
 }
