@@ -6,7 +6,7 @@ export default function AppLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="min-h-screen w-full p-4 pb-16 flex flex-col">
+    <div className="min-h-screen w-full px-4 pt-6 pb-32 flex flex-col">
       {children}
       <BottomTab />
     </div>
