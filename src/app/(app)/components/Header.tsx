@@ -1,8 +1,11 @@
-export function Header() {
+import { User } from '@/types/userType';
+import { Menubar } from './Menubar';
+
+export function Header({ user }: { user: User }) {
   return (
     <header className="flex justify-between mb-4">
-      <div>Olá, {'{ usuário }'}</div>
-      <div>{'{ tabicon }'}</div>
+      <p>Olá, {user.firstName}!</p>
+      <Menubar />
     </header>
   );
 }

@@ -16,7 +16,7 @@ export async function signOut() {
 
     revalidatePath('/');
 
-    redirect('/login', RedirectType.push);
+    return {};
   } catch (err) {
     const error = err as Error;
     console.log('signOut', error);
