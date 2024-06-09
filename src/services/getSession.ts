@@ -3,21 +3,17 @@
 import { cookies } from 'next/headers';
 import { api } from './api';
 import { User } from '@/types/userType';
+import { getToken } from './getToken';
 
 export async function getSession() {
   try {
-    const cookie = cookies().get('@petjournal/accessToken');
-    const accessToken = cookie?.value;
+    const accessToken = getToken();
 
     if (!accessToken) {
       throw 'Nenhum usuário autenticado...';
     }
 
     const res = await api('/guardian/name', {
-      method: 'GET',
-      headers: {
-        Authorization: 'Bearer ' + accessToken,
-      },
       cache: 'no-store',
     });
 
