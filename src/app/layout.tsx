@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
-      <body className={fredoka.className}>{children}</body>
+      <body className={`min-h-screen ${fredoka.className}`}>{children}</body>
     </html>
   );
 }
