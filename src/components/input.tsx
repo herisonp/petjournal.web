@@ -12,7 +12,7 @@ const inputStyleBase = 'w-full flex py-2 px-1';
 
 const inputVariants = {
   variant: {
-    default: `${inputStyleBase} border border-[#1b1b1b] font-medium rounded-[5px]`,
+    primary: `${inputStyleBase} border border-[#1b1b1b] font-medium rounded-[5px]`,
     secondary: `${inputStyleBase} border-2 border-[#B2B2B2] border-dashed font-normal rounded-[12px] pl-2`,
   },
 };
@@ -29,7 +29,7 @@ const labelStyleBase = 'text-sm font-medium';
 
 const labelVariants = {
   variant: {
-    default: `${labelStyleBase} text-custom-purple`,
+    primary: `${labelStyleBase} text-custom-purple`,
     secondary: `${labelStyleBase} text-[#2E2E2E] pl-2`,
   },
 };
@@ -46,7 +46,7 @@ const Label = React.forwardRef<HTMLLabelElement, LabelProps>(
 Label.displayName = 'Label';
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ variant = 'default', className, type, id, label, ...props }, ref) => {
+  ({ variant = 'primary', className, type, id, label, ...props }, ref) => {
     const [showPassword, setShowPassword] = React.useState(false);
 
     const togglePasswordVisibility = () => {
