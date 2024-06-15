@@ -3,6 +3,7 @@ import { FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { submitLogin } from '@/services/submitLogin';
 import { submitRegister } from '../submitRegister';
+import { Button } from '@/components/ui/button';
 
 export function RegisterForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -129,17 +130,13 @@ export function RegisterForm() {
         )}
         <span>Eu concordo com a politica de privacidade</span>
       </label>
-      <button
-        className={`flex self-center font-medium items-center justify-center  rounded-[45px] px-11 py-3 mt-16 ${
-          isLoading
-            ? 'bg-transparent border-2 border-[#B2B2B2] text-[#B2B2B2]'
-            : 'bg-custom-purple text-white'
-        }`}
+      <Button
+        className='flex self-center font-medium items-center justify-center  rounded-[45px] px-11 py-3 mt-16'
         type="submit"
-        disabled={isLoading}
+        disabled={!!isLoading}
       >
         {isLoading ? 'Enviando...' : 'Continuar'}
-      </button>
+      </Button>
     </form>
   );
 }

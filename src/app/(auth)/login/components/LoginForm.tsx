@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import toggleShowPassword from '/public/images/show-password.svg';
 import { submitLogin } from '@/services/submitLogin';
+import { Button } from '@/components/ui/button';
 
 export function LoginForm() {
   const router = useRouter();
@@ -64,7 +65,8 @@ export function LoginForm() {
             placeholder="Senha"
             name="password"
           />
-          <button
+          <Button
+            variant='ghost'
             type="button"
             onClick={() => setShowPassword((prev) => !prev)}
             className="px-1"
@@ -73,7 +75,7 @@ export function LoginForm() {
               src={toggleShowPassword}
               alt="Ícone de olho para mostrar e esconder a senha"
             />
-          </button>
+          </Button>
         </div>
         {/* {errors.password && (
           <span className="text-red-600 text-xs">
@@ -99,17 +101,13 @@ export function LoginForm() {
         </Link>
       </div>
 
-      <button
-        className={`flex self-center font-medium items-center justify-center  rounded-[45px] px-11 py-3 mt-16 ${
-          isButtonDisabled
-            ? 'bg-transparent border-2 border-[#B2B2B2] text-[#B2B2B2]'
-            : 'bg-custom-purple text-white'
-        }`}
+      <Button
+        className='mt-16'
         type="submit"
         disabled={isButtonDisabled}
       >
         {loading ? 'Enviando...' : 'Continuar'}
-      </button>
+      </Button>
     </form>
   );
 }
