@@ -1,4 +1,5 @@
 'use client';
+import { Button } from '@/components/Button';
 import { signOut } from '@/services/signOut';
 import { LogOut } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -22,12 +23,12 @@ export function LogoutButton() {
   }
 
   return (
-    <button
+    <Button
       onClick={handleSignOut}
       disabled={isLoading}
-      className="flex gap-2 items-center"
+      className="gap-2 py-0 px-0 font-normal disabled:opacity-45 disabled:border-none"
     >
       <span>Sair</span> <LogOut size={14} />
-    </button>
+    </Button>
   );
 }
