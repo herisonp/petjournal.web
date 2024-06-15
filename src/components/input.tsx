@@ -8,12 +8,31 @@ import toggleHiddenPassword from '@/assets/svg/hidden-password.svg';
 import { cn } from '@/utils/twmerge';
 import Image from 'next/image';
 
+const inputStyleBase = 'w-full flex py-2 px-1';
+
+const inputVariants = {
+  variant: {
+    default: `${inputStyleBase} border border-[#1b1b1b] font-medium rounded-[5px]`,
+    secondary: `${inputStyleBase} border-2 border-[#B2B2B2] border-dashed font-normal rounded-[12px] pl-2`,
+  },
+};
+
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
-  label?: string;
+  label: string;
+  variant?: keyof typeof inputVariants.variant;
 }
 
 interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {}
+
+const labelStyleBase = 'text-sm font-medium';
+
+const labelVariants = {
+  variant: {
+    default: `${labelStyleBase} text-custom-purple`,
+    secondary: `${labelStyleBase} text-[#2E2E2E] pl-2`,
+  },
+};
 
 const Label = React.forwardRef<HTMLLabelElement, LabelProps>(
   ({ htmlFor, children, ...props }, ref) => {
@@ -27,7 +46,7 @@ const Label = React.forwardRef<HTMLLabelElement, LabelProps>(
 Label.displayName = 'Label';
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, id, label, ...props }, ref) => {
+  ({ variant = 'default', className, type, id, label, ...props }, ref) => {
     const [showPassword, setShowPassword] = React.useState(false);
 
     const togglePasswordVisibility = () => {
@@ -36,19 +55,15 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <div className="flex flex-col">
-        {label && (
-          <Label
-            htmlFor={id}
-            className={cn('text-custom-purple text-sm font-medium')}
-          >
-            {label}
-          </Label>
-        )}
-        <div className="border border-[#1b1b1b] rounded-[5px] flex py-2 px-1">
+        <Label htmlFor={id} className={labelVariants.variant[variant]}>
+          {label}
+        </Label>
+
+        <div className={inputVariants.variant[variant]}>
           <input
             type={showPassword && type === 'password' ? 'text' : type}
             className={cn(
-              `w-full outline-0 text-[#292929] font-medium placeholder:text-[#BFBFBF] ${
+              `w-full outline-0 text-[#292929] placeholder:text-[#BFBFBF] ${
                 !showPassword && 'text-[#BFBFBF]'
               }`,
               className,
@@ -66,7 +81,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             >
               <Image
                 src={showPassword ? toggleShowPassword : toggleHiddenPassword}
-                alt="Ícone de olho para mostrar e es conder a senha"
+                alt="Ícone de olho para mostrar e esconder a senha"
               />
             </button>
           )}
