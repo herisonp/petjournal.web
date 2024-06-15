@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import toggleShowPassword from '/public/images/show-password.svg';
 import { submitLogin } from '@/services/submitLogin';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/Button';
 
 export function LoginForm() {
   const router = useRouter();

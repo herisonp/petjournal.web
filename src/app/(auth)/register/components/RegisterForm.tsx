@@ -3,7 +3,7 @@ import { FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { submitLogin } from '@/services/submitLogin';
 import { submitRegister } from '../submitRegister';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/Button';
 
 export function RegisterForm() {
   const [isLoading, setIsLoading] = useState(false);
