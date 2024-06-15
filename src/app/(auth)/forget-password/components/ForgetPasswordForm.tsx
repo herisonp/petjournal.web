@@ -1,4 +1,5 @@
 'use client';
+import { Button } from '@/components/ui/button';
 import { submitForgetPassword } from '@/services/submitForgetPassword';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
@@ -44,15 +45,14 @@ export function ForgetPasswordForm() {
       </label>
 
       <div className="flex justify-between">
-        <button
-          className={`flex self-center font-medium items-center justify-center rounded-[45px] px-11 py-3 bg-custom-purple text-white disabled:bg-transparent border-2 border-transparent disabled:border-[#B2B2B2] disabled:text-[#B2B2B2]`}
+        <Button
           type="submit"
           disabled={isLoading}
         >
           {isLoading ? 'Enviando...' : 'Enviar'}
-        </button>
-        <button
-          className={`flex self-center font-medium items-center justify-center rounded-[45px] px-11 py-3 bg-transparent border-2 border-red-600 text-red-600 disabled:opacity-45`}
+        </Button>
+        <Button
+          variant='outline'
           type="button"
           onClick={() => {
             router.push('/login');
@@ -60,7 +60,7 @@ export function ForgetPasswordForm() {
           disabled={isLoading}
         >
           Cancelar
-        </button>
+        </Button>
       </div>
     </form>
   );
