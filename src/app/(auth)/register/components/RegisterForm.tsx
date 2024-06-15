@@ -131,7 +131,7 @@ export function RegisterForm() {
         <span>Eu concordo com a politica de privacidade</span>
       </label>
       <Button
-        className='flex self-center font-medium items-center justify-center  rounded-[45px] px-11 py-3 mt-16'
+        className='mt-16'
         type="submit"
         disabled={!!isLoading}
       >
