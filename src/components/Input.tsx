@@ -14,8 +14,7 @@ const inputVariants = {
   },
 };
 
-export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   variant?: keyof typeof inputVariants.variant;
 }
 
@@ -35,14 +34,12 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         {...props}
       />
     ) : (
-      <div
-        className={cn('flex', inputVariants.variant[variant], className)}
-        ref={ref}
-        {...props}
-      >
+      <div className={cn('flex', inputVariants.variant[variant], className)}>
         <input
           type={showPassword && type === 'password' ? 'text' : type}
           className="w-full outline-0"
+          ref={ref}
+          {...props}
         />
 
         <button
