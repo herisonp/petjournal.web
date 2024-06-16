@@ -2,11 +2,9 @@
 
 import * as React from 'react';
 
-import toggleShowPassword from '@/assets/svg/show-password.svg';
-import toggleHiddenPassword from '@/assets/svg/hidden-password.svg';
+import { IconInputPassword } from './icons/IconInputPassword';
 
 import { cn } from '@/utils/twmerge';
-import Image from 'next/image';
 
 const inputStyleBase = 'w-full flex py-2 px-1';
 
@@ -79,10 +77,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
               className={cn('px-1')}
               aria-label={showPassword ? 'Esconder senha' : 'Mostrar senha'}
             >
-              <Image
-                src={showPassword ? toggleShowPassword : toggleHiddenPassword}
-                alt="Ícone de olho para mostrar e esconder a senha"
-              />
+              <IconInputPassword size={16} active={showPassword} />
             </button>
           )}
         </div>
