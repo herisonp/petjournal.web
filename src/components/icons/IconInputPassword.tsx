@@ -12,7 +12,7 @@ export function IconInputPassword({
   return (
     <Image
       className={cn(className)}
-      src={active ? toggleShowPassword : toggleHiddenPassword}
+      src={active ? toggleHiddenPassword : toggleShowPassword}
       width={size}
       height={size}
       alt="Ícone de olho para mostrar e esconder a senha"
