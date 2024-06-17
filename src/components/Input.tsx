@@ -11,15 +11,17 @@ const inputVariants = {
   variant: {
     primary: `${inputStyleBase} border border-[#1b1b1b] font-medium rounded-[5px]`,
     secondary: `${inputStyleBase} border-2 border-[#B2B2B2] border-dashed font-normal rounded-[12px]`,
+    error: `${inputStyleBase} border border-red-600 font-medium rounded-[12px]`,
   },
 };
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   variant?: keyof typeof inputVariants.variant;
+  message?: string;
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ variant = 'primary', className, type, ...props }, ref) => {
+  ({ variant = 'primary', className, type, message, ...props }, ref) => {
     const [showPassword, setShowPassword] = React.useState(false);
 
     const togglePasswordVisibility = () => {
@@ -27,12 +29,14 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     };
 
     return type !== 'password' ? (
-      <input
-        type={type}
-        className={cn(inputVariants.variant[variant], className)}
-        ref={ref}
-        {...props}
-      />
+      <>
+        <input
+          type={type}
+          className={cn(inputVariants.variant[variant], className)}
+          ref={ref}
+          {...props}
+        />
+      </>
     ) : (
       <div className={cn('flex', inputVariants.variant[variant], className)}>
         <input
