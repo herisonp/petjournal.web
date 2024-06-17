@@ -1,6 +1,4 @@
 'use server';
-
-import { cookies } from 'next/headers';
 import { api } from './api';
 import { User } from '@/types/userType';
 import { getToken } from './getToken';
