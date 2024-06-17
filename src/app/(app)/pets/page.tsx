@@ -1,5 +1,5 @@
 import { api } from '@/services/api';
-import { PetRegister } from './components/PetRegister/PetRegister';
+import { redirect } from 'next/navigation';
 
 export default async function PetsPage() {
   const res = await api('/pet', {
@@ -10,7 +10,7 @@ export default async function PetsPage() {
   const pets = await res.json();
 
   if (pets.length <= 0) {
-    return <PetRegister firstPet />;
+    redirect('/pet-register');
   }
   return <div>Lista dos pets</div>;
 }
