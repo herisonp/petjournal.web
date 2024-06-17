@@ -1,8 +1,19 @@
+import { Button } from '@/components/Button';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ToggleGroup';
 import { IconCat } from '@/components/icons/IconCat';
 import { IconDog } from '@/components/icons/IconDog';
+import { useContext } from 'react';
+import { PetRegisterContext } from '../context/PetRegisterContext';
 
 export function Specie() {
+  const { nextStep, previousStep } = useContext(PetRegisterContext);
+
+  function handleClickNextStep() {
+    nextStep();
+  }
+  function handleClickPreviousStep() {
+    previousStep();
+  }
   return (
     <div className="flex flex-col gap-2">
       <h3 className="text-xl font-medium text-center text-custom-purple">
@@ -26,6 +37,17 @@ export function Specie() {
           <span>Gato</span>
         </ToggleGroupItem>
       </ToggleGroup>
+
+      <div className="mt-auto w-full flex justify-around">
+        <Button
+          variant="outline"
+          className="border-custom-purple text-custom-purple"
+          onClick={handleClickPreviousStep}
+        >
+          Voltar
+        </Button>
+        <Button onClick={handleClickNextStep}>Continuar</Button>
+      </div>
     </div>
   );
 }
