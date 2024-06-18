@@ -1,14 +1,12 @@
+import { Logo } from '@/components/Logo';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export default function NotFound() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center p-8">
-      <Image
-        src="/images/logo.svg"
-        alt="Pet Journal Logo"
-        width={158}
-        height={158}
+      <Logo
+       scale='lg'
       />
       <h2 className="font-medium text-2xl text-center">
         Página não encontrada...

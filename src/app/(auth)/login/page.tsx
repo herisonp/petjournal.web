@@ -1,16 +1,11 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { LoginForm } from './components/LoginForm';
+import { Logo } from '@/components/Logo';
 
 export default function LoginPage() {
   return (
     <>
-      <Image
-        src="/images/logo.svg"
-        alt="Pet Journal Logo"
-        width={158}
-        height={158}
-      />
+      <Logo scale='lg' />
       <h1 className="font-medium text-2xl">Acessar conta</h1>
       <div className="w-full max-w-sm m-auto">
         <LoginForm />
