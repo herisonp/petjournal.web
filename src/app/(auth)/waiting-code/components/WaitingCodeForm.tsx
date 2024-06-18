@@ -1,4 +1,5 @@
 'use client';
+import { Button } from '@/components/Button';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/InputOPT';
 import { submitWaitingCode } from '@/services/submitWaitingCode';
 import Link from 'next/link';
@@ -55,13 +56,13 @@ export function WaitingCodeForm() {
         Reenviar código?
       </Link>
 
-      <button
-        className={`flex self-center font-medium items-center justify-center rounded-[45px] mt-4 px-11 py-3 bg-custom-purple text-white`}
+      <Button
+        className="mt-4"
         type="submit"
         disabled={isLoading}
       >
         {isLoading ? 'Enviando...' : 'Enviar'}
-      </button>
+      </Button>
       <p className="text-center">
         Dica: Caso não encontre o e-mail na sua caixa de entrada, verifique a
         pasta de spam!
