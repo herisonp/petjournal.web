@@ -6,7 +6,7 @@ const errorStyleBase =
 
 const errorVariants = {
   variant: {
-    red: `${errorStyleBase} text-red-600`,
+    red: `${errorStyleBase} text-red-300`,
     transparent: `${errorStyleBase} text-gray-300`
   },
 };
