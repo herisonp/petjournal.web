@@ -1,9 +1,5 @@
 import { cn } from '@/utils/twmerge';
-import React from 'react';
-
-interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
-  variant?: keyof typeof labelVariants.variant;
-}
+import * as React from 'react';
 
 const labelStyleBase = 'text-sm font-medium';
 
@@ -14,12 +10,16 @@ const labelVariants = {
   },
 };
 
+interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
+  variant?: keyof typeof labelVariants.variant;
+}
+
 const Label = React.forwardRef<HTMLLabelElement, LabelProps>(
-  ({ htmlFor, variant = 'primary', className, children, ...props }, ref) => {
+  ({ variant = 'primary', htmlFor, className, children, ...props }, ref) => {
     return (
       <label
+        className={cn(labelVariants.variant[variant], className)}
         htmlFor={htmlFor}
-        className={(cn(labelVariants.variant[variant]), className)}
         ref={ref}
         {...props}
       >
