@@ -1,6 +1,6 @@
 import { InputMessage } from "./InputMessage"
 import { Input } from "./Input"
-import { Label } from "./Label"
+import { Label } from "../Label"
 import { cn } from "@/utils/twmerge";
 
 interface InputControlProps {

@@ -1,9 +1,9 @@
 'use client';
 
 import * as React from 'react';
-import { IconInputPassword } from './icons/IconInputPassword';
+import { IconInputPassword } from '../icons/IconInputPassword';
 import { cn } from '@/utils/twmerge';
-import { IconErrorCircle } from './icons/IconErrorCircle';
+import { IconErrorCircle } from '../icons/IconErrorCircle';
 
 const inputStyleBase =
   'w-full outline-0 text-[#292929] placeholder:text-[#BFBFBF] py-2 pl-1 pr-2';
