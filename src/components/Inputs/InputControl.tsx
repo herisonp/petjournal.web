@@ -2,7 +2,7 @@ import { cn } from '@/utils/twmerge';
 
 interface InputControlProps {
   children: React.ReactNode;
-  className: string;
+  className?: string;
 }
 
 const InputControl = ({ children, className }: InputControlProps) => {
