@@ -6,7 +6,7 @@ const messageStyleBase =
 
 const messageVariants = {
   variant: {
-    error: `${messageStyleBase} text-red-300`,
+    error: `${messageStyleBase} text-red-400`,
     warning: `${messageStyleBase} text-gray-300`
   },
 };
