@@ -29,15 +29,17 @@ const logoVariants = {
 
 export interface LogoProps {
   scale?: keyof typeof logoVariants.scale;
+  className?: string;
 }
 
-export function Logo({ scale = 'default' }: LogoProps) {
+export function Logo({ scale = 'default', className }: LogoProps) {
   return (
     <Image
       src="/images/logo.svg"
       height={logoVariants.scale[scale].height}
       width={logoVariants.scale[scale].width}
       alt="Pet Journal Logo"
+      className={className}
     />
   );
 }
