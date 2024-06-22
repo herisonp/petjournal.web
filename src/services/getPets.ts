@@ -6,6 +6,7 @@ export async function getPets() {
   try {
     const res = await api('/pet', {
       next: {
+        tags: ['pets'],
         revalidate: 60 * 60 * 24, // 1 day in seconds
       },
     });
