@@ -1,16 +1,12 @@
 import Image from 'next/image';
 import { WaitingCodeForm } from './components/WaitingCodeForm';
 import { Suspense } from 'react';
+import { Logo } from '@/components/Logo';
 
 export default function WaitingCodePage() {
   return (
     <>
-      <Image
-        src="/images/logo.svg"
-        alt="Pet Journal Logo"
-        width={158}
-        height={158}
-      />
+      <Logo scale="lg" />
       <div className="flex flex-col justify-center gap-4">
         <h1 className="font-medium text-2xl text-center">
           Acabamos de enviar um código para seu e-mail
