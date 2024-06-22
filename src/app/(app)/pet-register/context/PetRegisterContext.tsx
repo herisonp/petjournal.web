@@ -36,9 +36,11 @@ export function PetRegisterContextProvider({
   const { pets } = useContext(PetsContext);
   const [breeds, setBreeds] = useState<Breed[] | null>(null);
   const [sizes, setSizes] = useState<Size[] | null>(null);
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(pets && pets.length > 0 ? 1 : 0);
+  const [firstPet, setFirstPet] = useState(
+    pets && pets.length > 0 ? false : true,
+  );
   const [maxStep, setMaxStep] = useState(4);
-  const [firstPet, setFirstPet] = useState(false);
   const [newPet, setNewPet] = useState<Pet['Insert']>({
     petName: '',
     size: '',
@@ -81,20 +83,10 @@ export function PetRegisterContextProvider({
       gender: '',
       specieName: '',
       breedName: '',
-      dateOfBirth: new Date(''),
+      dateOfBirth: '',
       castrated: false,
     });
   }
-
-  useEffect(() => {
-    if (pets) {
-      setFirstPet(false);
-      setStep(1);
-      return;
-    }
-    setStep(0);
-    setFirstPet(true);
-  }, [pets]);
 
   useEffect(() => {
     (async () => {

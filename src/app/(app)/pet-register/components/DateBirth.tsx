@@ -1,6 +1,7 @@
 'use client';
 import { Button } from '@/components/Button';
 import { ChangeEvent, useContext } from 'react';
+import { useRouter } from 'next/navigation';
 import { PetRegisterContext } from '../context/PetRegisterContext';
 import { usePetRegisterSteps } from './usePetRegisterSteps';
 import { InputControl } from '@/components/Inputs/InputControl';
@@ -11,6 +12,7 @@ export function DateBirth() {
   const { newPet } = useContext(PetRegisterContext);
   const { error, clickPreviousStep, setError, pet, setPet, sendNewPet } =
     usePetRegisterSteps();
+  const router = useRouter();
 
   async function handleClickNextStep() {
     setError(false);
@@ -18,10 +20,15 @@ export function DateBirth() {
       sendNewPet(null);
       return;
     }
-    await sendNewPet({
+
+    const res = await sendNewPet({
       ...newPet,
       dateOfBirth: new Date(pet.dateOfBirth),
     });
+
+    if (res) {
+      router.push('/pets');
+    }
   }
 
   function handleClickPreviousStep() {
