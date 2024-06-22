@@ -18,6 +18,7 @@ export type PetTypes = {
       gender: string;
       breedName: string;
       size: string;
+      dateOfBirth: Date | string;
       castrated: boolean;
     };
     Update: {};
@@ -32,11 +33,13 @@ export type Specie = {
 export type Breed = {
   id: string;
   name: string;
+  specieId?: string;
 };
 
 export type Size = {
   id: string;
   name: string;
+  specieId?: string;
 };
 
 export type Pet = PetTypes[Extract<keyof PetTypes, 'public'>];
