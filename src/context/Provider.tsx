@@ -1,6 +1,11 @@
 'use client';
 import { PetsContextProvider } from './PetsContext';
+import { UserContextProvider } from './UserContext';
 
 export function Provider({ children }: { children: React.ReactNode }) {
-  return <PetsContextProvider>{children}</PetsContextProvider>;
+  return (
+    <UserContextProvider>
+      <PetsContextProvider>{children}</PetsContextProvider>
+    </UserContextProvider>
+  );
 }
