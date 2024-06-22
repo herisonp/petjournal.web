@@ -2,20 +2,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FormEvent } from 'react';
 import { RegisterForm } from './components/RegisterForm';
+import { Logo } from '@/components/Logo';
 
 export default function RegisterPage() {
   function submitRegister(form: FormEvent<HTMLFormElement>) {}
 
   return (
     <>
-      <Image
-        className="w-28"
-        src="/images/logo.svg"
-        alt="Pet Journal Logo"
-        width={158}
-        height={158}
-        quality={100}
-      />
+      <Logo scale='md' />
       <h1 className="font-medium text-2xl">Inscreva-se</h1>
       <div className="w-full max-w-sm">
         <RegisterForm />
