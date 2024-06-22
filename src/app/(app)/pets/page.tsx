@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { species } from '@/utils/species';
-import { Suspense, useContext } from 'react';
+import { useContext } from 'react';
 import { PetsContext } from '@/context/PetsContext';
 
 export default function PetsPage() {
