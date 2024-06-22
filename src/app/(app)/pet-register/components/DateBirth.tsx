@@ -3,6 +3,9 @@ import { Button } from '@/components/Button';
 import { ChangeEvent, useContext } from 'react';
 import { PetRegisterContext } from '../context/PetRegisterContext';
 import { usePetRegisterSteps } from './usePetRegisterSteps';
+import { InputControl } from '@/components/Inputs/InputControl';
+import { Label } from '@/components/Label';
+import { Input } from '@/components/Inputs/Input';
 
 export function DateBirth() {
   const { newPet } = useContext(PetRegisterContext);
@@ -53,17 +56,22 @@ export function DateBirth() {
         </span>
       </p>
 
-      <div className="w-full">
-        <label className="flex flex-col gap-2">
-          <span>Data de nascimento</span>
-          <input
-            type="date"
-            name="dateOfBirth"
-            defaultValue={pet.dateOfBirth as string}
-            onChange={handleOnChangeDateOfBirth}
-          />
-        </label>
-      </div>
+      <InputControl className="w-full">
+        <Label variant="secondary" htmlFor="petName" className="text-base">
+          Data de nascimento
+        </Label>
+        <Input
+          type="date"
+          name="petName"
+          placeholder="Nome de seu Pet"
+          variant="secondary"
+          className="bg-white"
+          defaultValue={pet.dateOfBirth as string}
+          onChange={handleOnChangeDateOfBirth}
+          required
+        />
+        <span className="text-gray-400">*Campo obrigatório</span>
+      </InputControl>
 
       {error && (
         <span className="text-red-400 text-sm text-center">

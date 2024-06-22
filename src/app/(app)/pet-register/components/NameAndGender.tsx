@@ -7,6 +7,9 @@ import { ChangeEvent, useContext } from 'react';
 import { PetRegisterContext } from '../context/PetRegisterContext';
 import { usePetRegisterSteps } from './usePetRegisterSteps';
 import { species } from '@/utils/species';
+import { InputControl } from '@/components/Inputs/InputControl';
+import { Label } from '@/components/Label';
+import { Input } from '@/components/Inputs/Input';
 
 export function NameAndGender() {
   const { newPet } = useContext(PetRegisterContext);
@@ -57,19 +60,23 @@ export function NameAndGender() {
         comunidade!
       </h3>
 
-      <label className="flex flex-col gap-2 w-full">
-        <span>Qual nome de seu Pet?</span>
-        <input
+      <InputControl className="w-full">
+        <Label variant="secondary" htmlFor="petName" className="text-base">
+          Qual nome de seu Pet?
+        </Label>
+        <Input
           type="text"
           name="petName"
-          placeholder="Nome"
-          className="px-2 py-4 bg-white border border-gray-500 border-dashed rounded-xl focus:border-studio-600 focus:boder-dashed focus:border focus:outline-none"
+          placeholder="Nome de seu Pet"
+          variant="secondary"
+          className="bg-white"
           defaultValue={pet.petName}
           onChange={handleOnChangePetName}
           required
         />
         <span className="text-gray-400">*Campo obrigatório</span>
-      </label>
+      </InputControl>
+
       <div className="flex flex-col gap-2 w-full">
         <span className="text-center">Qual o sexo de seu Pet?</span>
         <ToggleGroup
