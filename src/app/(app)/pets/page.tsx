@@ -1,15 +1,16 @@
 'use client';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { species } from '@/utils/species';
 import { useContext } from 'react';
 import { PetsContext } from '@/context/PetsContext';
 
 export default function PetsPage() {
   const { pets } = useContext(PetsContext);
+  const router = useRouter();
 
   if (pets && pets.length <= 0) {
-    redirect('/pet-register');
+    router.push('/pet-register');
   }
 
   return (
