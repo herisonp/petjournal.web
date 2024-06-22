@@ -1,7 +1,6 @@
 'use client';
 import { IconMenuburger } from '@/components/icons/IconMenuburger';
 import * as MenubarRadix from '@radix-ui/react-menubar';
-import { LogOut } from 'lucide-react';
 import { LogoutButton } from './LogoutButton';
 
 export function Menubar() {
@@ -19,7 +18,7 @@ export function Menubar() {
             sideOffset={5}
             alignOffset={0}
           >
-            <MenubarRadix.Item asChild>
+            <MenubarRadix.Item>
               <LogoutButton />
             </MenubarRadix.Item>
           </MenubarRadix.Content>
