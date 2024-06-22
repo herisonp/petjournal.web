@@ -1,7 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { PetsContext } from '@/context/PetsContext';
-import { Pet } from '@/types/PetsTypes';
+import { Breed, Pet, Size } from '@/types/PetsTypes';
 import {
   Dispatch,
   SetStateAction,
@@ -10,6 +10,8 @@ import {
   useEffect,
   useState,
 } from 'react';
+import { getBreeds } from '@/services/getBreeds';
+import { getSizes } from '@/services/getSizes';
 
 interface PetRegisterContextProps {
   step: number;
@@ -18,6 +20,9 @@ interface PetRegisterContextProps {
   previousStep: () => void;
   setMaxStep: Dispatch<SetStateAction<number>>;
   incrementPetNewsValues: (pet: Pet['Insert']) => void;
+  resetPetNewsValues: () => void;
+  breeds: Breed[] | null;
+  sizes: Size[] | null;
 }
 
 export const PetRegisterContext = createContext({} as PetRegisterContextProps);
@@ -29,6 +34,8 @@ export function PetRegisterContextProvider({
 }) {
   const router = useRouter();
   const { pets } = useContext(PetsContext);
+  const [breeds, setBreeds] = useState<Breed[] | null>(null);
+  const [sizes, setSizes] = useState<Size[] | null>(null);
   const [step, setStep] = useState(0);
   const [maxStep, setMaxStep] = useState(4);
   const [firstPet, setFirstPet] = useState(false);
@@ -38,6 +45,7 @@ export function PetRegisterContextProvider({
     gender: '',
     specieName: '',
     breedName: '',
+    dateOfBirth: '',
     castrated: false,
   });
 
@@ -62,8 +70,20 @@ export function PetRegisterContextProvider({
   function incrementPetNewsValues(pet: Pet['Insert']) {
     setNewPet((state) => ({
       ...state,
-      pet,
+      ...pet,
     }));
+  }
+
+  function resetPetNewsValues() {
+    setNewPet({
+      petName: '',
+      size: '',
+      gender: '',
+      specieName: '',
+      breedName: '',
+      dateOfBirth: new Date(''),
+      castrated: false,
+    });
   }
 
   useEffect(() => {
@@ -76,6 +96,23 @@ export function PetRegisterContextProvider({
     setFirstPet(true);
   }, [pets]);
 
+  useEffect(() => {
+    (async () => {
+      if (!newPet.specieName) {
+        return;
+      }
+      const breedsData = await getBreeds(newPet.specieName);
+      const sizesData = await getSizes(newPet.specieName);
+      if (!breedsData || !sizesData) {
+        setBreeds(null);
+        setSizes(null);
+        return;
+      }
+      setBreeds(breedsData);
+      setSizes(sizesData);
+    })();
+  }, [newPet.specieName]);
+
   return (
     <PetRegisterContext.Provider
       value={{
@@ -85,6 +122,9 @@ export function PetRegisterContextProvider({
         previousStep,
         setMaxStep,
         incrementPetNewsValues,
+        resetPetNewsValues,
+        breeds,
+        sizes,
       }}
     >
       {children}

@@ -9,7 +9,7 @@ import { PetRegisterContext } from '../context/PetRegisterContext';
 
 export function PetRegister() {
   const { step, setMaxStep } = useContext(PetRegisterContext);
-  const [steps, setSteps] = useState([
+  const [stepsPage, setStepsPage] = useState([
     DefaultScreen,
     Specie,
     NameAndGender,
@@ -17,21 +17,20 @@ export function PetRegister() {
     DateBirth,
   ]);
 
-  const SelectedPage = steps[step];
+  const SelectedPage = stepsPage[step];
 
   useEffect(() => {
-    setMaxStep(steps.length - 1);
-  }, [steps, setMaxStep]);
+    setMaxStep(stepsPage.length - 1);
+  }, [stepsPage, setMaxStep]);
 
   return (
-    <div className="bg-gray-100 fixed inset-0 z-20 pb-16 w-full min-h-screen overflow-y-auto">
-      <div className="fixed w-full p-4 bg-gray-100 shadow">
+    <div className="bg-gray-100 px-4 pt-6 absolute inset-0 w-full h-fit min-h-screen">
+      <div className="fixed inset-0 h-fit w-full p-4 bg-gray-100 shadow">
         <h2 className="text-base text-custom-purple text-center">
           Cadastro Pet
         </h2>
       </div>
-
-      <section className="h-full pt-20 px-5 flex flex-col gap-8">
+      <section className="h-fit min-h-[90vh] pt-14 pb-16 flex flex-col items-center gap-8">
         <SelectedPage />
       </section>
     </div>
