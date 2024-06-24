@@ -1,8 +1,19 @@
+'use client';
+import { usePathname } from 'next/navigation';
 import { BottomTabItem } from './BottomTabItem';
 
+const pathsNotShow = ['/pet-register'];
+
 export function BottomTab() {
+  const pathname = usePathname();
+  const isShow = !pathsNotShow.includes(pathname);
+
+  if (!isShow) {
+    return <></>;
+  }
+
   return (
-    <div className="fixed bottom-0 left-0 bg-custom-purple w-full p-4">
+    <div className="fixed z-10 bottom-0 left-0 bg-custom-purple w-full p-4">
       <ul className="flex w-full justify-around">
         <li>
           <BottomTabItem label="Home" to="/" />
