@@ -6,16 +6,16 @@ import { cn } from '@/utils/twmerge';
 import { IconErrorCircle } from '../icons/IconErrorCircle';
 
 const inputStyleBase =
-  'flex w-full outline-0 text-[#292929] placeholder:text-[#BFBFBF] py-2 pl-1 pr-2';
+  'flex w-full outline-0 text-[#292929] transition-all placeholder:text-[#BFBFBF] py-2 pl-4 pr-2';
 
 const inputVariants = {
   variant: {
-    primary: `border border-[#1b1b1b] font-medium rounded-[5px]`,
-    secondary: `border-2 border-[#B2B2B2] border-dashed font-normal rounded-[12px]`,
+    primary: `border border-[#1b1b1b] font-medium rounded-[5px] focus-within:border-studio-500 focus-within:border-solid`,
+    secondary: `border-2 border-[#B2B2B2] border-dashed font-normal rounded-[12px] focus-within:border-studio-500 focus-within:border-solid`,
   },
   error: {
-    primary: `border border-red-300 font-medium rounded-[12px]`,
-    secondary: `border border-red-300 font-medium rounded-[12px]`,
+    primary: `border border-red-300`,
+    secondary: `border-2 border-red-300`,
   },
 };
 
@@ -43,7 +43,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       >
         <input
           type={showPassword && type === 'password' ? 'text' : type}
-          className="w-full outline-0"
+          className="w-full outline-0 bg-transparent"
           ref={ref}
           {...props}
         />
