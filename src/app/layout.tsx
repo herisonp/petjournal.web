@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Fredoka } from 'next/font/google';
 import '@/styles/globals.css';
+import { Provider } from '@/context/Provider';
 
 const fredoka = Fredoka({
   subsets: ['latin'],
@@ -19,7 +20,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
-      <body className={fredoka.className}>{children}</body>
+      <body className={`min-h-screen ${fredoka.className}`}>
+        <Provider>{children}</Provider>
+      </body>
     </html>
   );
 }

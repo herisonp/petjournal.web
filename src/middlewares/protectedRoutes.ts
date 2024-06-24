@@ -1,6 +1,6 @@
 export const protectedRoutes = [
   '/pets',
-  '/register-pet',
+  '/pet-register',
   '/tutor',
   '/change-password',
 ];

@@ -18,34 +18,43 @@ module.exports = {
           '0%,70%,100%': { opacity: '1' },
           '20%,50%': { opacity: '0' },
         },
+        'accordion-down': {
+          from: { height: '0' },
+          to: { height: 'var(--radix-accordion-content-height)' },
+        },
+        'accordion-up': {
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: '0' },
+        },
       },
       animation: {
         'caret-blink': 'caret-blink 1.25s ease-out infinite',
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
       },
-      backgroundColor: {
-        'custom-blue': '#8093F1',
-        'custom-cyan': '#AFD9DB',
-        'custom-pink': '#FFB8EB',
-        'custom-purple': '#9A0963',
-        'custom-purple-hover': '#6E0046',
-      },
-      textColor: {
-        'custom-purple': '#9A0963',
-        'custom-purple-hover': '#6E0046',
-        'custom-blue': '#54C1E9',
-      },
-      borderColor: {
-        'custom-purple': '#9A0963',
-        'custom-purple-hover': '#6E0046',
-      },
-      ringColor: {
-        'custom-purple': '#9A0963',
-        'custom-purple-hover': '#6E0046',
-      },
-      stroke: {
-        'custom-blue': '#54C1E9',
+      colors: {
+        custom: {
+          blue: '#8093F1',
+          cyan: '#AFD9DB',
+          pink: '#E06197',
+          purple: '#9A0963',
+          'purple-hover': '#6E0046',
+        },
+        studio: {
+          50: '#f9f7fc',
+          100: '#f3eef9',
+          200: '#e5dcf2',
+          300: '#d1c0e7',
+          400: '#b79bd7',
+          500: '#9772c3',
+          600: '#7c54a7',
+          700: '#664388',
+          800: '#553870',
+          900: '#49325d',
+          950: '#2a173b',
+        },
       },
     },
   },
-  plugins: [],
+  plugins: [require('tailwindcss-animate')],
 };
