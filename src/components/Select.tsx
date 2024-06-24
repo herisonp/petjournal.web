@@ -1,33 +1,35 @@
-"use client"
-
 import * as React from "react"
 import * as SelectPrimitive from "@radix-ui/react-select"
-
 import { ChevronDown } from "lucide-react"
-
+import { IconErrorCircle } from './icons/IconErrorCircle'
 import { cn } from "@/utils/twmerge"
 
+const SelectStyles = 'flex h-10 w-full items-center justify-between rounded-xl bg-white px-2 py-2 text-sm border'
+
 const Select = SelectPrimitive.Root
-
 const SelectGroup = SelectPrimitive.Group
-
 const SelectValue = SelectPrimitive.Value
+
+interface SelectTriggerProps extends React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger> {
+  error?: boolean;
+}
 
 const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
+  SelectTriggerProps
+>(({ className, error, children, ...props }, ref) => (
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      "flex h-10 w-full items-center justify-between rounded-xl border border-[#B2B2B2] bg-white border-dashed px-3 py-2 text-sm outline-none focus:border-[#B78AF7] focus:border-solid",
+      error ? `${SelectStyles} border-red-300 border-solid outline-none` 
+      : `${SelectStyles} border-[#B2B2B2] border-dashed outline-none focus:border-[#B78AF7] focus:border-solid`,
       className
     )}
     {...props}
   >
     {children}
     <SelectPrimitive.Icon asChild>
-      <ChevronDown className="h-4 w-4 text-[#2E2E2E]" />
+      {error ? <IconErrorCircle className="h-5 w-5 text-red-500" /> : <ChevronDown className="h-4 w-4 text-[#2E2E2E]" />}
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
 ))
