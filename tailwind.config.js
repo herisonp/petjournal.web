@@ -54,6 +54,9 @@ module.exports = {
           950: '#2a173b',
         },
       },
+      boxShadow: {
+        'custom-select': '0px 0px 4px 0px #8733FF33',
+      }
     },
   },
   plugins: [require('tailwindcss-animate')],
