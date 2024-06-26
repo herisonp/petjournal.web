@@ -44,7 +44,7 @@ export function Specie() {
 
   return (
     <>
-      <h3 className="text-xl font-medium text-left text-studio-600 w-full">
+      <h3 className="text-xl font-medium text-studio-600 w-full text-center">
         Olá, <span className="text-custom-pink">{user?.firstName}</span>,
         gostaríamos de saber qual a espécie do seu Pet:
       </h3>
