@@ -61,24 +61,27 @@ export function NameAndGender() {
       </h3>
 
       <InputControl className="w-full">
-        <Label variant="secondary" htmlFor="petName" className="text-base">
-          Qual nome de seu Pet?
-        </Label>
+        <span className="text-base text-center ">
+          Qual o nome do seu companheiro?
+        </span>
+        <label  htmlFor="petName" className="text-xs">
+          Nome:
+        </label>
         <Input
           type="text"
           name="petName"
           placeholder="Nome de seu Pet"
           variant="secondary"
-          className="bg-white"
+          className="bg-white placeholder:text-sm"
           defaultValue={pet.petName}
           onChange={handleOnChangePetName}
           required
         />
-        <span className="text-gray-400">*Campo obrigatório</span>
+        <span className="text-gray-400 text-xs">*Campo obrigatório</span>
       </InputControl>
 
-      <div className="flex flex-col gap-2 w-full">
-        <span className="text-center">Qual o sexo de seu Pet?</span>
+      <div className="flex flex-col gap-2 ">
+        <span className="text-center text-base">Qual o sexo de seu Pet?</span>
         <ToggleGroup
           type="single"
           defaultValue={pet.gender}
@@ -90,16 +93,17 @@ export function NameAndGender() {
             className="flex flex-col gap-1 w-[120px] h-[120px] p-5 border-2 border-dashed bg-white border-gray-400 rounded-2xl text-gray-700 hover:bg-white hover:border-studio-600 hover:text-gray-700 data-[state=on]:bg-white data-[state=on]:border-solid data-[state=on]:border-studio-600 data-[state=on]:text-gray-700"
           >
             <IconMale size={60} />
-            <span>Macho</span>
+            <span className='text-sm'>Macho</span>
           </ToggleGroupItem>
           <ToggleGroupItem
             value="F"
             className="flex flex-col gap-1 w-[120px] h-[120px] p-5 border-2 border-dashed bg-white border-gray-400 rounded-2xl text-gray-700 hover:bg-white hover:border-studio-600 hover:text-gray-700 data-[state=on]:bg-white data-[state=on]:border-solid data-[state=on]:border-studio-600 data-[state=on]:text-gray-700"
           >
             <IconFemale size={60} />
-            <span>Fêmea</span>
+            <span className='text-sm'>Fêmea</span>
           </ToggleGroupItem>
         </ToggleGroup>
+        <span className="text-gray-400 text-xs">*Campo obrigatório</span>
       </div>
 
       {error && (
