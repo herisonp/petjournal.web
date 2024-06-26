@@ -57,8 +57,8 @@ export function SizeAndBreed() {
         <div className="w-full flex flex-col gap-8">
           <label className="flex flex-col gap-1">
             <span>Porte</span>
-            <select defaultValue={pet.size || ''} onChange={handleOnChangeSize}>
-              <option value="">Selecione...</option>
+            <select defaultValue={pet.size || ''} onChange={handleOnChangeSize} className='flex w-full outline-0 text-[#292929] transition-all placeholder:text-[#BFBFBF] py-2 pl-4 pr-2 border-2 border-[#B2B2B2] border-dashed font-normal rounded-[12px] focus-within:border-studio-500 focus-within:border-solid'>
+              <option value="" disabled>Selecione...</option>
               {sizes.map((size) => (
                 <option key={size.id} value={size.name}>
                   {size.name}
@@ -72,8 +72,9 @@ export function SizeAndBreed() {
             <select
               defaultValue={pet.breedName || ''}
               onChange={handleOnChangeBreed}
+              className='flex w-full outline-0 text-[#292929] transition-all placeholder:text-[#BFBFBF] py-2 pl-4 pr-2 border-2 border-[#B2B2B2] border-dashed font-normal rounded-[12px] focus-within:border-studio-500 focus-within:border-solid'
             >
-              <option value="">Selecione...</option>
+              <option value="" disabled>Selecione...</option>
               {breeds.map((breed) => (
                 <option key={breed.id} value={breed.name}>
                   {breed.name}
