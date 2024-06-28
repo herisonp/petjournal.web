@@ -3,6 +3,15 @@ import { Button } from '@/components/Button';
 import { ChangeEvent, useContext, useEffect, useState } from 'react';
 import { PetRegisterContext } from '../context/PetRegisterContext';
 import { usePetRegisterSteps } from './usePetRegisterSteps';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/Select';
+import { ScrollArea } from '@/components/ScrollArea';
 
 export function SizeAndBreed() {
   const { newPet, breeds, sizes } = useContext(PetRegisterContext);
@@ -57,30 +66,42 @@ export function SizeAndBreed() {
         <div className="w-full flex flex-col gap-8">
           <label className="flex flex-col gap-1">
             <span>Porte</span>
-            <select defaultValue={pet.size || ''} onChange={handleOnChangeSize} className='flex w-full outline-0 text-[#292929] transition-all placeholder:text-[#BFBFBF] py-2 pl-4 pr-2 border-2 border-[#B2B2B2] border-dashed font-normal rounded-[12px] focus-within:border-studio-500 focus-within:border-solid'>
-              <option value="" disabled>Selecione...</option>
-              {sizes.map((size) => (
-                <option key={size.id} value={size.name}>
-                  {size.name}
-                </option>
-              ))}
-            </select>
+            <Select>
+              <SelectTrigger>
+                <SelectValue placeholder="Porte do seu pet" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <ScrollArea className="h-[150px] mr-1">
+                    {sizes.map((size) => (
+                      <SelectItem key={size.id} value={size.name}>
+                        {size.name}
+                      </SelectItem>
+                    ))}
+                  </ScrollArea>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </label>
 
           <label className="flex flex-col gap-1">
             <span>Raça</span>
-            <select
-              defaultValue={pet.breedName || ''}
-              onChange={handleOnChangeBreed}
-              className='flex w-full outline-0 text-[#292929] transition-all placeholder:text-[#BFBFBF] py-2 pl-4 pr-2 border-2 border-[#B2B2B2] border-dashed font-normal rounded-[12px] focus-within:border-studio-500 focus-within:border-solid'
-            >
-              <option value="" disabled>Selecione...</option>
-              {breeds.map((breed) => (
-                <option key={breed.id} value={breed.name}>
-                  {breed.name}
-                </option>
-              ))}
-            </select>
+            <Select>
+              <SelectTrigger>
+                <SelectValue placeholder="Porte do seu pet" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <ScrollArea className="h-[150px] mr-1">
+                    {breeds.map((breed) => (
+                      <SelectItem key={breed.id} value={breed.name}>
+                        {breed.name}
+                      </SelectItem>
+                    ))}
+                  </ScrollArea>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </label>
         </div>
       )}
