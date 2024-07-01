@@ -6,8 +6,13 @@ import { IconDog } from '@/components/icons/IconDog';
 import { useContext, useState } from 'react';
 import { PetRegisterContext } from '../context/PetRegisterContext';
 import { usePetRegisterSteps } from './usePetRegisterSteps';
+import { InputControl } from '@/components/Inputs/InputControl';
+import { Label } from '@/components/Label';
+import { Input } from '@/components/Inputs/Input';
+import Image from 'next/image';
 
 export function Specie() {
+  const [isOtherSpeciesOpen, setIsOtherSpeciesOpen] = useState<boolean>(false);
   const { newPet } = useContext(PetRegisterContext);
   const {
     error,
@@ -45,7 +50,7 @@ export function Specie() {
   return (
     <>
       <h3 className="text-xl font-medium text-studio-600 w-full text-center">
-        Olá, <span className="text-custom-pink">{user?.firstName}</span>,
+        Olá <span className="text-custom-pink">{user?.firstName}</span>,
         gostaríamos de saber qual a espécie do seu Pet:
       </h3>
       <ToggleGroup
@@ -74,6 +79,31 @@ export function Specie() {
         <span className="text-red-400 text-sm text-center">
           Selecione uma das espécies...
         </span>
+      )}
+
+      <Button
+        className="bg-custom-blue w-[200px]"
+        onClick={() => setIsOtherSpeciesOpen(!isOtherSpeciesOpen)}
+      >
+        Outros...
+      </Button>
+
+      {isOtherSpeciesOpen && (
+        <InputControl className="w-full">
+          <Label variant="primary" htmlFor="petName" className="text-base">
+            Insira a espécie:
+          </Label>
+          <Input
+            type="text"
+            name="petName"
+            placeholder="Digite aqui..."
+            variant="secondary"
+            className="bg-white border-solid"
+            defaultValue={pet.dateOfBirth as string}
+            required
+          />
+          <span className="text-gray-400 text-xs">*Campo obrigatório</span>
+        </InputControl>
       )}
 
       <div className="mt-auto w-full flex justify-around">
