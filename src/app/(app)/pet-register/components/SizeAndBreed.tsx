@@ -12,6 +12,7 @@ import {
   SelectValue,
 } from '@/components/Select';
 import { ScrollArea } from '@/components/ScrollArea';
+import Image from 'next/image';
 
 export function SizeAndBreed() {
   const { newPet, breeds, sizes } = useContext(PetRegisterContext);
@@ -63,7 +64,7 @@ export function SizeAndBreed() {
       </h3>
 
       {breeds && sizes && (
-        <div className="w-full flex flex-col gap-8">
+        <div className="w-full flex flex-col gap-8 z-20">
           <label className="flex flex-col gap-1">
             <span>Porte</span>
             <Select>
@@ -84,6 +85,7 @@ export function SizeAndBreed() {
             </Select>
           </label>
 
+          {/* TODO: Adicionar a opção de outros */}
           <label className="flex flex-col gap-1">
             <span>Raça</span>
             <Select>
@@ -105,6 +107,7 @@ export function SizeAndBreed() {
           </label>
         </div>
       )}
+      
 
       {!pet.specieName && (
         <div>
@@ -118,6 +121,23 @@ export function SizeAndBreed() {
           Selecione e preencha todas as informações
         </span>
       )}
+
+      <div className='flex justify-center h-[31vh]'>
+        <Image
+          src="./images/animals.svg"
+          height={245}
+          width={177}
+          alt="Pet Journal Logo"
+          className='absolute size-64 z-10'
+        />
+        <Image
+          src="./images/paws.svg"
+          height={578}
+          width={391}
+          alt="Pet Journal Logo"
+          className='absolute top-1/4'
+        />
+      </div>
 
       <div className="mt-auto w-full flex justify-around">
         <Button
