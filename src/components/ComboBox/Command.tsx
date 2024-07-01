@@ -3,7 +3,7 @@
 import * as React from "react"
 import { type DialogProps } from "@radix-ui/react-dialog"
 import { Command as CommandPrimitive } from "cmdk"
-import { Search } from "lucide-react"
+import { ChevronDown, Search } from "lucide-react"
 
 import { cn } from "@/utils/twmerge"
 import { Dialog, DialogContent } from "@/components/ComboBox/Dialog"
@@ -41,16 +41,16 @@ const CommandInput = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Input>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
 >(({ className, ...props }, ref) => (
-  <div className="flex items-center border-b px-3" cmdk-input-wrapper="">
-    <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
+  <div className="flex justify-between items-center">
     <CommandPrimitive.Input
       ref={ref}
       className={cn(
-        "flex h-11 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
+        "relative w-[327px] outline-0 text-[#2E2E2E] text-sm font-normal py-[9.5px] px-2 border border-[#B2B2B2] border-dashed rounded-xl",
         className
       )}
       {...props}
     />
+    <ChevronDown className="absolute right-2 ml-2 h-4 w-4 shrink-0 opacity-50" color="#2E2E2E"/>
   </div>
 ))
 

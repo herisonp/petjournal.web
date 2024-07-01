@@ -1,59 +1,67 @@
 "use client"
 
 import * as React from "react"
-import { Check, ChevronDown } from "lucide-react"
-
-import { cn } from "@/utils/twmerge"
-import { Command, CommandEmpty,CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ComboBox/Command"
+import { ChevronDown } from "lucide-react"
+import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from "@/components/ComboBox/Command"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ComboBox/Popover"
+import { ScrollArea } from "../ScrollArea"
+import { Input } from "../Inputs/Input"
 
 interface ComboBoxProps {
   placeholder: string;
-  items: {value: string; label: string;}[],
+  items: { value: string; label: string; }[],
 }
 
-export function ComboBox({placeholder, items}: ComboBoxProps) {
+export function ComboBox({ placeholder, items }: ComboBoxProps) {
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState("")
+  const [inputValue, setInputValue] = React.useState("")
+
+  const handleSelect = (currentValue: string) => {
+    setValue(currentValue === value ? "" : currentValue)
+    setInputValue(currentValue === value ? "" : items.find(item => item.value === currentValue)?.label || "")
+    setOpen(false)
+  }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value)
+  }
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <button
-          aria-expanded={open}
-          className="w-[327px] flex gap-2 justify-between items-center outline-0 text-[#2E2E2E] text-sm font-normal py-[9.5px] px-2 border border-[#B2B2B2] border-dashed rounded-xl"
-        >
-          {value
-            ? items.find((item) => item.value === value)?.label
-            : `${placeholder}`}
-          <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" color="#2E2E2E"/>
-        </button>
+        <div className="w-full max-w-[327px] flex relative justify-between items-center">
+          <Input
+            type="text"
+            variant="secondary"
+            aria-expanded={open}
+            value={inputValue}
+            onChange={handleInputChange}
+            placeholder={placeholder}
+            className="rounded-2xl text-sm"
+            onClick={() => setOpen(true)}
+          />
+          <ChevronDown className="absolute right-2" size={18} color="#2E2E2E"/>
+        </div>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent className="w-[327px] p-0">
         <Command>
-          <CommandInput placeholder="Search framework..." />
           <CommandList>
-            <CommandEmpty>No framework found.</CommandEmpty>
-            <CommandGroup>
-              {items.map((item) => (
-                <CommandItem
-                  key={item.value}
-                  value={item.value}
-                  onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue)
-                    setOpen(false)
-                  }}
-                >
-                  <Check
-                    className={cn(
-                      "mr-2 h-4 w-4",
-                      value === item.value ? "opacity-100" : "opacity-0"
-                    )}
-                  />
-                  {item.label}
-                </CommandItem>
-              ))}
-            </CommandGroup>
+            <CommandEmpty>Não encontrado.</CommandEmpty>
+            <ScrollArea className="h-[150px] mr-2">
+              <CommandGroup>
+                {items.filter(item => item.label.toLowerCase().includes(inputValue.toLowerCase())).map((item) => (
+                  <CommandItem
+                    key={item.value}
+                    value={item.value}
+                    onSelect={handleSelect}
+                    className="px-3"
+                  >
+                    {item.label}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </ScrollArea>
           </CommandList>
         </Command>
       </PopoverContent>
