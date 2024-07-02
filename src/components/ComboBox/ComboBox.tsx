@@ -9,17 +9,15 @@ import { Input } from "../Inputs/Input"
 
 interface ComboBoxProps {
   placeholder: string;
-  items: { value: string; label: string; }[],
+  items: { id: string; name: string; }[];
 }
 
 export function ComboBox({ placeholder, items }: ComboBoxProps) {
   const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState("")
   const [inputValue, setInputValue] = React.useState("")
 
   const handleSelect = (currentValue: string) => {
-    setValue(currentValue === value ? "" : currentValue)
-    setInputValue(currentValue === value ? "" : items.find(item => item.value === currentValue)?.label || "")
+    setInputValue(items.find(item => item.name === currentValue)?.name || "")
     setOpen(false)
   }
 
@@ -29,8 +27,8 @@ export function ComboBox({ placeholder, items }: ComboBoxProps) {
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <div className="w-full max-w-[327px] flex relative justify-between items-center">
+      <PopoverTrigger asChild className="w-full max-w-[327px]">
+        <div className="flex relative justify-between items-center">
           <Input
             type="text"
             variant="secondary"
@@ -38,26 +36,25 @@ export function ComboBox({ placeholder, items }: ComboBoxProps) {
             value={inputValue}
             onChange={handleInputChange}
             placeholder={placeholder}
-            className="rounded-2xl text-sm"
-            onClick={() => setOpen(true)}
+            className={`rounded-2xl text-sm ${open ? "border-solid border border-[#B78AF7] shadow-custom-select" : ""}`}
           />
           <ChevronDown className="absolute right-2" size={18} color="#2E2E2E"/>
         </div>
       </PopoverTrigger>
-      <PopoverContent className="w-[327px] p-0">
+      <PopoverContent>
         <Command>
           <CommandList>
             <CommandEmpty>Não encontrado.</CommandEmpty>
-            <ScrollArea className="h-[150px] mr-2">
+            <ScrollArea className="h-[150px]">
               <CommandGroup>
-                {items.filter(item => item.label.toLowerCase().includes(inputValue.toLowerCase())).map((item) => (
+                {items.filter(item => item.name.toLowerCase().includes(inputValue.toLowerCase())).map((item) => (
                   <CommandItem
                     key={item.value}
                     value={item.value}
                     onSelect={handleSelect}
-                    className="px-3"
+                    className="pl-1"
                   >
-                    {item.label}
+                    {item.name}
                   </CommandItem>
                 ))}
               </CommandGroup>
