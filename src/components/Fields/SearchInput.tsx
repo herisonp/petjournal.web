@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Breed } from '@/types/PetsTypes';
 import * as Ariakit from '@ariakit/react';
 import { ScrollArea } from '../ScrollArea';
 import { CheckIcon, ChevronDown } from 'lucide-react';
@@ -9,8 +8,8 @@ import { IconErrorCircle } from '../icons/IconErrorCircle';
 import { cn } from '@/utils/twmerge';
 
 interface SearchInputProps {
-  placeholder: string;
   items: SearchInputItems[];
+  placeholder?: string;
   className?: string;
   error?: boolean;
   onChange?: (value: string) => void;
