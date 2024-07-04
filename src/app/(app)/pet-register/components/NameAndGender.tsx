@@ -7,9 +7,9 @@ import { ChangeEvent, useContext } from 'react';
 import { PetRegisterContext } from '../context/PetRegisterContext';
 import { usePetRegisterSteps } from './usePetRegisterSteps';
 import { species } from '@/utils/species';
-import { InputControl } from '@/components/Inputs/InputControl';
+import { InputControl } from '@/components/Fields/InputControl';
 import { Label } from '@/components/Label';
-import { Input } from '@/components/Inputs/Input';
+import { Input } from '@/components/Fields/Input';
 
 export function NameAndGender() {
   const { newPet } = useContext(PetRegisterContext);
