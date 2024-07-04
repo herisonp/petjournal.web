@@ -1,6 +1,6 @@
 'use client';
 import { Button } from '@/components/Button';
-import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/Inputs/InputOPT';
+import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/Fields/InputOPT';
 import { submitWaitingCode } from '@/services/submitWaitingCode';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
