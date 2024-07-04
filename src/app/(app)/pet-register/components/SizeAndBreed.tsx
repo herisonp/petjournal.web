@@ -36,9 +36,8 @@ export function SizeAndBreed() {
     clickPreviousStep();
   }
 
-  function handleOnChangeSize(evt: ChangeEvent<HTMLSelectElement>) {
+  function handleOnChangeSize(value: string) {
     setError(false);
-    const { value } = evt.target;
 
     setPet((state) => ({
       ...state,
@@ -46,9 +45,8 @@ export function SizeAndBreed() {
     }));
   }
 
-  function handleOnChangeBreed(evt: ChangeEvent<HTMLSelectElement>) {
+  function handleOnChangeBreed(value: string) {
     setError(false);
-    const { value } = evt.target;
 
     setPet((state) => ({
       ...state,
@@ -67,7 +65,7 @@ export function SizeAndBreed() {
         <div className="w-full flex flex-col gap-8 z-20">
           <label className="flex flex-col gap-1">
             <span>Porte</span>
-            <Select>
+            <Select onValueChange={handleOnChangeSize}>
               <SelectTrigger>
                 <SelectValue placeholder="Porte do seu pet" />
               </SelectTrigger>
@@ -88,7 +86,7 @@ export function SizeAndBreed() {
           {/* TODO: Adicionar a opção de outros */}
           <label className="flex flex-col gap-1">
             <span>Raça</span>
-            <Select>
+            <Select onValueChange={handleOnChangeBreed}>
               <SelectTrigger>
                 <SelectValue placeholder="Porte do seu pet" />
               </SelectTrigger>
@@ -107,7 +105,6 @@ export function SizeAndBreed() {
           </label>
         </div>
       )}
-      
 
       {!pet.specieName && (
         <div>
@@ -122,24 +119,24 @@ export function SizeAndBreed() {
         </span>
       )}
 
-      <div className='flex justify-center h-[31vh]'>
+      <div className="flex justify-center h-[31vh]">
         <Image
           src="./images/animals.svg"
           height={245}
           width={177}
           alt="Pet Journal Logo"
-          className='absolute size-64 z-10'
+          className="absolute size-64 z-10"
         />
         <Image
           src="./images/paws.svg"
           height={578}
           width={391}
           alt="Pet Journal Logo"
-          className='absolute top-1/4'
+          className="absolute top-1/4"
         />
       </div>
 
-      <div className="mt-auto w-full flex justify-around">
+      <div className="mt-auto w-full flex justify-around z-40">
         <Button
           variant="outline"
           className="border-custom-purple text-custom-purple"
