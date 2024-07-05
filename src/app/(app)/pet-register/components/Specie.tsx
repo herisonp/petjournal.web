@@ -6,9 +6,13 @@ import { IconDog } from '@/components/icons/IconDog';
 import { useContext, useState } from 'react';
 import { PetRegisterContext } from '../context/PetRegisterContext';
 import { usePetRegisterSteps } from './usePetRegisterSteps';
-import { InputControl } from '@/components/Inputs/InputControl';
-import { Label } from '@/components/Label';
-import { Input } from '@/components/Inputs/Input';
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+} from '@/components/Breadcrump';
+import { Home } from 'lucide-react';
 import Image from 'next/image';
 
 export function Specie() {
@@ -48,6 +52,17 @@ export function Specie() {
 
   return (
     <>
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/">
+              <div className="flex items-center gap-2">
+              <Image src="/images/home-active.svg" height={15} width={13} alt='Home Icon' /> Cadastro Pet
+              </div>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
       <h3 className="text-xl font-medium text-studio-600 w-full text-center">
         Olá <span className="text-custom-pink">{user?.firstName}</span>,
         gostaríamos de saber qual a espécie do seu Pet:
