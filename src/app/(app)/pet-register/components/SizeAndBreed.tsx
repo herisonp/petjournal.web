@@ -3,6 +3,16 @@ import { Button } from '@/components/Button';
 import { ChangeEvent, useContext, useEffect, useState } from 'react';
 import { PetRegisterContext } from '../context/PetRegisterContext';
 import { usePetRegisterSteps } from './usePetRegisterSteps';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/Select';
+import { ScrollArea } from '@/components/ScrollArea';
+import Image from 'next/image';
 
 export function SizeAndBreed() {
   const { newPet, breeds, sizes } = useContext(PetRegisterContext);
@@ -26,9 +36,8 @@ export function SizeAndBreed() {
     clickPreviousStep();
   }
 
-  function handleOnChangeSize(evt: ChangeEvent<HTMLSelectElement>) {
+  function handleOnChangeSize(value: string) {
     setError(false);
-    const { value } = evt.target;
 
     setPet((state) => ({
       ...state,
@@ -36,9 +45,8 @@ export function SizeAndBreed() {
     }));
   }
 
-  function handleOnChangeBreed(evt: ChangeEvent<HTMLSelectElement>) {
+  function handleOnChangeBreed(value: string) {
     setError(false);
-    const { value } = evt.target;
 
     setPet((state) => ({
       ...state,
@@ -54,32 +62,46 @@ export function SizeAndBreed() {
       </h3>
 
       {breeds && sizes && (
-        <div className="w-full flex flex-col gap-8">
+        <div className="w-full flex flex-col gap-8 z-20">
           <label className="flex flex-col gap-1">
             <span>Porte</span>
-            <select defaultValue={pet.size || ''} onChange={handleOnChangeSize}>
-              <option value="">Selecione...</option>
-              {sizes.map((size) => (
-                <option key={size.id} value={size.name}>
-                  {size.name}
-                </option>
-              ))}
-            </select>
+            <Select onValueChange={handleOnChangeSize}>
+              <SelectTrigger>
+                <SelectValue placeholder="Porte do seu pet" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <ScrollArea className="h-[150px] mr-1">
+                    {sizes.map((size) => (
+                      <SelectItem key={size.id} value={size.name}>
+                        {size.name}
+                      </SelectItem>
+                    ))}
+                  </ScrollArea>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </label>
 
+          {/* TODO: Adicionar a opção de outros */}
           <label className="flex flex-col gap-1">
             <span>Raça</span>
-            <select
-              defaultValue={pet.breedName || ''}
-              onChange={handleOnChangeBreed}
-            >
-              <option value="">Selecione...</option>
-              {breeds.map((breed) => (
-                <option key={breed.id} value={breed.name}>
-                  {breed.name}
-                </option>
-              ))}
-            </select>
+            <Select onValueChange={handleOnChangeBreed}>
+              <SelectTrigger>
+                <SelectValue placeholder="Porte do seu pet" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <ScrollArea className="h-[150px] mr-1">
+                    {breeds.map((breed) => (
+                      <SelectItem key={breed.id} value={breed.name}>
+                        {breed.name}
+                      </SelectItem>
+                    ))}
+                  </ScrollArea>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </label>
         </div>
       )}
@@ -97,7 +119,24 @@ export function SizeAndBreed() {
         </span>
       )}
 
-      <div className="mt-auto w-full flex justify-around">
+      <div className="flex justify-center h-[31vh]">
+        <Image
+          src="./images/animals.svg"
+          height={245}
+          width={177}
+          alt="Pet Journal Logo"
+          className="absolute size-64 z-10"
+        />
+        <Image
+          src="./images/paws.svg"
+          height={578}
+          width={391}
+          alt="Pet Journal Logo"
+          className="absolute top-1/4"
+        />
+      </div>
+
+      <div className="mt-auto w-full flex justify-around z-40">
         <Button
           variant="outline"
           className="border-custom-purple text-custom-purple"
