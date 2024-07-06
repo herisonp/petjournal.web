@@ -1,17 +1,20 @@
 'use client';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useContext, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import toggleShowPassword from '/public/images/show-password.svg';
 import { submitLogin } from '@/services/submitLogin';
 import { Button } from '@/components/Button';
+import { getSession } from '@/services/getSession';
+import { UserContext } from '@/context/UserContext';
 
 export function LoginForm() {
   const router = useRouter();
   const [remember, setRemember] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { setUser } = useContext(UserContext);
 
   const isButtonDisabled = !!loading;
 
@@ -29,12 +32,21 @@ export function LoginForm() {
       };
 
       const { error } = await submitLogin(loginData);
-      if (error) throw error;
+      if (error) throw new Error(error);
+
+      const { session } = await getSession();
+      if (!session) {
+        throw new Error('Usuário não autenticado...');
+      }
+
+      const { user } = session;
+
+      setUser(user);
 
       router.push('/');
     } catch (error) {
-      // TODO: criar mensagens de erro
-      alert(error);
+      const err = error as Error;
+      alert(err.message);
     } finally {
       setLoading(false);
     }
@@ -66,7 +78,7 @@ export function LoginForm() {
             name="password"
           />
           <Button
-            variant='ghost'
+            variant="ghost"
             type="button"
             onClick={() => setShowPassword((prev) => !prev)}
             className="px-1"
@@ -101,11 +113,7 @@ export function LoginForm() {
         </Link>
       </div>
 
-      <Button
-        className='mt-16'
-        type="submit"
-        disabled={isButtonDisabled}
-      >
+      <Button className="mt-16" type="submit" disabled={isButtonDisabled}>
         {loading ? 'Enviando...' : 'Continuar'}
       </Button>
     </form>
