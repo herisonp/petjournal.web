@@ -1,7 +1,8 @@
 'use client';
 import { getPets } from '@/services/getPets';
 import { Pet } from '@/types/PetsTypes';
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { UserContext } from './UserContext';
 
 interface PetsContextProps {
   pets: Pet['View'][] | null;
@@ -17,6 +18,7 @@ export function PetsContextProvider({
   children: React.ReactNode;
 }) {
   const [pets, setPets] = useState<Pet['View'][] | null>(null);
+  const { user } = useContext(UserContext);
 
   function submitNewPet(pet: Pet['View']) {
     setPets((state) => {
@@ -40,13 +42,13 @@ export function PetsContextProvider({
   useEffect(() => {
     (async () => {
       const data = await getPets();
-      if (!data) {
+      if (!user || !data) {
         setPets(null);
         return;
       }
       setPets(data);
     })();
-  }, []);
+  }, [user]);
 
   return (
     <PetsContext.Provider
