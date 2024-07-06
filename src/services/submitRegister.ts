@@ -23,7 +23,10 @@ export async function submitRegister(user: submitRegisterProps) {
     });
     const data = await res.json();
     const error = data.error || null;
-    if (error) throw new Error(error);
+    if (error)
+      throw new Error(
+        error || 'Ocorreu um erro ao fazer o registro. Tente novamente',
+      );
     return {
       data,
     };
