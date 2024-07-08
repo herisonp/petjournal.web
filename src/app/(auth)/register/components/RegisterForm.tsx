@@ -2,7 +2,7 @@
 import { FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { submitLogin } from '@/services/submitLogin';
-import { submitRegister } from '../submitRegister';
+import { submitRegister } from '@/services/submitRegister';
 import { Button } from '@/components/Button';
 
 export function RegisterForm() {
@@ -26,7 +26,7 @@ export function RegisterForm() {
       };
 
       const { error: errorRegister, data } = await submitRegister(newUser);
-      if (errorRegister) throw errorRegister;
+      if (errorRegister) throw new Error(errorRegister);
 
       const { error: errorLogin } = await submitLogin({
         email: data.email,
@@ -36,7 +36,8 @@ export function RegisterForm() {
 
       router.push('/');
     } catch (error) {
-      alert(error);
+      const err = error as Error;
+      alert(err.message);
     } finally {
       setIsLoading(false);
     }
@@ -130,11 +131,7 @@ export function RegisterForm() {
         )}
         <span>Eu concordo com a politica de privacidade</span>
       </label>
-      <Button
-        className='mt-16'
-        type="submit"
-        disabled={!!isLoading}
-      >
+      <Button className="mt-16" type="submit" disabled={!!isLoading}>
         {isLoading ? 'Enviando...' : 'Continuar'}
       </Button>
     </form>

@@ -9,8 +9,13 @@ export default function PetsPage() {
   const { pets } = useContext(PetsContext);
   const router = useRouter();
 
-  if (pets && pets.length <= 0) {
+  if (!pets || pets.length <= 0) {
     router.push('/pet-register');
+    return (
+      <>
+        <span></span>
+      </>
+    );
   }
 
   return (
