@@ -1,30 +1,59 @@
 'use client';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import toggleShowPassword from '/public/images/show-password.svg';
 import Image from 'next/image';
+import { Button } from '@/components/Button';
+import { submitChangePassword } from '@/services/submitChangePassword';
 
 export function ChangePasswordForm() {
-  const [accountAccess, setAccountAccess] = useState(false);
+  const router = useRouter();
+  const [accountAccess, setAccountAccess] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState<Record<string, boolean>>({
+    password: false,
+    passwordConfirmation: false,
+  });
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  async function handleNewPasswordSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    try {
+      setLoading(true);
+      const formData = new FormData(event.currentTarget);
 
-  const { push } = useRouter();
+      // TODO: validar dados do formulário
+      const newPasswordData = {
+        password: formData.get('password') as string,
+        passwordConfirmation: formData.get('passwordConfirmation') as string,
+      };
+
+      const { error } = await submitChangePassword(newPasswordData);
+
+      if (error) throw error;
+
+      router.push('/');
+    } catch (error) {
+      // TODO: criar mensagens de erro
+      alert(error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
-    <form className="max-w-lg flex flex-col gap-6">
+    <form onSubmit={handleNewPasswordSubmit} className="max-w-lg flex flex-col gap-6">
       <label>
         <div className="text-custom-purple text-sm font-medium">Nova senha</div>
         <div className="border border-[#1b1b1b] rounded-[5px] flex py-2 px-1">
           <input
-            type={showPassword ? 'text' : 'password'}
+            type={showPassword.password ? 'text' : 'password'}
             className="w-full outline-0 text-[#292929] font-medium placeholder:text-[#BFBFBF]"
             placeholder="Digite sua nova senha"
+            name="password"
           />
           <button
             type="button"
-            onClick={() => setShowPassword((prev) => !prev)}
+            onClick={() => setShowPassword({...showPassword, password: !showPassword.password })}
             className="px-1"
           >
             <Image
@@ -46,13 +75,14 @@ export function ChangePasswordForm() {
         </div>
         <div className="border border-[#1b1b1b] rounded-[5px] flex py-2 px-1">
           <input
-            type={showPassword ? 'text' : 'password'}
+            type={showPassword.passwordConfirmation ? 'text' : 'password'}
             className="w-full outline-0 text-[#292929] font-medium placeholder:text-[#BFBFBF]"
             placeholder="Confirme sua senha"
+            name="passwordConfirmation"
           />
           <button
             type="button"
-            onClick={() => setShowPassword((prev) => !prev)}
+            onClick={() => setShowPassword({...showPassword, passwordConfirmation: !showPassword.passwordConfirmation })}
             className="px-1"
           >
             <Image
@@ -81,16 +111,13 @@ export function ChangePasswordForm() {
         </label>
       </div>
 
-      <button
+      <Button
         type="submit"
-        className={`bg-gray-300 py-2 w-full rounded-full`}
-        // ${
-        //   isButtonDisabled && 'text-gray-400 bg-gray-200'
-        // }`}
-        // disabled={isButtonDisabled}
+        className={`w-full`}
+        disabled={!!loading}
       >
         Redefinir senha
-      </button>
+      </Button>
     </form>
   );
 }
