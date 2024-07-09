@@ -1,7 +1,6 @@
 'use server';
-import { api } from './api';
-import { User } from '@/types/userType';
 import { getToken } from './getToken';
+import { getUser } from './getUser';
 
 export async function getSession() {
   try {
@@ -11,16 +10,12 @@ export async function getSession() {
       throw 'Nenhum usuário autenticado...';
     }
 
-    const res = await api('/guardian/name', {
-      cache: 'no-store',
-    });
+    const { error, user } = await getUser();
 
-    const { error, firstName, lastName } = await res.json();
-    if (error) throw 'Token de acesso expirado ou inválido...';
-    const user: User = {
-      firstName,
-      lastName,
-    };
+    if (error || !user) {
+      throw new Error(error || 'Token inválido ou expirado...');
+    }
+
     const session = {
       accessToken,
       user,
@@ -29,9 +24,10 @@ export async function getSession() {
       session,
     };
   } catch (error) {
+    const err = error as Error;
     console.log('getSession', error);
     return {
-      error,
+      error: err.message,
     };
   }
 }
