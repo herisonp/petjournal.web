@@ -6,10 +6,6 @@ import { IconDog } from '@/components/icons/IconDog';
 import { useContext, useState } from 'react';
 import { PetRegisterContext } from '../context/PetRegisterContext';
 import { usePetRegisterSteps } from './usePetRegisterSteps';
-import { InputControl } from '@/components/Inputs/InputControl';
-import { Label } from '@/components/Label';
-import { Input } from '@/components/Inputs/Input';
-import Image from 'next/image';
 
 export function Specie() {
   const { newPet } = useContext(PetRegisterContext);
