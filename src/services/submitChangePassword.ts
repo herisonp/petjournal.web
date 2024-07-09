@@ -9,6 +9,9 @@ export async function submitChangePassword({
   passwordConfirmation: string;
 }) {
   try {
+    if (password !== passwordConfirmation) {
+      throw new Error('Senhas digitadas não coincidem');
+    }
     const res = await api('/guardian/change-password', {
       body: JSON.stringify({
         password,
@@ -28,7 +31,7 @@ export async function submitChangePassword({
     };
   } catch (err) {
     const error = err as Error;
-    console.error('submitForgetPassword', error);
+    console.error('submitChangePassword', error);
     return {
       error: error.message,
     };

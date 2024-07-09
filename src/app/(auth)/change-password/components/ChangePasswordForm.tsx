@@ -16,7 +16,7 @@ export function ChangePasswordForm() {
   });
 
   async function handleNewPasswordSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
+    event.preventDefault();
     try {
       setLoading(true);
       const formData = new FormData(event.currentTarget);
@@ -41,7 +41,10 @@ export function ChangePasswordForm() {
   }
 
   return (
-    <form onSubmit={handleNewPasswordSubmit} className="max-w-lg flex flex-col gap-6">
+    <form
+      onSubmit={handleNewPasswordSubmit}
+      className="max-w-lg flex flex-col gap-6"
+    >
       <label>
         <div className="text-custom-purple text-sm font-medium">Nova senha</div>
         <div className="border border-[#1b1b1b] rounded-[5px] flex py-2 px-1">
@@ -53,7 +56,12 @@ export function ChangePasswordForm() {
           />
           <button
             type="button"
-            onClick={() => setShowPassword({...showPassword, password: !showPassword.password })}
+            onClick={() =>
+              setShowPassword({
+                ...showPassword,
+                password: !showPassword.password,
+              })
+            }
             className="px-1"
           >
             <Image
@@ -82,7 +90,12 @@ export function ChangePasswordForm() {
           />
           <button
             type="button"
-            onClick={() => setShowPassword({...showPassword, passwordConfirmation: !showPassword.passwordConfirmation })}
+            onClick={() =>
+              setShowPassword({
+                ...showPassword,
+                passwordConfirmation: !showPassword.passwordConfirmation,
+              })
+            }
             className="px-1"
           >
             <Image
@@ -111,11 +124,7 @@ export function ChangePasswordForm() {
         </label>
       </div>
 
-      <Button
-        type="submit"
-        className={`w-full`}
-        disabled={!!loading}
-      >
+      <Button type="submit" className={`w-full`} disabled={!!loading}>
         Redefinir senha
       </Button>
     </form>
