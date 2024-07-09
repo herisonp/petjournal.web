@@ -1,10 +1,15 @@
 'use client';
 import { Button } from '@/components/Button';
-import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/Inputs/InputOPT';
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from '@/components/Fields/InputOPT';
+import { submitForgetPassword } from '@/services/submitForgetPassword';
 import { submitWaitingCode } from '@/services/submitWaitingCode';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { FormEvent, useMemo, useState } from 'react';
+import { FormEvent, useState } from 'react';
 
 export function WaitingCodeForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -33,6 +38,22 @@ export function WaitingCodeForm() {
     }
   }
 
+  async function handleResendCode() {
+    try {
+      setIsLoading(true);
+      if (!email) {
+        return;
+      }
+      const { error } = await submitForgetPassword({ email });
+      if (error) throw error;
+      alert(`Novo código enviado ao ${email}`);
+    } catch (error) {
+      alert(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   return (
     <form onSubmit={handleSubmitCode} className="flex flex-col gap-4">
       <div className="flex justify-center overflow-hidden">
@@ -52,15 +73,17 @@ export function WaitingCodeForm() {
           </InputOTPGroup>
         </InputOTP>
       </div>
-      <Link href="/forget-password" className="underline">
-        Reenviar código?
-      </Link>
-
       <Button
-        className="mt-4"
-        type="submit"
+        onClick={handleResendCode}
+        variant="ghost"
+        className="underline self-start"
+        type="button"
         disabled={isLoading}
       >
+        Reenviar código?
+      </Button>
+
+      <Button className="mt-4" type="submit" disabled={isLoading}>
         {isLoading ? 'Enviando...' : 'Enviar'}
       </Button>
       <p className="text-center">

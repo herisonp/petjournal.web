@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { WaitingCodeForm } from './components/WaitingCodeForm';
 import { Suspense } from 'react';
 import { Logo } from '@/components/Logo';
