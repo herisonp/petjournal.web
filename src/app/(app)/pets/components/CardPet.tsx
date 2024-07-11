@@ -68,7 +68,9 @@ export function CardPet({ pet }: CardPetType) {
       </div>
 
       <div className='ml-auto mr-2 flex flex-col mt-4 gap-4'>
-        <Image src={iconClose} alt="alt" onClick={() => submitDeletePet(pet)}/>
+        <button type="button" aria-label="Excluir Pet">
+          <Image src={iconClose} alt="Ícone de X" onClick={() => submitDeletePet(pet)}/>
+        </button>
         <IconArrow size={14} />
       </div>
     </li>
