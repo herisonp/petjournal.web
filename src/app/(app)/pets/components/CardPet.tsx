@@ -18,8 +18,7 @@ export function CardPet({ pet }: CardPetType) {
   const { submitDeletePet } = useContext(PetsContext)
 
   return (
-    <li 
-      key={pet.id}
+    <li
       className={`border-[1.5px] rounded-2xl rounded-br-none flex items-center gap-3 h-24 mx-2 px-2 ${pet.gender === 'M' ? 'border-blue-300' : 'border-pink-300'}`}
     >
       {/* <Image className='rounded-full w-16 h-16 object-cover' src={Dog} alt='dog' /> */}
