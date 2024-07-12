@@ -3,9 +3,6 @@ import { useRouter } from 'next/navigation';
 import { useContext, useEffect } from 'react';
 import { PetsContext } from '@/context/PetsContext';
 
-import PetIcon from '@/assets/svg/petIcon.svg';
-import MyPets from '@/assets/svg/MyPets.svg';
-
 import Image from 'next/image';
 import { AddPet } from './components/AddPet';
 import { CardPet } from './components/CardPet';
