@@ -7,6 +7,15 @@ import { usePetRegisterSteps } from './usePetRegisterSteps';
 import { InputControl } from '@/components/Fields/InputControl';
 import { Label } from '@/components/Label';
 import { Input } from '@/components/Fields/Input';
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+} from '@/components/Breadcrump';
+import { Home } from 'lucide-react';
+import Image from 'next/image';
 
 export function DateBirth() {
   const { newPet } = useContext(PetRegisterContext);
@@ -48,6 +57,29 @@ export function DateBirth() {
 
   return (
     <>
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/">
+              <div className="flex items-center gap-2">
+              <Image src="/images/home.svg" height={15} width={13} alt='Home Icon' /> Cadastro Pet
+              </div>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/">Raça</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/">Porte</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/">Nascimento</BreadcrumbLink>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
       <h3 className="text-xl font-medium text-left text-studio-600 w-full">
         Qual a data de nascimento de {pet.petName}?
       </h3>
