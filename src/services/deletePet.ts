@@ -6,10 +6,18 @@ export async function deletePet(petId: string) {
     const res = await api(`/pet/${petId}`, {
       method: 'DELETE',
     });
-    if (!res.ok) return null
     const data = await res.json();
+    const error = data.error || null;
+    if (error || !data)
+      throw new Error(
+        error || 'Ocorreu um erro ao deletar o pet. Tente novamente',
+      );
     return data;
   } catch (error) {
+    const err = error as Error;
     console.log('deletePet', error);
+    return {
+      error: err.message,
+    };
   }
 }
