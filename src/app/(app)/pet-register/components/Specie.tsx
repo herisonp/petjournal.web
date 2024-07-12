@@ -6,6 +6,7 @@ import { IconDog } from '@/components/icons/IconDog';
 import { useContext, useState } from 'react';
 import { PetRegisterContext } from '../context/PetRegisterContext';
 import { usePetRegisterSteps } from './usePetRegisterSteps';
+
 import {
   Breadcrumb,
   BreadcrumbList,
