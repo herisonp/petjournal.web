@@ -9,6 +9,8 @@ import MyPets from '@/assets/svg/MyPets.svg';
 import Image from 'next/image';
 import { AddPet } from './components/AddPet';
 import { CardPet } from './components/CardPet';
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList } from '@/components/Breadcrump';
+import { Logo } from '@/components/Logo';
 
 export default function PetsPage() {
   const { pets } = useContext(PetsContext);
@@ -23,11 +25,22 @@ export default function PetsPage() {
               
   return (
     <div>
-      <div className='flex justify-center items-center w-full h-14 bg-[#FAFAFA] shadow-md'>
-        <Image src={PetIcon} alt='Logo do Pet Journal' />
+      <div className="inset-0 h-fit w-full p-4 shadow flex justify-center items-center">
+        <Logo />
       </div>
 
-      <Image className='m-6 w-20' src={MyPets} alt='Ícone demonstrando a aba com seus pets' />
+      <Breadcrumb className='m-6'>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink>
+              <div className="flex items-center gap-2">
+                <Image src="/images/home-active.svg" height={15} width={13} alt='Home Icon' /> 
+                <span>Meus Pets</span>
+              </div>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
     
       <ul className="flex flex-col gap-3 pb-16">
         {pets && 
