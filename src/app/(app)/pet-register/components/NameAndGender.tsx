@@ -10,6 +10,14 @@ import { species } from '@/utils/species';
 import { InputControl } from '@/components/Fields/InputControl';
 import { Label } from '@/components/Label';
 import { Input } from '@/components/Fields/Input';
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+} from '@/components/Breadcrump';
+import { Home } from 'lucide-react';
+import Image from 'next/image';
 
 export function NameAndGender() {
   const { newPet } = useContext(PetRegisterContext);
@@ -54,6 +62,17 @@ export function NameAndGender() {
 
   return (
     <>
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/">
+              <div className="flex items-center gap-2">
+              <Image src="/images/home-active.svg" height={15} width={13} alt='Home Icon' /> Cadastro Pet
+              </div>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
       <h3 className="text-xl font-medium text-left text-studio-600 w-full">
         <span className="block mb-4">Uau!</span>
         Ficamos muito felizes em receber mais um {specieName} em nossa
@@ -64,7 +83,7 @@ export function NameAndGender() {
         <span className="text-base text-center ">
           Qual o nome do seu companheiro?
         </span>
-        <label  htmlFor="petName" className="text-xs">
+        <label htmlFor="petName" className="text-xs">
           Nome:
         </label>
         <Input
@@ -93,14 +112,14 @@ export function NameAndGender() {
             className="flex flex-col gap-1 w-[120px] h-[120px] p-5 border-2 border-dashed bg-white border-gray-400 rounded-2xl text-gray-700 hover:bg-white hover:border-studio-600 hover:text-gray-700 data-[state=on]:bg-white data-[state=on]:border-solid data-[state=on]:border-studio-600 data-[state=on]:text-gray-700"
           >
             <IconMale size={60} />
-            <span className='text-sm'>Macho</span>
+            <span className="text-sm">Macho</span>
           </ToggleGroupItem>
           <ToggleGroupItem
             value="F"
             className="flex flex-col gap-1 w-[120px] h-[120px] p-5 border-2 border-dashed bg-white border-gray-400 rounded-2xl text-gray-700 hover:bg-white hover:border-studio-600 hover:text-gray-700 data-[state=on]:bg-white data-[state=on]:border-solid data-[state=on]:border-studio-600 data-[state=on]:text-gray-700"
           >
             <IconFemale size={60} />
-            <span className='text-sm'>Fêmea</span>
+            <span className="text-sm">Fêmea</span>
           </ToggleGroupItem>
         </ToggleGroup>
         <span className="text-gray-400 text-xs">*Campo obrigatório</span>
