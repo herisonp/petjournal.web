@@ -29,7 +29,7 @@ export default function PetsPage() {
 
       <Image className='m-6 w-20' src={MyPets} alt='Ícone demonstrando a aba com seus pets' />
     
-      <ul className="flex flex-col">
+      <ul className="flex flex-col gap-3 pb-16">
         {pets && 
           pets.map((pet) => (
             <CardPet key={pet.id} pet={pet} />
