@@ -3,11 +3,13 @@ import { getPets } from '@/services/getPets';
 import { Pet } from '@/types/PetsTypes';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { UserContext } from './UserContext';
+import { deletePet } from '@/services/deletePet';
 
 interface PetsContextProps {
   pets: Pet['View'][] | null;
   submitNewPet: (pet: Pet['View']) => void;
   submitUpdatePet: (pet: Pet['View']) => void;
+  submitDeletePet: (pet: Pet['View']) => void;
 }
 
 export const PetsContext = createContext({} as PetsContextProps);
@@ -39,6 +41,15 @@ export function PetsContextProvider({
     });
   }
 
+  async function submitDeletePet(pet: Pet['View']) {
+    const {error} = await deletePet(pet.id);
+    if (error) return 
+    setPets((state) => {
+      if (!state) return null;
+      return state.filter((item) => item.id !== pet.id);
+    });
+  }
+
   useEffect(() => {
     (async () => {
       const data = await getPets();
@@ -56,6 +67,7 @@ export function PetsContextProvider({
         pets,
         submitNewPet,
         submitUpdatePet,
+        submitDeletePet
       }}
     >
       {children}
