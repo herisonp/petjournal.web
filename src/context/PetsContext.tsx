@@ -42,8 +42,8 @@ export function PetsContextProvider({
   }
 
   async function submitDeletePet(pet: Pet['View']) {
-    const deletedPet = await deletePet(pet.id);
-    if (!deletedPet) return null
+    const {error} = await deletePet(pet.id);
+    if (error) return 
     setPets((state) => {
       if (!state) return null;
       return state.filter((item) => item.id !== pet.id);

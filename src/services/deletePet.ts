@@ -12,7 +12,9 @@ export async function deletePet(petId: string) {
       throw new Error(
         error || 'Ocorreu um erro ao deletar o pet. Tente novamente',
       );
-    return data;
+    return {
+      data: data,
+    };
   } catch (error) {
     const err = error as Error;
     console.log('deletePet', error);
