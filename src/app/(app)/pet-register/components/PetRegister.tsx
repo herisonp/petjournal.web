@@ -6,6 +6,7 @@ import { NameAndGender } from './NameAndGender';
 import { SizeAndBreed } from './SizeAndBreed';
 import { DateBirth } from './DateBirth';
 import { PetRegisterContext } from '../context/PetRegisterContext';
+import { Logo } from '@/components/Logo';
 
 export function PetRegister() {
   const { step, setMaxStep } = useContext(PetRegisterContext);
@@ -25,10 +26,8 @@ export function PetRegister() {
 
   return (
     <div className="bg-gray-100 px-4 pt-6 absolute inset-0 w-full h-fit min-h-screen">
-      <div className="fixed inset-0 h-fit w-full p-4 bg-gray-100 shadow">
-        <h2 className="text-base text-custom-purple text-center">
-          Cadastro Pet
-        </h2>
+      <div className="fixed inset-0 h-fit w-full p-4 bg-gray-100 shadow flex justify-center items-center">
+       <Logo />
       </div>
       <section className="h-fit min-h-[90vh] pt-14 pb-16 flex flex-col items-center gap-8">
         <SelectedPage />

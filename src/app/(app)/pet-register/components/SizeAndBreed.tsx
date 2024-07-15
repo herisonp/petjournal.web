@@ -13,6 +13,14 @@ import {
 } from '@/components/Select';
 import { ScrollArea } from '@/components/ScrollArea';
 import Image from 'next/image';
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+} from '@/components/Breadcrump';
+import { Home } from 'lucide-react';
 
 export function SizeAndBreed() {
   const { newPet, breeds, sizes } = useContext(PetRegisterContext);
@@ -56,6 +64,21 @@ export function SizeAndBreed() {
 
   return (
     <>
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/">
+              <div className="flex items-center gap-2">
+                <Image src="/images/home.svg" height={15} width={15} alt='' /> Cadastro Pet
+              </div>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/">Raça</BreadcrumbLink>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
       <h3 className="text-xl font-medium text-left text-studio-600 w-full">
         <span className="block">Nos conte mais!</span>
         <span className="block">Qual a raça de {pet.petName}?</span>

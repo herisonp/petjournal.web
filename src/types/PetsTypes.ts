@@ -11,6 +11,7 @@ export type PetTypes = {
       breed: Breed;
       size: Size;
       castrated: boolean;
+      dateOfBirth: Date | string;
     };
     Insert: {
       specieName: string;

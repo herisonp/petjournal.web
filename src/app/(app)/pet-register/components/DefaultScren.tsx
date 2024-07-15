@@ -4,6 +4,16 @@ import Image from 'next/image';
 import { useContext } from 'react';
 import { PetRegisterContext } from '../context/PetRegisterContext';
 import { usePetRegisterSteps } from './usePetRegisterSteps';
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+  BreadcrumbEllipsis,
+  BreadcrumbPage,
+} from '@/components/Breadcrump';
+import { Home } from 'lucide-react';
 
 export function DefaultScreen() {
   const { nextStep, previousStep, resetPetNewsValues } =
@@ -20,6 +30,17 @@ export function DefaultScreen() {
 
   return (
     <>
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/">
+              <div className="flex items-center gap-2">
+              <Image src="/images/home-active.svg" height={15} width={13} alt='Home Icon' /> Cadastro Pet
+              </div>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
       <div className="flex flex-col gap-2">
         <h3 className="text-xl font-bold text-center text-studio-600 w-full">
           Olá, {user?.firstName}!
