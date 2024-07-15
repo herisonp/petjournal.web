@@ -1,5 +1,8 @@
 'use client';
 import { Button } from '@/components/Button';
+import { Input } from '@/components/Fields/Input';
+import { InputControl } from '@/components/Fields/InputControl';
+import { Label } from '@/components/Label';
 import { submitForgetPassword } from '@/services/submitForgetPassword';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
@@ -13,7 +16,7 @@ export function ForgetPasswordForm() {
     try {
       setIsLoading(true);
       const formData = new FormData(event.currentTarget);
-      const email = formData.get('email') as string;
+      const email = formData.get('email') as string;      
       const { error } = await submitForgetPassword({ email });
       if (error) throw error;
       router.push(`/waiting-code?email=${email}`);
@@ -25,28 +28,17 @@ export function ForgetPasswordForm() {
   }
 
   return (
-    <form onSubmit={handleSubmitForgetPassword} className="flex flex-col gap-8">
-      <label>
-        <div className="text-custom-purple text-sm font-medium">
-          Qual seu email de cadastro?
-        </div>
-        <div className="border border-[#1b1b1b] rounded-[5px] py-2 px-1">
-          <input
-            type="email"
-            className="w-full outline-0 text-[#292929] font-medium placeholder:text-[#BFBFBF]"
-            placeholder="Digite seu e-mail"
-            name="email"
-            id="email"
-          />
-        </div>
-        {/* {errors.email && (
-          <span className="text-red-600 text-xs">{errors.email.message}</span>
-        )} */}
-      </label>
+    <form onSubmit={handleSubmitForgetPassword} className="flex flex-col">
+      <InputControl>
+        <Label variant='primary'>Qual seu email de cadastro?</Label>
+        <Input variant='primary' placeholder='Digite seu e-mail' type='email' name='email' id='email' className='text-sm h-12'/>
+      </InputControl>
 
-      <div className="flex justify-between">
+      <div className="flex flex-col gap-3 mt-24">
         <Button
+          variant='default'
           type="submit"
+          className='w-40'
           disabled={isLoading}
         >
           {isLoading ? 'Enviando...' : 'Enviar'}
@@ -54,6 +46,7 @@ export function ForgetPasswordForm() {
         <Button
           variant='outline'
           type="button"
+          className='w-40'
           onClick={() => {
             router.push('/login');
           }}
