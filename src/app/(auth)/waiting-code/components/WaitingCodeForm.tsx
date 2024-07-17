@@ -1,38 +1,47 @@
 'use client';
 import { Button } from '@/components/Button';
+import { InputMessage } from '@/components/Fields/InputMessage';
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
 } from '@/components/Fields/InputOPT';
+import { WaitingCodeSchema, WaitingCodeType } from '@/schemas/WaitingCode';
 import { submitForgetPassword } from '@/services/submitForgetPassword';
 import { submitWaitingCode } from '@/services/submitWaitingCode';
+import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { FormEvent, useState } from 'react';
+import { useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
 
 export function WaitingCodeForm() {
   const [isLoading, setIsLoading] = useState(false);
-  const [code, setCode] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isResendCode, setIsResendCode] = useState(false);
   const router = useRouter();
   const params = useSearchParams();
   const email = params.get('email');
+  const { control, register, handleSubmit, formState: { errors } } = useForm<WaitingCodeType>({
+    resolver: zodResolver(WaitingCodeSchema),
+    mode: 'onBlur',
+    defaultValues: {
+      verificationToken: '',
+    },
+  });
 
-  async function handleSubmitCode(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  async function handleSubmitCode(data: WaitingCodeType) {
     try {
       setIsLoading(true);
-      const isEmpty = code.length >= 6;
-      if (!isEmpty) throw 'Preencha todos os campos!';
       if (!email) throw 'Um email é requerido';
       const { error } = await submitWaitingCode({
         email,
-        code,
+        code: data.verificationToken,
       });
       if (error) throw error;
       router.push('/change-password');
-    } catch (error) {
-      alert(error);
+    } catch (error: any) {
+      setErrorMessage(error);
     } finally {
       setIsLoading(false);
     }
@@ -41,38 +50,51 @@ export function WaitingCodeForm() {
   async function handleResendCode() {
     try {
       setIsLoading(true);
-      if (!email) {
-        return;
-      }
+      if (!email) return
       const { error } = await submitForgetPassword({ email });
       if (error) throw error;
-      alert(`Novo código enviado ao ${email}`);
-    } catch (error) {
-      alert(error);
+      setIsResendCode(true);
+
+      setTimeout(() => {
+        setIsResendCode(false);
+      }, 10000);
+    } catch (error: any) {
+      setErrorMessage(error)
     } finally {
       setIsLoading(false);
     }
   }
 
   return (
-    <form onSubmit={handleSubmitCode} className="flex flex-col gap-4">
+    <form onSubmit={handleSubmit(handleSubmitCode)} className="flex flex-col gap-4">
       <div className="flex justify-center overflow-hidden">
-        <InputOTP
-          maxLength={6}
-          value={code}
-          onChange={setCode}
-          className="flex items-center justify-center"
-        >
-          <InputOTPGroup className="flex justify-between gap-2">
-            <InputOTPSlot index={0} />
-            <InputOTPSlot index={1} />
-            <InputOTPSlot index={2} />
-            <InputOTPSlot index={3} />
-            <InputOTPSlot index={4} />
-            <InputOTPSlot index={5} />
-          </InputOTPGroup>
-        </InputOTP>
+        <Controller
+          name="verificationToken"
+          control={control}
+          render={({ field }) => (
+            <InputOTP
+              maxLength={6}
+              value={field.value}
+              onChange={field.onChange}
+              className="flex items-center justify-center"
+            >
+              <InputOTPGroup className="flex justify-between gap-2">
+                <InputOTPSlot index={0} />
+                <InputOTPSlot index={1} />
+                <InputOTPSlot index={2} />
+                <InputOTPSlot index={3} />
+                <InputOTPSlot index={4} />
+                <InputOTPSlot index={5} />
+              </InputOTPGroup>
+            </InputOTP>
+          )}
+        />
       </div>
+
+      {errors.verificationToken && <InputMessage className='text-center' variant='error' message={errors.verificationToken.message} />}
+      {errorMessage && !errors.verificationToken && <InputMessage className='text-center' variant='error' message={errorMessage} />}
+      {isResendCode && <InputMessage className='text-center' variant='warning' message={`Novo código enviado ao ${email}`}/>}
+
       <Button
         onClick={handleResendCode}
         variant="ghost"
@@ -82,6 +104,7 @@ export function WaitingCodeForm() {
       >
         Reenviar código?
       </Button>
+
 
       <Button className="mt-4" type="submit" disabled={isLoading}>
         {isLoading ? 'Enviando...' : 'Enviar'}
