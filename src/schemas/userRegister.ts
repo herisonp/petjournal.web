@@ -12,10 +12,10 @@ export const userRegisterSchema = z.object({
     .regex(/[a-z]/, 'Deve conter pelo menos uma letra minúscula')
     .regex(/[A-Z]/, 'Deve conter pelo menos uma letra maiúscula')
     .regex(/[0-9]/, 'Deve conter pelo menos um número')
-    .regex(/[@$!%*?&#]/, {
-      message:
-        'A senha deve conter pelo menos um símbolo especial (@, $, !, %, *, ?, &, #).',
-    })
+    .regex(
+      /[@$!%*?&#]/,
+      'A senha deve conter pelo menos um símbolo especial (@, $, !, %, *, ?, &, #).',
+    )
     .trim(),
   passwordConfirmation: z
     .string()
@@ -23,10 +23,10 @@ export const userRegisterSchema = z.object({
     .regex(/[a-z]/, 'Deve conter pelo menos uma letra minúscula')
     .regex(/[A-Z]/, 'Deve conter pelo menos uma letra maiúscula')
     .regex(/[0-9]/, 'Deve conter pelo menos um número')
-    .regex(/[@$!%*?&#]/, {
-      message:
-        'A senha deve conter pelo menos um símbolo especial (@, $, !, %, *, ?, &, #).',
-    })
+    .regex(
+      /[@$!%*?&#]/,
+      'A senha deve conter pelo menos um símbolo especial (@, $, !, %, *, ?, &, #).',
+    )
     .trim(),
   phone: z
     .string()
@@ -36,9 +36,12 @@ export const userRegisterSchema = z.object({
       /^\d{10,11}$/,
       'Número de telefone inválido. Deve conter apenas dígitos e ter 10 ou 11 números.',
     ),
-    isPrivacyPolicyAccepted: z.boolean().refine(val => val === true, {
-      message: "Você deve aceitar a política de privacidade.",
-    }),
+  isPrivacyPolicyAccepted: z
+    .boolean()
+    .refine(
+      (val) => val === true,
+      'Você deve aceitar a política de privacidade.',
+    ),
 });
 
 export type UserRegisterProps = z.infer<typeof userRegisterSchema>;
