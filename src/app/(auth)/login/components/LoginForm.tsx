@@ -88,17 +88,6 @@ export function LoginForm() {
             placeholder="Senha"
             {...register('password')}
           />
-          <Button
-            variant="ghost"
-            type="button"
-            onClick={() => setShowPassword((prev) => !prev)}
-            className="px-1"
-          >
-            <Image
-              src={toggleShowPassword}
-              alt="Ícone de olho para mostrar e esconder a senha"
-            />
-          </Button>
         {errors.password && (
           <span className="text-red-600 text-xs">
             {errors.password.message}
