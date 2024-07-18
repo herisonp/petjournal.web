@@ -8,6 +8,10 @@ import { submitLogin } from '@/services/submitLogin';
 import { Button } from '@/components/Button';
 import { getSession } from '@/services/getSession';
 import { UserContext } from '@/context/UserContext';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { UserLoginProps, userLoginSchema } from '@/schemas/userLogin';
+import { Input } from '@/components/Fields/Input';
 
 export function LoginForm() {
   const router = useRouter();
@@ -18,16 +22,23 @@ export function LoginForm() {
 
   const isButtonDisabled = !!loading;
 
-  async function handleSubmitLogin(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<UserLoginProps>({
+    resolver: zodResolver(userLoginSchema),
+    criteriaMode: 'firstError',
+    reValidateMode: 'onChange',
+    mode: 'onBlur',
+  });
+
+  async function handleSubmitLogin({ email, password }: UserLoginProps) {
     try {
       setLoading(true);
-      const formData = new FormData(event.currentTarget);
-
-      // TODO: validar dados do formulário
       const loginData = {
-        email: formData.get('email') as string,
-        password: formData.get('password') as string,
+        email,
+        password,
         remember: remember,
       };
 
@@ -53,29 +64,29 @@ export function LoginForm() {
   }
 
   return (
-    <form onSubmit={handleSubmitLogin} className="flex flex-col gap-y-4">
+    <form
+      onSubmit={handleSubmit(handleSubmitLogin)}
+      className="flex flex-col gap-y-4"
+    >
       <label>
         <div className="text-custom-purple text-sm font-medium">Login</div>
-        <div className="border border-[#1b1b1b] rounded-[5px] py-2 px-1">
-          <input
+          <Input
             type="email"
             className="w-full outline-0 text-[#292929] font-medium placeholder:text-[#BFBFBF]"
             placeholder="E-mail"
-            name="email"
+            {...register('email')}
           />
-        </div>
-        {/* {errors.email && (
+        {errors.email && (
           <span className="text-red-600 text-xs">{errors.email.message}</span>
-        )} */}
+        )}
       </label>
       <label>
         <div className="text-custom-purple text-sm font-medium">Senha</div>
-        <div className="border border-[#1b1b1b] rounded-[5px] flex py-2 px-1">
-          <input
+          <Input
             type={showPassword ? 'text' : 'password'}
             className="w-full outline-0 text-[#292929] font-medium placeholder:text-[#BFBFBF]"
             placeholder="Senha"
-            name="password"
+            {...register('password')}
           />
           <Button
             variant="ghost"
@@ -88,12 +99,11 @@ export function LoginForm() {
               alt="Ícone de olho para mostrar e esconder a senha"
             />
           </Button>
-        </div>
-        {/* {errors.password && (
+        {errors.password && (
           <span className="text-red-600 text-xs">
             {errors.password.message}
           </span>
-        )} */}
+        )}
       </label>
       <div className="flex justify-between px-1">
         <label className="flex items-center justify-center relative">
