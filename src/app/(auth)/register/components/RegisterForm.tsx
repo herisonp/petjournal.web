@@ -6,8 +6,8 @@ import { submitRegister } from '@/services/submitRegister';
 import { Button } from '@/components/Button';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { UserRegisterProps, userRegisterSchema } from '@/schemas/player';
 import { Input } from '@/components/Fields/Input';
+import { UserRegisterProps, userRegisterSchema } from '@/schemas/userRegister';
 
 export function RegisterForm() {
   const [isLoading, setIsLoading] = useState(false);
