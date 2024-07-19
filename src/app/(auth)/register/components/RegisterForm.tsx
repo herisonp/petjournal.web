@@ -36,10 +36,9 @@ export function RegisterForm() {
 
       router.push('/');
     } catch (error) {
+      setIsLoading(false);
       const err = error as Error;
       alert(err.message);
-    } finally {
-      setIsLoading(false);
     }
   }
 

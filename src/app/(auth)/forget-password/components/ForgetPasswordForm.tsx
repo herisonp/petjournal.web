@@ -18,9 +18,8 @@ export function ForgetPasswordForm() {
       if (error) throw error;
       router.push(`/waiting-code?email=${email}`);
     } catch (error) {
-      alert(error);
-    } finally {
       setIsLoading(false);
+      alert(error);
     }
   }
 
@@ -45,14 +44,11 @@ export function ForgetPasswordForm() {
       </label>
 
       <div className="flex justify-between">
-        <Button
-          type="submit"
-          disabled={isLoading}
-        >
+        <Button type="submit" disabled={isLoading}>
           {isLoading ? 'Enviando...' : 'Enviar'}
         </Button>
         <Button
-          variant='outline'
+          variant="outline"
           type="button"
           onClick={() => {
             router.push('/login');

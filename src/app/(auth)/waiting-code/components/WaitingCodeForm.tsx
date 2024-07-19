@@ -32,9 +32,8 @@ export function WaitingCodeForm() {
       if (error) throw error;
       router.push('/change-password');
     } catch (error) {
-      alert(error);
-    } finally {
       setIsLoading(false);
+      alert(error);
     }
   }
 
