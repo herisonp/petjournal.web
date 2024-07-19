@@ -17,19 +17,15 @@ export function ChangePasswordForm() {
   const [loading, setLoading] = useState(false);
   const { register, handleSubmit, formState: { errors } } = useForm<ChangePasswordType>({
     resolver: zodResolver(ChangePasswordSchema),
+    criteriaMode: 'firstError',
+    reValidateMode: 'onChange',
     mode: 'onBlur',
-    defaultValues: {
-      password: '',
-      passwordConfirmation: '',
-    }
   })
 
-  async function handleNewPasswordSubmit(data: ChangePasswordType) {
-    console.log(data)
+  async function handleNewPasswordSubmit({ password, passwordConfirmation }: ChangePasswordType) {
     try {
       setLoading(true);
-      const {password, passwordConfirmation} = data;
-      const { error } = await submitChangePassword({password, passwordConfirmation});
+      const { error } = await submitChangePassword({ password, passwordConfirmation });
 
       if (error) throw error;
 
