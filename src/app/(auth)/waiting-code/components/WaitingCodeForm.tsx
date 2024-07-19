@@ -6,11 +6,10 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from '@/components/Fields/InputOPT';
-import { WaitingCodeSchema, WaitingCodeType } from '@/schemas/WaitingCode';
+import { WaitingCodeSchema, WaitingCodeProps } from '@/schemas/WaitingCode';
 import { submitForgetPassword } from '@/services/submitForgetPassword';
 import { submitWaitingCode } from '@/services/submitWaitingCode';
 import { zodResolver } from '@hookform/resolvers/zod';
-import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
@@ -22,21 +21,20 @@ export function WaitingCodeForm() {
   const router = useRouter();
   const params = useSearchParams();
   const email = params.get('email');
-  const { control, register, handleSubmit, formState: { errors } } = useForm<WaitingCodeType>({
+  const { control, register, handleSubmit, formState: { errors } } = useForm<WaitingCodeProps>({
     resolver: zodResolver(WaitingCodeSchema),
+    criteriaMode: 'firstError',
+    reValidateMode: 'onChange',
     mode: 'onBlur',
-    defaultValues: {
-      verificationToken: '',
-    },
   });
 
-  async function handleSubmitCode(data: WaitingCodeType) {
+  async function handleSubmitCode({ verificationToken }: WaitingCodeProps) {
     try {
       setIsLoading(true);
       if (!email) throw 'Um email é requerido';
       const { error } = await submitWaitingCode({
         email,
-        code: data.verificationToken,
+        code: verificationToken,
       });
       if (error) throw error;
       router.push('/change-password');

@@ -10,19 +10,19 @@ import { Input } from '@/components/Fields/Input';
 import { InputMessage } from '@/components/Fields/InputMessage';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ChangePasswordSchema, ChangePasswordType } from '@/schemas/ChangePassword';
+import { ChangePasswordSchema, ChangePasswordProps } from '@/schemas/ChangePassword';
 
 export function ChangePasswordForm() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const { register, handleSubmit, formState: { errors } } = useForm<ChangePasswordType>({
+  const { register, handleSubmit, formState: { errors } } = useForm<ChangePasswordProps>({
     resolver: zodResolver(ChangePasswordSchema),
     criteriaMode: 'firstError',
     reValidateMode: 'onChange',
     mode: 'onBlur',
   })
 
-  async function handleNewPasswordSubmit({ password, passwordConfirmation }: ChangePasswordType) {
+  async function handleNewPasswordSubmit({ password, passwordConfirmation }: ChangePasswordProps) {
     try {
       setLoading(true);
       const { error } = await submitChangePassword({ password, passwordConfirmation });

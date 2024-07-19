@@ -4,7 +4,7 @@ import { Input } from '@/components/Fields/Input';
 import { InputControl } from '@/components/Fields/InputControl';
 import { InputMessage } from '@/components/Fields/InputMessage';
 import { Label } from '@/components/Label';
-import { ForgetPasswordSchema, ForgetPasswordType } from '@/schemas/ForgetPassword';
+import { ForgetPasswordSchema, ForgetPasswordProps } from '@/schemas/ForgetPassword';
 import { submitForgetPassword } from '@/services/submitForgetPassword';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
@@ -15,20 +15,19 @@ export function ForgetPasswordForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const router = useRouter();
-  const { register, handleSubmit, formState: { errors } } = useForm<ForgetPasswordType>({
+  const { register, handleSubmit, formState: { errors } } = useForm<ForgetPasswordProps>({
     resolver: zodResolver(ForgetPasswordSchema),
+    criteriaMode: 'firstError',
+    reValidateMode: 'onChange',
     mode: 'onBlur',
-    defaultValues: {
-      email: '',
-    },
   });
 
-  async function handleSubmitForgetPassword(data: ForgetPasswordType) {
+  async function handleSubmitForgetPassword({ email }: ForgetPasswordProps) {
     setIsLoading(true);
     try {
-      const { error } = await submitForgetPassword(data);
+      const { error } = await submitForgetPassword({email});
       if (error) throw error;
-      router.push(`/waiting-code?email=${data.email}`);
+      router.push(`/waiting-code?email=${email}`);
     } catch (error: any) {
       setErrorMessage(error);
     } finally {
