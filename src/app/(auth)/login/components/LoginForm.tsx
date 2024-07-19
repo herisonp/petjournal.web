@@ -45,10 +45,9 @@ export function LoginForm() {
 
       router.push('/');
     } catch (error) {
+      setLoading(false);
       const err = error as Error;
       alert(err.message);
-    } finally {
-      setLoading(false);
     }
   }
 
