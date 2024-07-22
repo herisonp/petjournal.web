@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { submitLogin } from '@/services/submitLogin';
 import { submitRegister } from '@/services/submitRegister';
 import { Button } from '@/components/Button';
+import RememberCheckbox, { CheckBox } from './CheckBox';
 
 export function RegisterForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -118,19 +119,23 @@ export function RegisterForm() {
           />
         </div>
       </label>
-      <label className="flex items-center relative">
-        <input
-          className="appearance-none w-5 h-5 rounded-full border-2 border-custom-purple mr-1"
-          type="checkbox"
-          checked={remember}
-          onChange={(event) => setRemember(event.target.checked)}
-        />
-        {remember && (
-          <div className="absolute w-2 h-2 bg-custom-purple rounded-full left-[0.375rem]"></div>
-        )}
-        <span>Eu concordo com a politica de privacidade</span>
-      </label>
-      <Button className="mt-16" type="submit" disabled={!!isLoading}>
+      {/* <label className="flex items-center relative mt-4 sm:mt-6 md:mt-8">
+      <input
+        className="appearance-none w-5 h-5 rounded-full border-2 border-[#7C54A7] relative cursor-pointer"
+        type="checkbox"
+        checked={remember}
+        onChange={(event) => setRemember(event.target.checked)}
+      />
+      {remember && (
+        <div className="absolute w-2 h-2 bg-[#7C54A7] rounded-full left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
+      )}
+      <span className="text-xs sm:text-sm font-medium ml-2">
+        Eu concordo com a política de privacidade
+      </span>
+    </label> */}
+
+    <CheckBox remember={remember} setRemember={setRemember} />
+      <Button className="mt-8" type="submit" disabled={!!isLoading}>
         {isLoading ? 'Enviando...' : 'Continuar'}
       </Button>
     </form>
