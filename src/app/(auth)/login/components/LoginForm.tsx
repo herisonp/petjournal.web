@@ -75,10 +75,8 @@ export function LoginForm() {
             className="w-full outline-0 text-[#292929] font-medium placeholder:text-[#BFBFBF]"
             placeholder="E-mail"
             {...register('email')}
+            error={errors.email ? true : false}
           />
-        {errors.email && (
-          <span className="text-red-600 text-xs">{errors.email.message}</span>
-        )}
       </label>
       <label>
         <div className="text-custom-purple text-sm font-medium">Senha</div>
@@ -87,12 +85,8 @@ export function LoginForm() {
             className="w-full outline-0 text-[#292929] font-medium placeholder:text-[#BFBFBF]"
             placeholder="Senha"
             {...register('password')}
+            error={errors.password ? true : false}
           />
-        {errors.password && (
-          <span className="text-red-600 text-xs">
-            {errors.password.message}
-          </span>
-        )}
       </label>
       <div className="flex justify-between px-1">
         <label className="flex items-center justify-center relative">

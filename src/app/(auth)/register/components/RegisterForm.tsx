@@ -75,12 +75,8 @@ export function RegisterForm() {
           id="name"
           placeholder="Digite seu primeiro nome"
           {...register('firstName')}
+          error={errors.firstName ? true : false}
         />
-        {errors.firstName && (
-          <span className="text-red-500 text-xs">
-            {errors.firstName.message}
-          </span>
-        )}
       </label>
       <label>
         <div className="text-custom-purple text-sm font-medium">Sobrenome</div>
@@ -89,12 +85,8 @@ export function RegisterForm() {
           id="lastname"
           placeholder="Digite seu sobrenome"
           {...register('lastName')}
+          error={errors.lastName? true : false}
         />
-        {errors.lastName && (
-          <span className="text-red-500 text-xs">
-            {errors.lastName.message}
-          </span>
-        )}
       </label>
       <label>
         <div className="text-custom-purple text-sm font-medium">Email</div>
@@ -103,10 +95,8 @@ export function RegisterForm() {
           id="email"
           placeholder="E-mail"
           {...register('email')}
+          error={errors.email? true : false}
         />
-        {errors.email && (
-          <span className="text-red-500 text-xs">{errors.email.message}</span>
-        )}
       </label>
       <label>
         <div className="text-custom-purple text-sm font-medium">Telefone</div>
@@ -116,10 +106,8 @@ export function RegisterForm() {
           id="phone"
           placeholder="Telefone"
           {...register('phone')}
+          error={errors.phone? true : false}
         />
-        {errors.phone && (
-          <span className="text-red-500 text-xs">{errors.phone.message}</span>
-        )}
       </label>
       <label>
         <div className="text-custom-purple text-sm font-medium">Senha</div>
@@ -129,12 +117,8 @@ export function RegisterForm() {
           id="password"
           placeholder="Senha"
           {...register('password')}
+          error={errors.password? true : false}
         />
-        {errors.password && (
-          <span className="text-red-500 text-xs">
-            {errors.password.message}
-          </span>
-        )}
       </label>
       <label>
         <div className="text-custom-purple text-sm font-medium">
@@ -146,12 +130,8 @@ export function RegisterForm() {
           id="password-confirm"
           placeholder="Confirmar senha"
           {...register('passwordConfirmation')}
+          error={errors.passwordConfirmation? true : false}
         />
-        {errors.passwordConfirmation && (
-          <span className="text-red-500 text-xs">
-            {errors.passwordConfirmation.message}
-          </span>
-        )}
       </label>
       <label className="flex items-center relative">
         <input

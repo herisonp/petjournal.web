@@ -5,10 +5,6 @@ export const userLoginSchema = z.object({
   password: z
     .string()
     .min(8, 'Senha inválida')
-    .regex(/[a-z]/, 'Senha inválida')
-    .regex(/[A-Z]/, 'Senha inválida')
-    .regex(/[0-9]/, 'Senha inválida')
-    .regex(/[@$!%*?&#]/, 'Senha inválida')
     .trim(),
 });
 
