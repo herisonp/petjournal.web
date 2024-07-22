@@ -97,22 +97,22 @@ export function LoginForm() {
       <div className="flex justify-between px-1">
         <label className="flex items-center justify-center relative">
           <input
-            className="appearance-none w-5 h-5 rounded-full border-2 border-custom-purple mr-1"
+            className="appearance-none w-4 h-4 rounded-full border-2 border-[#7C54A7] mr-1"
             type="checkbox"
             checked={remember}
             onChange={(event) => setRemember(event.target.checked)}
           />
-          <span>Lembrar</span>
+          <span className='text-sm font-medium'>Lembrar</span>
           {remember && (
-            <div className="absolute w-2 h-2 bg-custom-purple rounded-full left-[0.375rem]"></div>
+            <div className="absolute w-[6px] h-[6px] bg-[#7C54A7] rounded-full left-[0.3rem]"></div>
           )}
         </label>
-        <Link className="underline" href="/forget-password">
+        <Link className="text-sm font-medium" href="/forget-password">
           Esqueci minha senha
         </Link>
       </div>
 
-      <Button className="mt-16" type="submit" disabled={isButtonDisabled}>
+      <Button className="mt-16" type="submit" variant='default' disabled={isButtonDisabled}>
         {loading ? 'Enviando...' : 'Continuar'}
       </Button>
     </form>
