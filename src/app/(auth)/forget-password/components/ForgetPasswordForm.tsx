@@ -38,7 +38,7 @@ export function ForgetPasswordForm() {
   return (
     <form onSubmit={handleSubmit(handleSubmitForgetPassword)} className="flex flex-col">
       <InputControl>
-        <Label variant='primary'>Qual seu email de cadastro?</Label>
+        <Label htmlFor='email' variant='primary'>Qual seu email de cadastro?</Label>
         <Input variant='primary' placeholder='Digite seu e-mail' type='email' id='email' className='text-sm h-12' {...register('email')} />
         {errors.email && <InputMessage variant='error' message={errors.email?.message} />}
       </InputControl>

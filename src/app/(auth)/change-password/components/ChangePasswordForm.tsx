@@ -43,7 +43,7 @@ export function ChangePasswordForm() {
       className="max-w-lg flex flex-col gap-6"
     >
       <InputControl>
-        <Label variant='primary'>Nova senha</Label>
+        <Label htmlFor='password' variant='primary'>Nova senha</Label>
         <Input
           type='password'
           id='password'
