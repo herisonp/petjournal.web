@@ -36,11 +36,11 @@ export function WaitingCodeForm() {
         email,
         code: verificationToken,
       });
-      if (error) throw error;
+      if (error) throw new Error(error);
       router.push('/change-password');
-    } catch (error: any) {
-      setErrorMessage(error);
-    } finally {
+    } catch (error) {
+      const err = error as Error
+      setErrorMessage(err.message);
       setIsLoading(false);
     }
   }

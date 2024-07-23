@@ -26,11 +26,11 @@ export function ForgetPasswordForm() {
     setIsLoading(true);
     try {
       const { error } = await submitForgetPassword({email});
-      if (error) throw error;
+      if (error) throw new Error(error);
       router.push(`/waiting-code?email=${email}`);
-    } catch (error: any) {
-      setErrorMessage(error);
-    } finally {
+    } catch (error) {
+      const err = error as Error;
+      setErrorMessage(err.message);
       setIsLoading(false);
     }
   }
@@ -55,7 +55,7 @@ export function ForgetPasswordForm() {
           {isLoading ? 'Enviando...' : 'Enviar'}
         </Button>
         <Button
-          variant='outline'
+          variant="outline"
           type="button"
           className='w-40'
           onClick={() => {

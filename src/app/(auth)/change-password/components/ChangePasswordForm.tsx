@@ -31,9 +31,8 @@ export function ChangePasswordForm() {
 
       router.push('/');
     } catch (error) {
-      console.log(error)
-    } finally {
       setLoading(false);
+      alert(error);
     }
   }
 
