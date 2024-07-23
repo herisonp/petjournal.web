@@ -6,7 +6,7 @@ export default function WaitingCodePage() {
   return (
     <>
       <Logo scale="lg" />
-      <div className="flex flex-col justify-center gap-4">
+      <div className="flex flex-col justify-center gap-6 mt-6">
         <h1 className="font-medium text-2xl text-center">
           Acabamos de enviar um código para seu e-mail
         </h1>
@@ -15,7 +15,7 @@ export default function WaitingCodePage() {
           para o seu email.
         </p>
       </div>
-      <div className="w-full max-w-sm mt-8">
+      <div className="w-full max-w-sm m-auto">
         <Suspense>
           <WaitingCodeForm />
         </Suspense>

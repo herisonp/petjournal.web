@@ -1,39 +1,36 @@
 'use client';
 import { FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import toggleShowPassword from '/public/images/show-password.svg';
 import Image from 'next/image';
 import { Button } from '@/components/Button';
 import { submitChangePassword } from '@/services/submitChangePassword';
+import { InputControl } from '@/components/Fields/InputControl';
+import { Label } from '@/components/Label';
+import { Input } from '@/components/Fields/Input';
+import { InputMessage } from '@/components/Fields/InputMessage';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { ChangePasswordSchema, ChangePasswordProps } from '@/schemas/ChangePassword';
 
 export function ChangePasswordForm() {
   const router = useRouter();
-  const [accountAccess, setAccountAccess] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState<Record<string, boolean>>({
-    password: false,
-    passwordConfirmation: false,
-  });
+  const { register, handleSubmit, formState: { errors } } = useForm<ChangePasswordProps>({
+    resolver: zodResolver(ChangePasswordSchema),
+    criteriaMode: 'firstError',
+    reValidateMode: 'onChange',
+    mode: 'onBlur',
+  })
 
-  async function handleNewPasswordSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  async function handleNewPasswordSubmit({ password, passwordConfirmation }: ChangePasswordProps) {
     try {
       setLoading(true);
-      const formData = new FormData(event.currentTarget);
-
-      // TODO: validar dados do formulário
-      const newPasswordData = {
-        password: formData.get('password') as string,
-        passwordConfirmation: formData.get('passwordConfirmation') as string,
-      };
-
-      const { error } = await submitChangePassword(newPasswordData);
+      const { error } = await submitChangePassword({ password, passwordConfirmation });
 
       if (error) throw error;
 
       router.push('/');
     } catch (error) {
-      // TODO: criar mensagens de erro
       setLoading(false);
       alert(error);
     }
@@ -41,89 +38,51 @@ export function ChangePasswordForm() {
 
   return (
     <form
-      onSubmit={handleNewPasswordSubmit}
+      onSubmit={handleSubmit(handleNewPasswordSubmit)}
       className="max-w-lg flex flex-col gap-6"
     >
-      <label>
-        <div className="text-custom-purple text-sm font-medium">Nova senha</div>
-        <div className="border border-[#1b1b1b] rounded-[5px] flex py-2 px-1">
-          <input
-            type={showPassword.password ? 'text' : 'password'}
-            className="w-full outline-0 text-[#292929] font-medium placeholder:text-[#BFBFBF]"
-            placeholder="Digite sua nova senha"
-            name="password"
-          />
-          <button
-            type="button"
-            onClick={() =>
-              setShowPassword({
-                ...showPassword,
-                password: !showPassword.password,
-              })
-            }
-            className="px-1"
-          >
-            <Image
-              src={toggleShowPassword}
-              alt="Ícone de olho para mostrar e esconder a senha"
-            />
-          </button>
-        </div>
-        {/* {errors.password && (
-          <span className="text-red-600 text-xs">
-            {errors.password.message}
-          </span>
-        )} */}
-      </label>
-
-      <label>
-        <div className="text-custom-purple text-sm font-medium">
-          Confirmar senha
-        </div>
-        <div className="border border-[#1b1b1b] rounded-[5px] flex py-2 px-1">
-          <input
-            type={showPassword.passwordConfirmation ? 'text' : 'password'}
-            className="w-full outline-0 text-[#292929] font-medium placeholder:text-[#BFBFBF]"
-            placeholder="Confirme sua senha"
-            name="passwordConfirmation"
-          />
-          <button
-            type="button"
-            onClick={() =>
-              setShowPassword({
-                ...showPassword,
-                passwordConfirmation: !showPassword.passwordConfirmation,
-              })
-            }
-            className="px-1"
-          >
-            <Image
-              src={toggleShowPassword}
-              alt="Ícone de olho para mostrar e esconder a senha"
-            />
-          </button>
-        </div>
-        {/* {errors.password && (
-          <span className="text-red-600 text-xs">
-            {errors.password.message}
-          </span>
-        )} */}
-      </label>
-
-      <div className="flex">
-        <input
-          type="checkbox"
-          id="check"
-          checked={accountAccess}
-          onChange={(event) => setAccountAccess(event.target.checked)}
+      <InputControl>
+        <Label htmlFor='password' variant='primary'>Nova senha</Label>
+        <Input
+          type='password'
+          id='password'
+          placeholder='Digite a sua nova senha'
+          className='h-12'
+          {...register('password')}
+          error={errors.password ? true : false}
         />
-        <label htmlFor="check" className="pl-2 leading-5">
-          É necessário que todos os dispositivos acessem sua conta com a nova
-          senha?
-        </label>
+        {errors.password && <InputMessage variant='error' message={errors.password.message} />}
+      </InputControl>
+
+      <InputControl>
+        <Label variant='primary'>Confirmar senha</Label>
+        <Input
+          type='password'
+          id='passwordConfirm'
+          placeholder='Confirme sua senha'
+          className='h-12'
+          {...register('passwordConfirmation')}
+          error={errors.passwordConfirmation ? true : false}
+        />
+        {errors.passwordConfirmation && <InputMessage variant='error' message={errors.passwordConfirmation.message} />}
+      </InputControl>
+
+      <div className="flex flex-col">
+        <div className='flex'>
+          <input
+            type="checkbox"
+            id="check"
+            {...register('confirmationAction')}
+            />
+          <label htmlFor="check" className="ml-2 font-normal text-xs">
+            É necessário que todos os dispositivos acessem sua conta com a nova
+            senha?
+          </label>
+        </div>
+        {errors.confirmationAction && <InputMessage variant='error' message={errors.confirmationAction.message} className='mt-1'/>}
       </div>
 
-      <Button type="submit" className={`w-full`} disabled={!!loading}>
+      <Button type="submit" disabled={!!loading}>
         Redefinir senha
       </Button>
     </form>
