@@ -1,23 +1,23 @@
-import { cn } from '@/utils/twmerge';
+import { Label } from '@/components/Label';
 import React from 'react';
 
 interface ICheckBox {
   remember: boolean;
   setRemember: React.Dispatch<React.SetStateAction<boolean>>;
-  className: string;
 }
 
-export function CheckBox({ remember, setRemember, className }: ICheckBox) {
+export function CheckBox({ remember, setRemember }: ICheckBox) {
   return (
-    <label className={cn(`flex items-center justify-center ${className}`)}>
+    <Label htmlFor='checkbox' className="flex items-center">
       <input
         type="checkbox"
+        id='checkbox'
         checked={remember}
         onChange={(event) => setRemember(event.target.checked)}
         className="appearance-none"
       />
       <span
-        className='flex items-center justify-center w-4 h-4 mr-2 rounded-full border-2 border-studio-600'
+        className='flex items-center justify-center mr-2 w-4 h-4 rounded-full border-2 border-studio-600'
       >
         <span
           className={`absolute w-[6px] h-[6px] rounded-full ${
@@ -25,7 +25,7 @@ export function CheckBox({ remember, setRemember, className }: ICheckBox) {
           }`}
         />
       </span>
-      <span className="text-xs font-medium">Eu concordo com a política de privacidade</span>
-    </label>
+      <span className="text-xs font-medium">Lembrar</span>
+    </Label>
   );
 };

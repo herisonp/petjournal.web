@@ -134,7 +134,7 @@ export function RegisterForm() {
       </span>
     </label> */}
 
-    <CheckBox remember={remember} setRemember={setRemember} />
+    <CheckBox remember={remember} setRemember={setRemember} className="mt-8" />
       <Button className="mt-8" type="submit" disabled={!!isLoading}>
         {isLoading ? 'Enviando...' : 'Continuar'}
       </Button>

@@ -4,8 +4,8 @@ import { Logo } from '@/components/Logo';
 export default function ForgetPasswordPage() {
   return (
     <>
-      <Logo scale="lg" />
-      <div className="flex flex-col items-center mt-8">
+      <Logo scale="md" />
+      <div className="flex flex-col items-center mt-10">
         <h1 className="font-medium text-2xl">Esqueceu a senha?</h1>
         <p className="font-light">Redefina a senha em duas etapas</p>
       </div>

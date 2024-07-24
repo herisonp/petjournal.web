@@ -8,6 +8,7 @@ import { submitLogin } from '@/services/submitLogin';
 import { Button } from '@/components/Button';
 import { getSession } from '@/services/getSession';
 import { UserContext } from '@/context/UserContext';
+import { CheckBox } from './CheckBox';
 
 export function LoginForm() {
   const router = useRouter();
@@ -94,20 +95,9 @@ export function LoginForm() {
           </span>
         )} */}
       </label>
-      <div className="flex justify-between px-1">
-        <label className="flex items-center justify-center relative">
-          <input
-            className="appearance-none w-4 h-4 rounded-full border-2 border-[#7C54A7] mr-1"
-            type="checkbox"
-            checked={remember}
-            onChange={(event) => setRemember(event.target.checked)}
-          />
-          <span className='text-sm font-medium'>Lembrar</span>
-          {remember && (
-            <div className="absolute w-[6px] h-[6px] bg-[#7C54A7] rounded-full left-[0.3rem]"></div>
-          )}
-        </label>
-        <Link className="text-sm font-medium" href="/forget-password">
+      <div className="flex justify-between ">
+        <CheckBox remember={remember} setRemember={setRemember} />
+        <Link className="text-xs font-medium" href="/forget-password">
           Esqueci minha senha
         </Link>
       </div>

@@ -82,7 +82,7 @@ export function ChangePasswordForm() {
         {errors.confirmationAction && <InputMessage variant='error' message={errors.confirmationAction.message} className='mt-1'/>}
       </div>
 
-      <Button type="submit" disabled={!!loading}>
+      <Button type="submit" disabled={!!loading} className='mt-10'>
         Redefinir senha
       </Button>
     </form>
