@@ -6,15 +6,15 @@ import { cn } from '@/utils/twmerge';
 import { IconErrorCircle } from '../icons/IconErrorCircle';
 
 const inputStyleBase =
-  'flex w-full outline-0 text-[#292929] transition-all placeholder:text-[#BFBFBF] py-2 pl-4 pr-2';
+  'flex w-full outline-0 text-[#292929] transition-all placeholder:text-[#BFBFBF] py-2 pl-1 pr-2';
 
 const inputVariants = {
   variant: {
-    primary: `border border-[#1b1b1b] font-medium rounded-[5px] focus-within:border-studio-500 focus-within:border-solid`,
+    primary: `border border-[#1b1b1b] font-medium text-sm rounded-[5px] focus-within:border-studio-500 focus-within:border-solid`,
     secondary: `border-2 border-[#B2B2B2] border-dashed font-normal rounded-[12px] focus-within:border-studio-500 focus-within:border-solid`,
   },
   error: {
-    primary: `border border-red-300`,
+    primary: `border border-red-300 rounded-xl`,
     secondary: `border-2 border-red-300`,
   },
 };
@@ -48,7 +48,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           {...props}
         />
 
-        {!error && type === 'password' && (
+        {type === 'password' && (
           <button
             type="button"
             onClick={togglePasswordVisibility}
@@ -58,7 +58,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           </button>
         )}
 
-        {error && <IconErrorCircle size={20} />}
+        {error && type !== 'password' && <IconErrorCircle size={20} />}
       </div>
     );
   },
