@@ -28,7 +28,7 @@ export function LoginForm() {
       const loginData = {
         email: formData.get('email') as string,
         password: formData.get('password') as string,
-        remember: remember,
+        remind: remember,
       };
 
       const { error } = await submitLogin(loginData);

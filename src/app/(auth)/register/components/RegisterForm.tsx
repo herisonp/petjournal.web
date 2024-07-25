@@ -1,13 +1,16 @@
 'use client';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useContext, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { submitLogin } from '@/services/submitLogin';
 import { submitRegister } from '@/services/submitRegister';
 import { Button } from '@/components/Button';
+import { getSession } from '@/services/getSession';
+import { UserContext } from '@/context/UserContext';
 
 export function RegisterForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [remember, setRemember] = useState(false);
+  const { setUser } = useContext(UserContext);
   const router = useRouter();
 
   async function handleSubmitRegister(event: FormEvent<HTMLFormElement>) {
@@ -33,6 +36,15 @@ export function RegisterForm() {
         password: newUser.password,
       });
       if (errorLogin) throw errorLogin;
+
+      const { session } = await getSession();
+      if (!session) {
+        throw new Error('Usuário não autenticado...');
+      }
+
+      const { user } = session;
+
+      setUser(user);
 
       router.push('/');
     } catch (error) {
