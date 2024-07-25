@@ -8,6 +8,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Input } from '@/components/Fields/Input';
 import { UserRegisterProps, userRegisterSchema } from '@/schemas/userRegister';
+import { InputControl } from '@/components/Fields/InputControl';
+import { Label } from '@/components/Label';
+import { InputMessage } from '@/components/Fields/InputMessage';
 
 export function RegisterForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -68,8 +71,8 @@ export function RegisterForm() {
       onSubmit={handleSubmit(handleSubmitRegister)}
       className="flex flex-col gap-y-4"
     >
-      <label>
-        <div className="text-custom-purple text-sm font-medium">Nome</div>
+      <InputControl>
+        <Label>Nome</Label>
         <Input
           type="text"
           id="name"
@@ -77,62 +80,75 @@ export function RegisterForm() {
           {...register('firstName')}
           error={errors.firstName ? true : false}
         />
-      </label>
-      <label>
-        <div className="text-custom-purple text-sm font-medium">Sobrenome</div>
+        {errors.firstName && (
+          <InputMessage variant="error" message={errors.firstName?.message} />
+        )}
+      </InputControl>
+      <InputControl>
+        <Label>Sobrenome</Label>
         <Input
           type="text"
           id="lastname"
           placeholder="Digite seu sobrenome"
           {...register('lastName')}
-          error={errors.lastName? true : false}
+          error={errors.lastName ? true : false}
         />
-      </label>
-      <label>
-        <div className="text-custom-purple text-sm font-medium">Email</div>
+        {errors.lastName && (
+          <InputMessage variant="error" message={errors.lastName?.message} />
+        )}
+      </InputControl>
+      <InputControl>
+        <Label>Login</Label>
         <Input
           type="email"
-          id="email"
           placeholder="E-mail"
           {...register('email')}
-          error={errors.email? true : false}
+          error={errors.email ? true : false}
         />
-      </label>
-      <label>
-        <div className="text-custom-purple text-sm font-medium">Telefone</div>
+        {errors.email && (
+          <InputMessage variant="error" message={errors.email?.message} />
+        )}
+      </InputControl>
+      <InputControl>
+        <Label>Telefone</Label>
         <Input
           type="text"
-          className="w-full outline-0 text-[#292929] font-medium placeholder:text-[#BFBFBF]"
           id="phone"
           placeholder="Telefone"
           {...register('phone')}
-          error={errors.phone? true : false}
+          error={errors.phone ? true : false}
         />
-      </label>
-      <label>
-        <div className="text-custom-purple text-sm font-medium">Senha</div>
+        {errors.phone && (
+          <InputMessage variant="error" message={errors.phone?.message} />
+        )}
+      </InputControl>
+      <InputControl>
+        <Label>Senha</Label>
         <Input
           type="password"
-          className="w-full outline-0 text-[#292929] font-medium placeholder:text-[#BFBFBF]"
           id="password"
           placeholder="Senha"
           {...register('password')}
-          error={errors.password? true : false}
         />
-      </label>
-      <label>
-        <div className="text-custom-purple text-sm font-medium">
-          Confirmar senha
-        </div>
+        {errors.password && (
+          <InputMessage variant="error" message={errors.password?.message} />
+        )}
+      </InputControl>
+      <InputControl>
+        <Label>Confirmar senha</Label>
         <Input
           type="password"
-          className="w-full outline-0 text-[#292929] font-medium placeholder:text-[#BFBFBF]"
           id="password-confirm"
           placeholder="Confirmar senha"
           {...register('passwordConfirmation')}
-          error={errors.passwordConfirmation? true : false}
         />
-      </label>
+        {errors.passwordConfirmation && (
+          <InputMessage
+            variant="error"
+            message={errors.passwordConfirmation?.message}
+          />
+        )}
+      </InputControl>
       <label className="flex items-center relative">
         <input
           className="appearance-none w-5 h-5 rounded-full border-2 border-custom-purple mr-1"

@@ -12,6 +12,9 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { UserLoginProps, userLoginSchema } from '@/schemas/userLogin';
 import { Input } from '@/components/Fields/Input';
+import { InputControl } from '@/components/Fields/InputControl';
+import { Label } from '@/components/Label';
+import { InputMessage } from '@/components/Fields/InputMessage';
 
 export function LoginForm() {
   const router = useRouter();
@@ -68,26 +71,29 @@ export function LoginForm() {
       onSubmit={handleSubmit(handleSubmitLogin)}
       className="flex flex-col gap-y-4"
     >
-      <label>
-        <div className="text-custom-purple text-sm font-medium">Login</div>
-          <Input
-            type="email"
-            className="w-full outline-0 text-[#292929] font-medium placeholder:text-[#BFBFBF]"
-            placeholder="E-mail"
-            {...register('email')}
-            error={errors.email ? true : false}
-          />
-      </label>
-      <label>
-        <div className="text-custom-purple text-sm font-medium">Senha</div>
-          <Input
-            type={showPassword ? 'text' : 'password'}
-            className="w-full outline-0 text-[#292929] font-medium placeholder:text-[#BFBFBF]"
-            placeholder="Senha"
-            {...register('password')}
-            error={errors.password ? true : false}
-          />
-      </label>
+      <InputControl>
+        <Label>Login</Label>
+        <Input
+          type="email"
+          placeholder="E-mail"
+          {...register('email')}
+          error={errors.email ? true : false}
+        />
+        {errors.email && (
+          <InputMessage variant="error" message={errors.email?.message} />
+        )}
+      </InputControl>
+      <InputControl>
+        <Label>Senha</Label>
+        <Input
+          type={showPassword ? 'text' : 'password'}
+          placeholder="Senha"
+          {...register('password')}
+        />
+         {errors.password && (
+          <InputMessage variant="error" message={errors.password?.message} />
+        )}
+      </InputControl>
       <div className="flex justify-between px-1">
         <label className="flex items-center justify-center relative">
           <input
