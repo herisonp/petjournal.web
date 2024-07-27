@@ -72,9 +72,10 @@ export function LoginForm() {
       className="flex flex-col gap-y-4"
     >
       <InputControl>
-        <Label>Login</Label>
+        <Label htmlFor='email'>Login</Label>
         <Input
           type="email"
+          id='email'
           placeholder="E-mail"
           {...register('email')}
           error={errors.email ? true : false}
@@ -84,9 +85,10 @@ export function LoginForm() {
         )}
       </InputControl>
       <InputControl>
-        <Label>Senha</Label>
+        <Label htmlFor='password'>Senha</Label>
         <Input
           type={showPassword ? 'text' : 'password'}
+          id='password'
           placeholder="Senha"
           {...register('password')}
         />

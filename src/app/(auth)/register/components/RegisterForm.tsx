@@ -72,7 +72,7 @@ export function RegisterForm() {
       className="flex flex-col gap-y-4"
     >
       <InputControl>
-        <Label>Nome</Label>
+        <Label htmlFor='name'>Nome</Label>
         <Input
           type="text"
           id="name"
@@ -85,7 +85,7 @@ export function RegisterForm() {
         )}
       </InputControl>
       <InputControl>
-        <Label>Sobrenome</Label>
+        <Label htmlFor='lastname'>Sobrenome</Label>
         <Input
           type="text"
           id="lastname"
@@ -98,9 +98,10 @@ export function RegisterForm() {
         )}
       </InputControl>
       <InputControl>
-        <Label>Login</Label>
+        <Label htmlFor='email'>Login</Label>
         <Input
           type="email"
+          id="email"
           placeholder="E-mail"
           {...register('email')}
           error={errors.email ? true : false}
@@ -110,7 +111,7 @@ export function RegisterForm() {
         )}
       </InputControl>
       <InputControl>
-        <Label>Telefone</Label>
+        <Label htmlFor='phone'>Telefone</Label>
         <Input
           type="text"
           id="phone"
@@ -123,7 +124,7 @@ export function RegisterForm() {
         )}
       </InputControl>
       <InputControl>
-        <Label>Senha</Label>
+        <Label htmlFor='password'>Senha</Label>
         <Input
           type="password"
           id="password"
@@ -135,7 +136,7 @@ export function RegisterForm() {
         )}
       </InputControl>
       <InputControl>
-        <Label>Confirmar senha</Label>
+        <Label htmlFor='password-confirm'>Confirmar senha</Label>
         <Input
           type="password"
           id="password-confirm"
