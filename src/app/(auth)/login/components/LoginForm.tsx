@@ -69,7 +69,7 @@ export function LoginForm() {
       className="flex flex-col gap-y-4"
     >
       <InputControl>
-        <Label htmlFor="email">Login</Label>
+        <Label htmlFor="email">E-mail</Label>
         <Input
           type="email"
           id="email"
@@ -88,6 +88,7 @@ export function LoginForm() {
           id="password"
           placeholder="Senha"
           {...register('password')}
+          error={errors.password ? true : false}
         />
         {errors.password && (
           <InputMessage variant="error" message={errors.password?.message} />
@@ -96,22 +97,32 @@ export function LoginForm() {
       <div className="flex justify-between px-1">
         <label className="flex items-center justify-center relative">
           <input
-            className="appearance-none w-5 h-5 rounded-full border-2 border-custom-purple mr-1"
+            className="appearance-none"
             type="checkbox"
             checked={remember}
             onChange={(event) => setRemember(event.target.checked)}
           />
-          <span>Lembrar</span>
-          {remember && (
-            <div className="absolute w-2 h-2 bg-custom-purple rounded-full left-[0.375rem]"></div>
-          )}
+          <span className="flex items-center justify-center w-4 h-4 mr-2 rounded-full border-2 border-studio-600">
+            <span
+              className={`absolute w-[6px] h-[6px] rounded-full ${
+                remember ? 'bg-studio-600' : ''
+              }`}
+            />
+          </span>
+
+          <span className="text-xs font-medium">Lembrar</span>
         </label>
-        <Link className="underline" href="/forget-password">
+        <Link className="text-xs font-medium" href="/forget-password">
           Esqueci minha senha
         </Link>
       </div>
 
-      <Button className="mt-16" type="submit" disabled={isButtonDisabled}>
+      <Button
+        className="mt-16"
+        type="submit"
+        variant="default"
+        disabled={isButtonDisabled}
+      >
         {loading ? 'Enviando...' : 'Continuar'}
       </Button>
     </form>

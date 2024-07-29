@@ -24,6 +24,7 @@ export function RegisterForm() {
     handleSubmit,
     register,
     formState: { errors },
+    setValue,
   } = useForm<UserRegisterProps>({
     resolver: zodResolver(userRegisterSchema),
     criteriaMode: 'firstError',
@@ -77,6 +78,12 @@ export function RegisterForm() {
     }
   }
 
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { checked } = event.target;
+    setRemember(checked);
+    setValue('isPrivacyPolicyAccepted', checked, { shouldValidate: true });
+  };
+
   return (
     <form
       onSubmit={handleSubmit(handleSubmitRegister)}
@@ -109,7 +116,7 @@ export function RegisterForm() {
         )}
       </InputControl>
       <InputControl>
-        <Label htmlFor="email">Login</Label>
+        <Label htmlFor="email">E-mail</Label>
         <Input
           type="email"
           id="email"
@@ -141,6 +148,7 @@ export function RegisterForm() {
           id="password"
           placeholder="Senha"
           {...register('password')}
+          error={errors.password ? true : false}
         />
         {errors.password && (
           <InputMessage variant="error" message={errors.password?.message} />
@@ -153,6 +161,7 @@ export function RegisterForm() {
           id="password-confirm"
           placeholder="Confirmar senha"
           {...register('passwordConfirmation')}
+          error={errors.passwordConfirmation ? true : false}
         />
         {errors.passwordConfirmation && (
           <InputMessage
@@ -161,24 +170,29 @@ export function RegisterForm() {
           />
         )}
       </InputControl>
-      <label className="flex items-center relative">
+
+      <label className="flex justify-center items-center relative">
         <input
-          className="appearance-none w-5 h-5 rounded-full border-2 border-custom-purple mr-1"
+          className="appearance-none"
           type="checkbox"
           checked={remember}
-          {...register('isPrivacyPolicyAccepted', {
-            onChange(event) {
-              setRemember(event.target.checked);
-            },
-          })}
+          {...register('isPrivacyPolicyAccepted')}
+          onChange={handleCheckboxChange}
         />
-        {remember && (
-          <div className="absolute w-2 h-2 bg-custom-purple rounded-full left-[0.375rem]"></div>
-        )}
-        <span>Eu concordo com a politica de privacidade</span>
+        <span className="flex items-center justify-center w-4 h-4 mr-2 rounded-full border-2 border-studio-600">
+          <span
+            className={`absolute w-[6px] h-[6px] rounded-full ${
+              remember ? 'bg-studio-600' : ''
+            }`}
+          />
+        </span>
+
+        <span className="text-xs font-medium">
+          Eu concordo com a política de privacidade
+        </span>
       </label>
       {errors.isPrivacyPolicyAccepted && (
-        <span className="text-red-500 text-xs">
+        <span className="text-red-500 text-xs self-center">
           {errors.isPrivacyPolicyAccepted.message}
         </span>
       )}

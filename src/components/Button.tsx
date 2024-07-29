@@ -6,7 +6,7 @@ const buttonStyleBase =
 
 const buttonVariants = {
     variant: {
-      default: `${buttonStyleBase} text-white bg-custom-purple disabled:bg-transparent disabled:border-2 disabled:border-[#B2B2B2] disabled:text-[#B2B2B2]`,
+      default: `${buttonStyleBase} text-white bg-[#7C54A7] disabled:bg-transparent disabled:border-2 disabled:border-[#B2B2B2] disabled:text-[#B2B2B2]`,
       outline: `${buttonStyleBase} bg-transparent border-2 border-red-600 text-red-600 disabled:opacity-45`,
       ghost: `bg-transparent disabled:opacity-45`,
     },

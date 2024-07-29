@@ -5,14 +5,14 @@ import { Logo } from '@/components/Logo';
 export default function LoginPage() {
   return (
     <>
-      <Logo scale='lg' />
-      <h1 className="font-medium text-2xl">Acessar conta</h1>
+      <Logo scale='md' />
+      <h1 className="font-medium text-2xl mt-10">Acessar conta</h1>
       <div className="w-full max-w-sm m-auto">
         <LoginForm />
-        <p className="text-center mt-6">
+        <p className="text-center text-xs font-medium mt-6">
           Não tem uma conta?{' '}
-          <Link href="/register" className="underline">
-            Inscreva-se
+          <Link href="/register">
+            Inscrever-se
           </Link>
         </p>
       </div>
