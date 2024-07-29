@@ -1,9 +1,11 @@
 'use client';
-import { FormEvent, useState } from 'react';
+import { useContext, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { submitLogin } from '@/services/submitLogin';
 import { submitRegister } from '@/services/submitRegister';
 import { Button } from '@/components/Button';
+import { getSession } from '@/services/getSession';
+import { UserContext } from '@/context/UserContext';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Input } from '@/components/Fields/Input';
@@ -15,6 +17,7 @@ import { InputMessage } from '@/components/Fields/InputMessage';
 export function RegisterForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [remember, setRemember] = useState(false);
+  const { setUser } = useContext(UserContext);
   const router = useRouter();
 
   const {
@@ -57,6 +60,15 @@ export function RegisterForm() {
       });
       if (errorLogin) throw errorLogin;
 
+      const { session } = await getSession();
+      if (!session) {
+        throw new Error('Usuário não autenticado...');
+      }
+
+      const { user } = session;
+
+      setUser(user);
+
       router.push('/');
     } catch (error) {
       setIsLoading(false);
@@ -71,7 +83,7 @@ export function RegisterForm() {
       className="flex flex-col gap-y-4"
     >
       <InputControl>
-        <Label htmlFor='name'>Nome</Label>
+        <Label htmlFor="name">Nome</Label>
         <Input
           type="text"
           id="name"
@@ -84,7 +96,7 @@ export function RegisterForm() {
         )}
       </InputControl>
       <InputControl>
-        <Label htmlFor='lastname'>Sobrenome</Label>
+        <Label htmlFor="lastname">Sobrenome</Label>
         <Input
           type="text"
           id="lastname"
@@ -97,7 +109,7 @@ export function RegisterForm() {
         )}
       </InputControl>
       <InputControl>
-        <Label htmlFor='email'>Login</Label>
+        <Label htmlFor="email">Login</Label>
         <Input
           type="email"
           id="email"
@@ -110,7 +122,7 @@ export function RegisterForm() {
         )}
       </InputControl>
       <InputControl>
-        <Label htmlFor='phone'>Telefone</Label>
+        <Label htmlFor="phone">Telefone</Label>
         <Input
           type="text"
           id="phone"
@@ -123,7 +135,7 @@ export function RegisterForm() {
         )}
       </InputControl>
       <InputControl>
-        <Label htmlFor='password'>Senha</Label>
+        <Label htmlFor="password">Senha</Label>
         <Input
           type="password"
           id="password"
@@ -135,7 +147,7 @@ export function RegisterForm() {
         )}
       </InputControl>
       <InputControl>
-        <Label htmlFor='password-confirm'>Confirmar senha</Label>
+        <Label htmlFor="password-confirm">Confirmar senha</Label>
         <Input
           type="password"
           id="password-confirm"
