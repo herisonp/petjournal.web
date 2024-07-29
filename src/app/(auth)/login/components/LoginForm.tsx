@@ -8,6 +8,13 @@ import { submitLogin } from '@/services/submitLogin';
 import { Button } from '@/components/Button';
 import { getSession } from '@/services/getSession';
 import { UserContext } from '@/context/UserContext';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { UserLoginProps, userLoginSchema } from '@/schemas/userLogin';
+import { Input } from '@/components/Fields/Input';
+import { InputControl } from '@/components/Fields/InputControl';
+import { Label } from '@/components/Label';
+import { InputMessage } from '@/components/Fields/InputMessage';
 
 export function LoginForm() {
   const router = useRouter();
@@ -18,17 +25,24 @@ export function LoginForm() {
 
   const isButtonDisabled = !!loading;
 
-  async function handleSubmitLogin(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<UserLoginProps>({
+    resolver: zodResolver(userLoginSchema),
+    criteriaMode: 'firstError',
+    reValidateMode: 'onChange',
+    mode: 'onBlur',
+  });
+
+  async function handleSubmitLogin({ email, password }: UserLoginProps) {
     try {
       setLoading(true);
-      const formData = new FormData(event.currentTarget);
-
-      // TODO: validar dados do formulário
       const loginData = {
-        email: formData.get('email') as string,
-        password: formData.get('password') as string,
-        remind: remember,
+        email,
+        password,
+        remember: remember,
       };
 
       const { error } = await submitLogin(loginData);
@@ -52,48 +66,35 @@ export function LoginForm() {
   }
 
   return (
-    <form onSubmit={handleSubmitLogin} className="flex flex-col gap-y-4">
-      <label>
-        <div className="text-custom-purple text-sm font-medium">Login</div>
-        <div className="border border-[#1b1b1b] rounded-[5px] py-2 px-1">
-          <input
-            type="email"
-            className="w-full outline-0 text-[#292929] font-medium placeholder:text-[#BFBFBF]"
-            placeholder="E-mail"
-            name="email"
-          />
-        </div>
-        {/* {errors.email && (
-          <span className="text-red-600 text-xs">{errors.email.message}</span>
-        )} */}
-      </label>
-      <label>
-        <div className="text-custom-purple text-sm font-medium">Senha</div>
-        <div className="border border-[#1b1b1b] rounded-[5px] flex py-2 px-1">
-          <input
-            type={showPassword ? 'text' : 'password'}
-            className="w-full outline-0 text-[#292929] font-medium placeholder:text-[#BFBFBF]"
-            placeholder="Senha"
-            name="password"
-          />
-          <Button
-            variant="ghost"
-            type="button"
-            onClick={() => setShowPassword((prev) => !prev)}
-            className="px-1"
-          >
-            <Image
-              src={toggleShowPassword}
-              alt="Ícone de olho para mostrar e esconder a senha"
-            />
-          </Button>
-        </div>
-        {/* {errors.password && (
-          <span className="text-red-600 text-xs">
-            {errors.password.message}
-          </span>
-        )} */}
-      </label>
+    <form
+      onSubmit={handleSubmit(handleSubmitLogin)}
+      className="flex flex-col gap-y-4"
+    >
+      <InputControl>
+        <Label htmlFor="email">Login</Label>
+        <Input
+          type="email"
+          id="email"
+          placeholder="E-mail"
+          {...register('email')}
+          error={errors.email ? true : false}
+        />
+        {errors.email && (
+          <InputMessage variant="error" message={errors.email?.message} />
+        )}
+      </InputControl>
+      <InputControl>
+        <Label htmlFor="password">Senha</Label>
+        <Input
+          type={showPassword ? 'text' : 'password'}
+          id="password"
+          placeholder="Senha"
+          {...register('password')}
+        />
+        {errors.password && (
+          <InputMessage variant="error" message={errors.password?.message} />
+        )}
+      </InputControl>
       <div className="flex justify-between px-1">
         <label className="flex items-center justify-center relative">
           <input
