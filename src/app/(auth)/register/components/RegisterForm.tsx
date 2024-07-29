@@ -1,5 +1,5 @@
 'use client';
-import { FormEvent, useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { submitLogin } from '@/services/submitLogin';
 import { submitRegister } from '@/services/submitRegister';

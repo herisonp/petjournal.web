@@ -1,9 +1,7 @@
 'use client';
-import { FormEvent, useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import Image from 'next/image';
-import toggleShowPassword from '/public/images/show-password.svg';
 import { submitLogin } from '@/services/submitLogin';
 import { Button } from '@/components/Button';
 import { getSession } from '@/services/getSession';
