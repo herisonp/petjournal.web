@@ -24,7 +24,7 @@ export function RegisterForm() {
     handleSubmit,
     register,
     formState: { errors },
-    setValue
+    setValue,
   } = useForm<UserRegisterProps>({
     resolver: zodResolver(userRegisterSchema),
     criteriaMode: 'firstError',
@@ -116,7 +116,7 @@ export function RegisterForm() {
         )}
       </InputControl>
       <InputControl>
-        <Label htmlFor="email">Login</Label>
+        <Label htmlFor="email">E-mail</Label>
         <Input
           type="email"
           id="email"
@@ -179,11 +179,17 @@ export function RegisterForm() {
           {...register('isPrivacyPolicyAccepted')}
           onChange={handleCheckboxChange}
         />
-        <span className='flex items-center justify-center w-4 h-4 mr-2 rounded-full border-2 border-studio-600'>
-          <span className={`absolute w-[6px] h-[6px] rounded-full ${remember ? 'bg-studio-600' : ''}`} />
+        <span className="flex items-center justify-center w-4 h-4 mr-2 rounded-full border-2 border-studio-600">
+          <span
+            className={`absolute w-[6px] h-[6px] rounded-full ${
+              remember ? 'bg-studio-600' : ''
+            }`}
+          />
         </span>
 
-        <span className="text-xs font-medium">Eu concordo com a política de privacidade</span>
+        <span className="text-xs font-medium">
+          Eu concordo com a política de privacidade
+        </span>
       </label>
       {errors.isPrivacyPolicyAccepted && (
         <span className="text-red-500 text-xs self-center">
