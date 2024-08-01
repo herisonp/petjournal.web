@@ -1,23 +1,22 @@
 'use client';
-import { useContext, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { submitLogin } from '@/services/submitLogin';
 import { Button } from '@/components/Button';
-import { getSession } from '@/services/getSession';
-import { UserContext } from '@/context/UserContext';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { UserLoginProps, userLoginSchema } from '@/schemas/userLogin';
 import { Input } from '@/components/Fields/Input';
 import { InputControl } from '@/components/Fields/InputControl';
-import { Label } from '@/components/Label';
 import { InputMessage } from '@/components/Fields/InputMessage';
+import { Label } from '@/components/Label';
+import { UserContext } from '@/context/UserContext';
+import { UserLoginProps, userLoginSchema } from '@/schemas/userLogin';
+import { getSession } from '@/services/getSession';
+import { submitLogin } from '@/services/submitLogin';
+import { zodResolver } from '@hookform/resolvers/zod';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useContext, useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 export function LoginForm() {
   const router = useRouter();
   const [remember, setRemember] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const { setUser } = useContext(UserContext);
 
@@ -40,7 +39,7 @@ export function LoginForm() {
       const loginData = {
         email,
         password,
-        remember: remember,
+        remember,
       };
 
       const { error } = await submitLogin(loginData);
@@ -75,7 +74,7 @@ export function LoginForm() {
           id="email"
           placeholder="E-mail"
           {...register('email')}
-          error={errors.email ? true : false}
+          error={!!errors.email}
         />
         {errors.email && (
           <InputMessage variant="error" message={errors.email?.message} />
@@ -84,11 +83,10 @@ export function LoginForm() {
       <InputControl>
         <Label htmlFor="password">Senha</Label>
         <Input
-          type={showPassword ? 'text' : 'password'}
           id="password"
           placeholder="Senha"
           {...register('password')}
-          error={errors.password ? true : false}
+          error={!!errors.password}
         />
         {errors.password && (
           <InputMessage variant="error" message={errors.password?.message} />
@@ -100,7 +98,7 @@ export function LoginForm() {
             className="appearance-none"
             type="checkbox"
             checked={remember}
-            onChange={(event) => setRemember(event.target.checked)}
+            onChange={event => setRemember(event.target.checked)}
           />
           <span className="flex items-center justify-center w-4 h-4 mr-2 rounded-full border-2 border-studio-600">
             <span
