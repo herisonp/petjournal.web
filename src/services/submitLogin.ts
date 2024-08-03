@@ -5,13 +5,13 @@ import { setToken } from './setToken';
 interface submitLoginProps {
   email: string;
   password: string;
-  rembered?: boolean;
+  remember?: boolean;
 }
 
 export async function submitLogin({
   email,
   password,
-  rembered,
+  remember,
 }: submitLoginProps) {
   try {
     const res = await api('/login', {
@@ -34,10 +34,10 @@ export async function submitLogin({
 
     await setToken({
       token: accessToken,
-      rembered: rembered || false,
+      remember: remember || false,
     });
 
-    return { accessToken };
+    return { accessToken: accessToken as string };
   } catch (err) {
     const error = err as Error;
     console.log('submitLogin error', error);

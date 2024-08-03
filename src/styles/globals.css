@@ -5,3 +5,13 @@
 .swiper-pagination-bullet-active {
   background-color: #fff !important;
 }
+
+@layer components {
+  input:-webkit-autofill {
+    box-shadow: 0 0 0px 1000px white inset;
+  }
+
+  input:-moz-autofill {
+    box-shadow: 0 0 0px 1000px white inset;
+  }
+}

@@ -1,27 +1,54 @@
 'use client';
-import { FormEvent, useState } from 'react';
+import { useContext, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { submitLogin } from '@/services/submitLogin';
 import { submitRegister } from '@/services/submitRegister';
 import { Button } from '@/components/Button';
+import { getSession } from '@/services/getSession';
+import { UserContext } from '@/context/UserContext';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { Input } from '@/components/Fields/Input';
+import { UserRegisterProps, userRegisterSchema } from '@/schemas/userRegister';
+import { InputControl } from '@/components/Fields/InputControl';
+import { Label } from '@/components/Label';
+import { InputMessage } from '@/components/Fields/InputMessage';
 
 export function RegisterForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [remember, setRemember] = useState(false);
+  const { setUser } = useContext(UserContext);
   const router = useRouter();
 
-  async function handleSubmitRegister(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+    setValue,
+  } = useForm<UserRegisterProps>({
+    resolver: zodResolver(userRegisterSchema),
+    criteriaMode: 'firstError',
+    reValidateMode: 'onChange',
+    mode: 'onBlur',
+  });
+
+  async function handleSubmitRegister({
+    email,
+    firstName,
+    lastName,
+    password,
+    passwordConfirmation,
+    phone,
+  }: UserRegisterProps) {
     setIsLoading(true);
-    const formData = new FormData(event.currentTarget);
     try {
       const newUser = {
-        firstName: formData.get('name') as string,
-        lastName: formData.get('lastname') as string,
-        email: formData.get('email') as string,
-        password: formData.get('password') as string,
-        passwordConfirmation: formData.get('password-confirm') as string,
-        phone: formData.get('phone') as string,
+        firstName,
+        lastName,
+        email,
+        password,
+        passwordConfirmation,
+        phone,
         isPrivacyPolicyAccepted: remember,
       };
 
@@ -34,103 +61,141 @@ export function RegisterForm() {
       });
       if (errorLogin) throw errorLogin;
 
+      const { session } = await getSession();
+      if (!session) {
+        throw new Error('Usuário não autenticado...');
+      }
+
+      const { user } = session;
+
+      setUser(user);
+
       router.push('/');
     } catch (error) {
+      setIsLoading(false);
       const err = error as Error;
       alert(err.message);
-    } finally {
-      setIsLoading(false);
     }
   }
 
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { checked } = event.target;
+    setRemember(checked);
+    setValue('isPrivacyPolicyAccepted', checked, { shouldValidate: true });
+  };
+
   return (
-    <form onSubmit={handleSubmitRegister} className="flex flex-col gap-y-4">
-      <label>
-        <div className="text-custom-purple text-sm font-medium">Nome</div>
-        <div className="border border-[#1b1b1b] rounded-[5px] py-2 px-1">
-          <input
-            type="text"
-            className="w-full outline-0 text-[#292929] font-medium placeholder:text-[#BFBFBF]"
-            name="name"
-            id="name"
-            placeholder="Digite seu primeiro nome"
+    <form
+      onSubmit={handleSubmit(handleSubmitRegister)}
+      className="flex flex-col gap-y-4"
+    >
+      <InputControl>
+        <Label htmlFor="name">Nome</Label>
+        <Input
+          type="text"
+          id="name"
+          placeholder="Digite seu primeiro nome"
+          {...register('firstName')}
+          error={errors.firstName ? true : false}
+        />
+        {errors.firstName && (
+          <InputMessage variant="error" message={errors.firstName?.message} />
+        )}
+      </InputControl>
+      <InputControl>
+        <Label htmlFor="lastname">Sobrenome</Label>
+        <Input
+          type="text"
+          id="lastname"
+          placeholder="Digite seu sobrenome"
+          {...register('lastName')}
+          error={errors.lastName ? true : false}
+        />
+        {errors.lastName && (
+          <InputMessage variant="error" message={errors.lastName?.message} />
+        )}
+      </InputControl>
+      <InputControl>
+        <Label htmlFor="email">E-mail</Label>
+        <Input
+          type="email"
+          id="email"
+          placeholder="E-mail"
+          {...register('email')}
+          error={errors.email ? true : false}
+        />
+        {errors.email && (
+          <InputMessage variant="error" message={errors.email?.message} />
+        )}
+      </InputControl>
+      <InputControl>
+        <Label htmlFor="phone">Telefone</Label>
+        <Input
+          type="text"
+          id="phone"
+          placeholder="Telefone"
+          {...register('phone')}
+          error={errors.phone ? true : false}
+        />
+        {errors.phone && (
+          <InputMessage variant="error" message={errors.phone?.message} />
+        )}
+      </InputControl>
+      <InputControl>
+        <Label htmlFor="password">Senha</Label>
+        <Input
+          type="password"
+          id="password"
+          placeholder="Senha"
+          {...register('password')}
+          error={errors.password ? true : false}
+        />
+        {errors.password && (
+          <InputMessage variant="error" message={errors.password?.message} />
+        )}
+      </InputControl>
+      <InputControl>
+        <Label htmlFor="password-confirm">Confirmar senha</Label>
+        <Input
+          type="password"
+          id="password-confirm"
+          placeholder="Confirmar senha"
+          {...register('passwordConfirmation')}
+          error={errors.passwordConfirmation ? true : false}
+        />
+        {errors.passwordConfirmation && (
+          <InputMessage
+            variant="error"
+            message={errors.passwordConfirmation?.message}
           />
-        </div>
-      </label>
-      <label>
-        <div className="text-custom-purple text-sm font-medium">Sobrenome</div>
-        <div className="border border-[#1b1b1b] rounded-[5px] py-2 px-1">
-          <input
-            type="text"
-            className="w-full outline-0 text-[#292929] font-medium placeholder:text-[#BFBFBF]"
-            name="lastname"
-            id="lastname"
-            placeholder="Digite seu sobrenome"
-          />
-        </div>
-      </label>
-      <label>
-        <div className="text-custom-purple text-sm font-medium">Email</div>
-        <div className="border border-[#1b1b1b] rounded-[5px] py-2 px-1">
-          <input
-            type="email"
-            className="w-full outline-0 text-[#292929] font-medium placeholder:text-[#BFBFBF]"
-            name="email"
-            id="email"
-            placeholder="E-mail"
-          />
-        </div>
-      </label>
-      <label>
-        <div className="text-custom-purple text-sm font-medium">Telefone</div>
-        <div className="border border-[#1b1b1b] rounded-[5px] py-2 px-1">
-          <input
-            type="text"
-            className="w-full outline-0 text-[#292929] font-medium placeholder:text-[#BFBFBF]"
-            name="phone"
-            id="phone"
-            placeholder="Telefone"
-          />
-        </div>
-      </label>
-      <label>
-        <div className="text-custom-purple text-sm font-medium">Senha</div>
-        <div className="border border-[#1b1b1b] rounded-[5px] py-2 px-1">
-          <input
-            type="password"
-            className="w-full outline-0 text-[#292929] font-medium placeholder:text-[#BFBFBF]"
-            name="password"
-            id="password"
-            placeholder="Senha"
-          />
-        </div>
-      </label>
-      <label>
-        <div className="text-custom-purple text-sm font-medium">
-          Confirmar senha
-        </div>
-        <div className="border border-[#1b1b1b] rounded-[5px] py-2 px-1">
-          <input
-            type="password"
-            className="w-full outline-0 text-[#292929] font-medium placeholder:text-[#BFBFBF]"
-            name="password-confirm"
-            id="password-confirm"
-            placeholder="Confirmar senha"
-          />
-        </div>
-      </label>
-      <label className="flex items-center relative">
+        )}
+      </InputControl>
+
+      <label className="flex justify-center items-center relative">
         <input
-          className="appearance-none w-5 h-5 rounded-full border-2 border-custom-purple mr-1"
+          className="appearance-none"
           type="checkbox"
           checked={remember}
-          onChange={(event) => setRemember(event.target.checked)}
+          {...register('isPrivacyPolicyAccepted')}
+          onChange={handleCheckboxChange}
         />
-        {remember && (
-          <div className="absolute w-2 h-2 bg-custom-purple rounded-full left-[0.375rem]"></div>
-        )}
-        <span>Eu concordo com a politica de privacidade</span>
+        <span className="flex items-center justify-center w-4 h-4 mr-2 rounded-full border-2 border-studio-600">
+          <span
+            className={`absolute w-[6px] h-[6px] rounded-full ${
+              remember ? 'bg-studio-600' : ''
+            }`}
+          />
+        </span>
+
+        <span className="text-xs font-medium">
+          Eu concordo com a política de privacidade
+        </span>
       </label>
+      {errors.isPrivacyPolicyAccepted && (
+        <span className="text-red-500 text-xs self-center">
+          {errors.isPrivacyPolicyAccepted.message}
+        </span>
+      )}
       <Button className="mt-16" type="submit" disabled={!!isLoading}>
         {isLoading ? 'Enviando...' : 'Continuar'}
       </Button>

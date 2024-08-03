@@ -5,7 +5,7 @@ const labelStyleBase = 'text-sm font-medium';
 
 const labelVariants = {
   variant: {
-    primary: `${labelStyleBase} text-custom-purple`,
+    primary: `${labelStyleBase} text-studio-600`,
     secondary: `${labelStyleBase} text-[#2E2E2E]`,
   },
 };

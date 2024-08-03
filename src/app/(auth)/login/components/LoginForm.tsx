@@ -1,13 +1,18 @@
 'use client';
-import { FormEvent, useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import Image from 'next/image';
-import toggleShowPassword from '/public/images/show-password.svg';
 import { submitLogin } from '@/services/submitLogin';
 import { Button } from '@/components/Button';
 import { getSession } from '@/services/getSession';
 import { UserContext } from '@/context/UserContext';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { UserLoginProps, userLoginSchema } from '@/schemas/userLogin';
+import { Input } from '@/components/Fields/Input';
+import { InputControl } from '@/components/Fields/InputControl';
+import { Label } from '@/components/Label';
+import { InputMessage } from '@/components/Fields/InputMessage';
 
 export function LoginForm() {
   const router = useRouter();
@@ -18,16 +23,23 @@ export function LoginForm() {
 
   const isButtonDisabled = !!loading;
 
-  async function handleSubmitLogin(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<UserLoginProps>({
+    resolver: zodResolver(userLoginSchema),
+    criteriaMode: 'firstError',
+    reValidateMode: 'onChange',
+    mode: 'onBlur',
+  });
+
+  async function handleSubmitLogin({ email, password }: UserLoginProps) {
     try {
       setLoading(true);
-      const formData = new FormData(event.currentTarget);
-
-      // TODO: validar dados do formulário
       const loginData = {
-        email: formData.get('email') as string,
-        password: formData.get('password') as string,
+        email,
+        password,
         remember: remember,
       };
 
@@ -45,75 +57,72 @@ export function LoginForm() {
 
       router.push('/');
     } catch (error) {
+      setLoading(false);
       const err = error as Error;
       alert(err.message);
-    } finally {
-      setLoading(false);
     }
   }
 
   return (
-    <form onSubmit={handleSubmitLogin} className="flex flex-col gap-y-4">
-      <label>
-        <div className="text-custom-purple text-sm font-medium">Login</div>
-        <div className="border border-[#1b1b1b] rounded-[5px] py-2 px-1">
-          <input
-            type="email"
-            className="w-full outline-0 text-[#292929] font-medium placeholder:text-[#BFBFBF]"
-            placeholder="E-mail"
-            name="email"
-          />
-        </div>
-        {/* {errors.email && (
-          <span className="text-red-600 text-xs">{errors.email.message}</span>
-        )} */}
-      </label>
-      <label>
-        <div className="text-custom-purple text-sm font-medium">Senha</div>
-        <div className="border border-[#1b1b1b] rounded-[5px] flex py-2 px-1">
-          <input
-            type={showPassword ? 'text' : 'password'}
-            className="w-full outline-0 text-[#292929] font-medium placeholder:text-[#BFBFBF]"
-            placeholder="Senha"
-            name="password"
-          />
-          <Button
-            variant="ghost"
-            type="button"
-            onClick={() => setShowPassword((prev) => !prev)}
-            className="px-1"
-          >
-            <Image
-              src={toggleShowPassword}
-              alt="Ícone de olho para mostrar e esconder a senha"
-            />
-          </Button>
-        </div>
-        {/* {errors.password && (
-          <span className="text-red-600 text-xs">
-            {errors.password.message}
-          </span>
-        )} */}
-      </label>
+    <form
+      onSubmit={handleSubmit(handleSubmitLogin)}
+      className="flex flex-col gap-y-4"
+    >
+      <InputControl>
+        <Label htmlFor="email">E-mail</Label>
+        <Input
+          type="email"
+          id="email"
+          placeholder="E-mail"
+          {...register('email')}
+          error={errors.email ? true : false}
+        />
+        {errors.email && (
+          <InputMessage variant="error" message={errors.email?.message} />
+        )}
+      </InputControl>
+      <InputControl>
+        <Label htmlFor="password">Senha</Label>
+        <Input
+          type={showPassword ? 'text' : 'password'}
+          id="password"
+          placeholder="Senha"
+          {...register('password')}
+          error={errors.password ? true : false}
+        />
+        {errors.password && (
+          <InputMessage variant="error" message={errors.password?.message} />
+        )}
+      </InputControl>
       <div className="flex justify-between px-1">
         <label className="flex items-center justify-center relative">
           <input
-            className="appearance-none w-5 h-5 rounded-full border-2 border-custom-purple mr-1"
+            className="appearance-none"
             type="checkbox"
             checked={remember}
             onChange={(event) => setRemember(event.target.checked)}
           />
-          <span>Lembrar</span>
-          {remember && (
-            <div className="absolute w-2 h-2 bg-custom-purple rounded-full left-[0.375rem]"></div>
-          )}
+          <span className="flex items-center justify-center w-4 h-4 mr-2 rounded-full border-2 border-studio-600">
+            <span
+              className={`absolute w-[6px] h-[6px] rounded-full ${
+                remember ? 'bg-studio-600' : ''
+              }`}
+            />
+          </span>
+
+          <span className="text-xs font-medium">Lembrar</span>
         </label>
-        <Link className="underline" href="/forget-password">
+        <Link className="text-xs font-medium" href="/forget-password">
           Esqueci minha senha
         </Link>
       </div>
 
-      <Button className="mt-16" type="submit" disabled={isButtonDisabled}>
+      <Button
+        className="mt-16"
+        type="submit"
+        variant="default"
+        disabled={isButtonDisabled}
+      >
         {loading ? 'Enviando...' : 'Continuar'}
       </Button>
     </form>
