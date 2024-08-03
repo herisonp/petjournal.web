@@ -27,7 +27,7 @@ export async function submitWaitingCode({
 
     await setToken({
       token: accessToken,
-      remind: false,
+      remember: false
     });
 
     return {
