@@ -18,6 +18,7 @@ export function LoginForm() {
   const router = useRouter();
   const [remember, setRemember] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showPassword] = useState(false);
   const { setUser } = useContext(UserContext);
 
   const isButtonDisabled = !!loading;
@@ -83,6 +84,7 @@ export function LoginForm() {
       <InputControl>
         <Label htmlFor="password">Senha</Label>
         <Input
+          type={showPassword ? 'text' : 'password'}
           id="password"
           placeholder="Senha"
           {...register('password')}
