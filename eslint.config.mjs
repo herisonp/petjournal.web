@@ -64,6 +64,7 @@ export default [
           arrowParens: 'avoid',
           semi: true,
           endOfLine: 'auto',
+          jsxSingleQuote: true,
         },
       ],
 
