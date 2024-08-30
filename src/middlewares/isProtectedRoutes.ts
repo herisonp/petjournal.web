@@ -5,7 +5,6 @@ import { protectedRoutes } from './protectedRoutes';
 export function isProtectedRoutes(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const isProtectedRoute =
-    pathname === '/' ||
-    protectedRoutes.some((path) => pathname.startsWith(path));
+    pathname === '/' || protectedRoutes.some(path => pathname.startsWith(path));
   return isProtectedRoute;
 }

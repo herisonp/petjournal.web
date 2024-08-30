@@ -1,5 +1,5 @@
 'use server';
-import { type NextRequest, NextResponse } from 'next/server';
+import { type NextRequest } from 'next/server';
 
 export function isWaitingCodeMiddleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;

@@ -29,7 +29,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     const [showPassword, setShowPassword] = React.useState(false);
 
     const togglePasswordVisibility = () => {
-      setShowPassword((prev) => !prev);
+      setShowPassword(prev => !prev);
     };
 
     return (
@@ -43,14 +43,14 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       >
         <input
           type={showPassword && type === 'password' ? 'text' : type}
-          className="w-full outline-0 bg-transparent"
+          className='w-full outline-0 bg-transparent'
           ref={ref}
           {...props}
         />
 
         {type === 'password' && (
           <button
-            type="button"
+            type='button'
             onClick={togglePasswordVisibility}
             aria-label={showPassword ? 'Esconder senha' : 'Mostrar senha'}
           >
