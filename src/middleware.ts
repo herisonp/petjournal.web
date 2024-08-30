@@ -1,8 +1,8 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { isWaitingCodeMiddleware } from './middlewares/isWaitingCodeMiddleware';
-import { isProtectedRoutes } from './middlewares/isProtectedRoutes';
-import { isAuthvalid } from './middlewares/isAuthValid';
 import { isAuthPages } from './middlewares/isAuthPages';
+import { isAuthvalid } from './middlewares/isAuthValid';
+import { isProtectedRoutes } from './middlewares/isProtectedRoutes';
+import { isWaitingCodeMiddleware } from './middlewares/isWaitingCodeMiddleware';
 
 export async function middleware(request: NextRequest) {
   const authenticated = await isAuthvalid();

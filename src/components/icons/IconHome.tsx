@@ -11,7 +11,7 @@ export function IconHome({ size = 16, active = false, className }: IconProps) {
       src={active ? iconHomeActive : iconHome}
       width={size}
       height={size}
-      alt=""
+      alt=''
     />
   );
 }

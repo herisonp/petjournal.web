@@ -66,43 +66,43 @@ export function LoginForm() {
   return (
     <form
       onSubmit={handleSubmit(handleSubmitLogin)}
-      className="flex flex-col gap-y-4"
+      className='flex flex-col gap-y-4'
     >
       <InputControl>
-        <Label htmlFor="email">E-mail</Label>
+        <Label htmlFor='email'>E-mail</Label>
         <Input
-          type="email"
-          id="email"
-          placeholder="E-mail"
+          type='email'
+          id='email'
+          placeholder='E-mail'
           {...register('email')}
           error={!!errors.email}
         />
         {errors.email && (
-          <InputMessage variant="error" message={errors.email?.message} />
+          <InputMessage variant='error' message={errors.email?.message} />
         )}
       </InputControl>
       <InputControl>
-        <Label htmlFor="password">Senha</Label>
+        <Label htmlFor='password'>Senha</Label>
         <Input
           type={showPassword ? 'text' : 'password'}
-          id="password"
-          placeholder="Senha"
+          id='password'
+          placeholder='Senha'
           {...register('password')}
           error={!!errors.password}
         />
         {errors.password && (
-          <InputMessage variant="error" message={errors.password?.message} />
+          <InputMessage variant='error' message={errors.password?.message} />
         )}
       </InputControl>
-      <div className="flex justify-between px-1">
-        <label className="flex items-center justify-center relative">
+      <div className='flex justify-between px-1'>
+        <label className='flex items-center justify-center relative'>
           <input
-            className="appearance-none"
-            type="checkbox"
+            className='appearance-none'
+            type='checkbox'
             checked={remember}
             onChange={event => setRemember(event.target.checked)}
           />
-          <span className="flex items-center justify-center w-4 h-4 mr-2 rounded-full border-2 border-studio-600">
+          <span className='flex items-center justify-center w-4 h-4 mr-2 rounded-full border-2 border-studio-600'>
             <span
               className={`absolute w-[6px] h-[6px] rounded-full ${
                 remember ? 'bg-studio-600' : ''
@@ -110,17 +110,17 @@ export function LoginForm() {
             />
           </span>
 
-          <span className="text-xs font-medium">Lembrar</span>
+          <span className='text-xs font-medium'>Lembrar</span>
         </label>
-        <Link className="text-xs font-medium" href="/forget-password">
+        <Link className='text-xs font-medium' href='/forget-password'>
           Esqueci minha senha
         </Link>
       </div>
 
       <Button
-        className="mt-16"
-        type="submit"
-        variant="default"
+        className='mt-16'
+        type='submit'
+        variant='default'
         disabled={isButtonDisabled}
       >
         {loading ? 'Enviando...' : 'Continuar'}

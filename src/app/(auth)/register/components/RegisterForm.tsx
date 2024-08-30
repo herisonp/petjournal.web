@@ -87,99 +87,99 @@ export function RegisterForm() {
   return (
     <form
       onSubmit={handleSubmit(handleSubmitRegister)}
-      className="flex flex-col gap-y-4"
+      className='flex flex-col gap-y-4'
     >
       <InputControl>
-        <Label htmlFor="name">Nome</Label>
+        <Label htmlFor='name'>Nome</Label>
         <Input
-          type="text"
-          id="name"
-          placeholder="Digite seu primeiro nome"
+          type='text'
+          id='name'
+          placeholder='Digite seu primeiro nome'
           {...register('firstName')}
-          error={errors.firstName ? true : false}
+          error={!!errors.firstName}
         />
         {errors.firstName && (
-          <InputMessage variant="error" message={errors.firstName?.message} />
+          <InputMessage variant='error' message={errors.firstName?.message} />
         )}
       </InputControl>
       <InputControl>
-        <Label htmlFor="lastname">Sobrenome</Label>
+        <Label htmlFor='lastname'>Sobrenome</Label>
         <Input
-          type="text"
-          id="lastname"
-          placeholder="Digite seu sobrenome"
+          type='text'
+          id='lastname'
+          placeholder='Digite seu sobrenome'
           {...register('lastName')}
-          error={errors.lastName ? true : false}
+          error={!!errors.lastName}
         />
         {errors.lastName && (
-          <InputMessage variant="error" message={errors.lastName?.message} />
+          <InputMessage variant='error' message={errors.lastName?.message} />
         )}
       </InputControl>
       <InputControl>
-        <Label htmlFor="email">E-mail</Label>
+        <Label htmlFor='email'>E-mail</Label>
         <Input
-          type="email"
-          id="email"
-          placeholder="E-mail"
+          type='email'
+          id='email'
+          placeholder='E-mail'
           {...register('email')}
-          error={errors.email ? true : false}
+          error={!!errors.email}
         />
         {errors.email && (
-          <InputMessage variant="error" message={errors.email?.message} />
+          <InputMessage variant='error' message={errors.email?.message} />
         )}
       </InputControl>
       <InputControl>
-        <Label htmlFor="phone">Telefone</Label>
+        <Label htmlFor='phone'>Telefone</Label>
         <Input
-          type="text"
-          id="phone"
-          placeholder="Telefone"
+          type='text'
+          id='phone'
+          placeholder='Telefone'
           {...register('phone')}
-          error={errors.phone ? true : false}
+          error={!!errors.phone}
         />
         {errors.phone && (
-          <InputMessage variant="error" message={errors.phone?.message} />
+          <InputMessage variant='error' message={errors.phone?.message} />
         )}
       </InputControl>
       <InputControl>
-        <Label htmlFor="password">Senha</Label>
+        <Label htmlFor='password'>Senha</Label>
         <Input
-          type="password"
-          id="password"
-          placeholder="Senha"
+          type='password'
+          id='password'
+          placeholder='Senha'
           {...register('password')}
-          error={errors.password ? true : false}
+          error={!!errors.password}
         />
         {errors.password && (
-          <InputMessage variant="error" message={errors.password?.message} />
+          <InputMessage variant='error' message={errors.password?.message} />
         )}
       </InputControl>
       <InputControl>
-        <Label htmlFor="password-confirm">Confirmar senha</Label>
+        <Label htmlFor='password-confirm'>Confirmar senha</Label>
         <Input
-          type="password"
-          id="password-confirm"
-          placeholder="Confirmar senha"
+          type='password'
+          id='password-confirm'
+          placeholder='Confirmar senha'
           {...register('passwordConfirmation')}
-          error={errors.passwordConfirmation ? true : false}
+          error={!!errors.passwordConfirmation}
         />
         {errors.passwordConfirmation && (
           <InputMessage
-            variant="error"
+            variant='error'
             message={errors.passwordConfirmation?.message}
           />
         )}
       </InputControl>
 
-      <label className="flex justify-center items-center relative">
+      <label className='flex justify-center items-center relative'>
         <input
-          className="appearance-none"
-          type="checkbox"
+          className='appearance-none'
+          type='checkbox'
           checked={remember}
           {...register('isPrivacyPolicyAccepted')}
           onChange={handleCheckboxChange}
         />
-        <span className="flex items-center justify-center w-4 h-4 mr-2 rounded-full border-2 border-studio-600">
+        <span className='flex items-center justify-center w-4 h-4 mr-2 rounded-full border-2 border-studio-600'>
           <span
             className={`absolute w-[6px] h-[6px] rounded-full ${
               remember ? 'bg-studio-600' : ''
@@ -187,16 +187,16 @@ export function RegisterForm() {
           />
         </span>
 
-        <span className="text-xs font-medium">
+        <span className='text-xs font-medium'>
           Eu concordo com a política de privacidade
         </span>
       </label>
       {errors.isPrivacyPolicyAccepted && (
-        <span className="text-red-500 text-xs self-center">
+        <span className='text-red-500 text-xs self-center'>
           {errors.isPrivacyPolicyAccepted.message}
         </span>
       )}
-      <Button className="mt-16" type="submit" disabled={!!isLoading}>
+      <Button className='mt-16' type='submit' disabled={!!isLoading}>
         {isLoading ? 'Enviando...' : 'Continuar'}
       </Button>
     </form>

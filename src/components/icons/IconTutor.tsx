@@ -11,7 +11,7 @@ export function IconTutor({ size = 16, active = false, className }: IconProps) {
       src={active ? iconTutorActive : iconTutor}
       width={size}
       height={size}
-      alt=""
+      alt=''
     />
   );
 }

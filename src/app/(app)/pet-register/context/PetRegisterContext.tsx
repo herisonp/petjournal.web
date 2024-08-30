@@ -1,17 +1,18 @@
 'use client';
-import { useRouter } from 'next/navigation';
 import { PetsContext } from '@/context/PetsContext';
+import { getBreeds } from '@/services/getBreeds';
+import { getSizes } from '@/services/getSizes';
 import { Breed, Pet, Size } from '@/types/PetsTypes';
+import { useRouter } from 'next/navigation';
 import {
   Dispatch,
   SetStateAction,
   createContext,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from 'react';
-import { getBreeds } from '@/services/getBreeds';
-import { getSizes } from '@/services/getSizes';
 
 interface PetRegisterContextProps {
   step: number;
@@ -37,9 +38,6 @@ export function PetRegisterContextProvider({
   const [breeds, setBreeds] = useState<Breed[] | null>(null);
   const [sizes, setSizes] = useState<Size[] | null>(null);
   const [step, setStep] = useState(pets && pets.length > 0 ? 1 : 0);
-  const [firstPet, setFirstPet] = useState(
-    pets && pets.length > 0 ? false : true,
-  );
   const [maxStep, setMaxStep] = useState(4);
   const [newPet, setNewPet] = useState<Pet['Insert']>({
     petName: '',
@@ -51,9 +49,11 @@ export function PetRegisterContextProvider({
     castrated: false,
   });
 
+  const firstPet = useMemo(() => !(pets && pets.length > 0), [pets]);
+
   function nextStep() {
     if (step >= maxStep) return;
-    setStep((state) => state + 1);
+    setStep(state => state + 1);
   }
 
   function previousStep() {
@@ -66,11 +66,11 @@ export function PetRegisterContextProvider({
       router.push('/pets');
       return;
     }
-    setStep((state) => state - 1);
+    setStep(state => state - 1);
   }
 
   function incrementPetNewsValues(pet: Pet['Insert']) {
-    setNewPet((state) => ({
+    setNewPet(state => ({
       ...state,
       ...pet,
     }));

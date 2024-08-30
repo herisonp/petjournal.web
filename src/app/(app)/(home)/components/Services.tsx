@@ -33,8 +33,8 @@ const servicesMock = [
 
 export function Services() {
   return (
-    <ul className="grid grid-cols-2 grid-rows-2 gap-4">
-      {servicesMock.map((service) => (
+    <ul className='grid grid-cols-2 grid-rows-2 gap-4'>
+      {servicesMock.map(service => (
         <ServicesItem
           key={service.title}
           href={service.href}

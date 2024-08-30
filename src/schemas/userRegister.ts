@@ -39,7 +39,7 @@ export const userRegisterSchema = z.object({
   isPrivacyPolicyAccepted: z
     .boolean()
     .refine(
-      (val) => val === true,
+      val => val === true,
       'Você deve aceitar a política de privacidade.',
     ),
 });

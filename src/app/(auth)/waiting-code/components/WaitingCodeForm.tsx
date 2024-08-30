@@ -6,13 +6,13 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from '@/components/Fields/InputOPT';
-import { WaitingCodeSchema, WaitingCodeProps } from '@/schemas/WaitingCode';
+import { WaitingCodeProps, WaitingCodeSchema } from '@/schemas/WaitingCode';
 import { submitForgetPassword } from '@/services/submitForgetPassword';
 import { submitWaitingCode } from '@/services/submitWaitingCode';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 
 export function WaitingCodeForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -21,18 +21,22 @@ export function WaitingCodeForm() {
   const router = useRouter();
   const params = useSearchParams();
   const email = params.get('email');
-  const { control, handleSubmit, formState: { errors } } = useForm<WaitingCodeProps>({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<WaitingCodeProps>({
     resolver: zodResolver(WaitingCodeSchema),
     criteriaMode: 'firstError',
     reValidateMode: 'onChange',
-    defaultValues: {verificationToken: ''},
+    defaultValues: { verificationToken: '' },
     mode: 'onBlur',
   });
 
   async function handleSubmitCode({ verificationToken }: WaitingCodeProps) {
     try {
       setIsLoading(true);
-      if (!email) throw 'Um email é requerido';
+      if (!email) throw new Error('Um email é requerido');
       const { error } = await submitWaitingCode({
         email,
         code: verificationToken,
@@ -40,7 +44,7 @@ export function WaitingCodeForm() {
       if (error) throw new Error(error);
       router.push('/change-password');
     } catch (error) {
-      const err = error as Error
+      const err = error as Error;
       setErrorMessage(err.message);
       setIsLoading(false);
     }
@@ -49,16 +53,17 @@ export function WaitingCodeForm() {
   async function handleResendCode() {
     try {
       setIsLoading(true);
-      if (!email) return
+      if (!email) return;
       const { error } = await submitForgetPassword({ email });
-      if (error) throw error;
+      if (error) throw new Error(error);
       setIsResendCode(true);
 
       setTimeout(() => {
         setIsResendCode(false);
       }, 10000);
-    } catch (error: any) {
-      setErrorMessage(error)
+    } catch (error) {
+      const err = error as Error;
+      setErrorMessage(err.message);
     } finally {
       setIsLoading(false);
     }
@@ -67,10 +72,13 @@ export function WaitingCodeForm() {
   console.log(errors.verificationToken);
 
   return (
-    <form onSubmit={handleSubmit(handleSubmitCode)} className="flex flex-col gap-4">
-      <div className="flex flex-col">
+    <form
+      onSubmit={handleSubmit(handleSubmitCode)}
+      className='flex flex-col gap-4'
+    >
+      <div className='flex flex-col'>
         <Controller
-          name="verificationToken"
+          name='verificationToken'
           control={control}
           render={({ field }) => (
             <InputOTP
@@ -79,7 +87,7 @@ export function WaitingCodeForm() {
               value={field.value}
               onChange={field.onChange}
             >
-              <InputOTPGroup className="flex justify-center w-full gap-2">
+              <InputOTPGroup className='flex justify-center w-full gap-2'>
                 <InputOTPSlot index={0} />
                 <InputOTPSlot index={1} />
                 <InputOTPSlot index={2} />
@@ -91,28 +99,39 @@ export function WaitingCodeForm() {
           )}
         />
 
-        <div className="text-center mt-1">
-          {errors.verificationToken && <InputMessage variant='error' message={errors.verificationToken.message} />}
-          {errorMessage && !errors.verificationToken && <InputMessage variant='error' message={errorMessage} />}
-          {isResendCode && <InputMessage variant='warning' message={`Novo código enviado ao ${email}`}/>}
+        <div className='text-center mt-1'>
+          {errors.verificationToken && (
+            <InputMessage
+              variant='error'
+              message={errors.verificationToken.message}
+            />
+          )}
+          {errorMessage && !errors.verificationToken && (
+            <InputMessage variant='error' message={errorMessage} />
+          )}
+          {isResendCode && (
+            <InputMessage
+              variant='warning'
+              message={`Novo código enviado ao ${email}`}
+            />
+          )}
         </div>
 
         <Button
           onClick={handleResendCode}
-          variant="ghost"
-          className="underline self-start text-xs mt-1"
-          type="button"
+          variant='ghost'
+          className='underline self-start text-xs mt-1'
+          type='button'
           disabled={isLoading}
-          >
+        >
           Reenviar código?
         </Button>
       </div>
 
-
-      <Button className="mt-4" type="submit" disabled={isLoading}>
+      <Button className='mt-4' type='submit' disabled={isLoading}>
         {isLoading ? 'Enviando...' : 'Enviar'}
       </Button>
-      <p className="text-center">
+      <p className='text-center'>
         Dica: Caso não encontre o e-mail na sua caixa de entrada, verifique a
         pasta de Spam!
       </p>

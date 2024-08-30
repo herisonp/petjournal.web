@@ -15,7 +15,7 @@ export function IconInputPassword({
       src={active ? toggleHiddenPassword : toggleShowPassword}
       width={size}
       height={size}
-      alt="Ícone de olho para mostrar e esconder a senha"
+      alt='Ícone de olho para mostrar e esconder a senha'
     />
   );
 }

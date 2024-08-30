@@ -13,8 +13,8 @@ export function Menubar() {
 
         <MenubarRadix.Portal>
           <MenubarRadix.Content
-            className="relative z-50 bg-custom-purple text-white px-4 py-2 rounded-md"
-            align="end"
+            className='relative z-50 bg-custom-purple text-white px-4 py-2 rounded-md'
+            align='end'
             sideOffset={5}
             alignOffset={0}
           >

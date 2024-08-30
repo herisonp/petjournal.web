@@ -22,10 +22,10 @@ export function ServicesItem({
     >
       <Link
         {...props}
-        className="flex flex-col justify-center items-center w-full h-full text-center"
+        className='flex flex-col justify-center items-center w-full h-full text-center'
       >
         {children}
-        <span className="text-center">{title}</span>
+        <span className='text-center'>{title}</span>
       </Link>
     </li>
   );

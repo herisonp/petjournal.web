@@ -1,10 +1,27 @@
+export type Specie = {
+  id: string;
+  name: string;
+};
+
+export type Breed = {
+  id: string;
+  name: string;
+  specieId?: string;
+};
+
+export type Size = {
+  id: string;
+  name: string;
+  specieId?: string;
+};
+
 export type PetTypes = {
   public: {
     View: {
       id: string;
       guardianId: string;
       specie: Specie;
-      specieAlias: any;
+      specieAlias: string;
       petName: string;
       gender: string;
       breedAlias: string;
@@ -22,25 +39,8 @@ export type PetTypes = {
       dateOfBirth: Date | string;
       castrated: boolean;
     };
-    Update: {};
+    Update: object;
   };
-};
-
-export type Specie = {
-  id: string;
-  name: string;
-};
-
-export type Breed = {
-  id: string;
-  name: string;
-  specieId?: string;
-};
-
-export type Size = {
-  id: string;
-  name: string;
-  specieId?: string;
 };
 
 export type Pet = PetTypes[Extract<keyof PetTypes, 'public'>];

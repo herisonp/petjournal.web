@@ -11,16 +11,16 @@ export function BannerHome() {
       modules={[Autoplay]}
       slidesPerView={1}
       autoHeight
-      className="w-full"
+      className='w-full'
     >
-      <SwiperSlide className="rounded-lg">
-        <Image src="/images/banner-1.png" alt="" width={400} height={280} />
+      <SwiperSlide className='rounded-lg'>
+        <Image src='/images/banner-1.png' alt='' width={400} height={280} />
       </SwiperSlide>
-      <SwiperSlide className="rounded-lg">
-        <Image src="/images/banner-2.png" alt="" width={400} height={280} />
+      <SwiperSlide className='rounded-lg'>
+        <Image src='/images/banner-2.png' alt='' width={400} height={280} />
       </SwiperSlide>
-      <SwiperSlide className="rounded-lg">
-        <Image src="/images/banner-3.png" alt="" width={400} height={280} />
+      <SwiperSlide className='rounded-lg'>
+        <Image src='/images/banner-3.png' alt='' width={400} height={280} />
       </SwiperSlide>
     </Swiper>
   );
