@@ -33,9 +33,9 @@ const SelectTrigger = React.forwardRef<
     {children}
     <SelectPrimitive.Icon asChild>
       {error ? (
-        <IconErrorCircle className="h-5 w-5 text-red-500" />
+        <IconErrorCircle className='h-5 w-5 text-red-500' />
       ) : (
-        <ChevronDown className="h-4 w-4 text-[#2E2E2E]" />
+        <ChevronDown className='h-4 w-4 text-[#2E2E2E]' />
       )}
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
@@ -84,9 +84,9 @@ const SelectItem = React.forwardRef<
     )}
     {...props}
   >
-    <span className="absolute right-4 h-3.5 w-3.5 items-center justify-center">
+    <span className='absolute right-4 h-3.5 w-3.5 items-center justify-center'>
       <SelectPrimitive.ItemIndicator>
-        <CheckIcon className="h-4 w-4" />
+        <CheckIcon className='h-4 w-4' />
       </SelectPrimitive.ItemIndicator>
     </span>
     <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>

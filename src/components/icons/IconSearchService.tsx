@@ -1,20 +1,16 @@
 import { cn } from '@/utils/twmerge';
-import { IconProps } from './IconProps';
 import Image from 'next/image';
 import iconSearchService from '../../assets/svg/search.svg';
+import { IconProps } from './IconProps';
 
-export function IconSearchService({
-  size = 16,
-  active = false,
-  className,
-}: IconProps) {
+export function IconSearchService({ size = 16, className }: IconProps) {
   return (
     <Image
       className={cn(className)}
       src={iconSearchService}
       width={size}
       height={size}
-      alt=""
+      alt=''
     />
   );
 }

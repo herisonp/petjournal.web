@@ -3,5 +3,5 @@ import { authRoutes } from './authRoutes';
 
 export function isAuthPages(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  return authRoutes.some((path) => pathname.startsWith(path));
+  return authRoutes.some(path => pathname.startsWith(path));
 }

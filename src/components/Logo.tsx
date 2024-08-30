@@ -1,6 +1,4 @@
-import { cn } from '@/utils/twmerge';
-import Image, { ImageProps } from 'next/image';
-import { Ref, forwardRef } from 'react';
+import Image from 'next/image';
 
 const logoVariants = {
   scale: {
@@ -35,10 +33,10 @@ export interface LogoProps {
 export function Logo({ scale = 'default', className }: LogoProps) {
   return (
     <Image
-      src="/images/logo.svg"
+      src='/images/logo.svg'
       height={logoVariants.scale[scale].height}
       width={logoVariants.scale[scale].width}
-      alt="Pet Journal Logo"
+      alt='Pet Journal Logo'
       className={className}
     />
   );

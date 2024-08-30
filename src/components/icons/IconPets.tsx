@@ -11,7 +11,7 @@ export function IconPets({ size = 16, active = false, className }: IconProps) {
       src={active ? iconPetsActive : iconPets}
       width={size}
       height={size}
-      alt=""
+      alt=''
     />
   );
 }

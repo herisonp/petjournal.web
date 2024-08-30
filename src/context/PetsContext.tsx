@@ -23,16 +23,16 @@ export function PetsContextProvider({
   const { user } = useContext(UserContext);
 
   function submitNewPet(pet: Pet['View']) {
-    setPets((state) => {
+    setPets(state => {
       if (!state) return [pet];
       return [...state, pet];
     });
   }
 
   function submitUpdatePet(pet: Pet['View']) {
-    setPets((state) => {
+    setPets(state => {
       if (!state) return null;
-      return state.map((item) => {
+      return state.map(item => {
         if (item.id === pet.id) {
           return pet;
         }
@@ -42,11 +42,11 @@ export function PetsContextProvider({
   }
 
   async function submitDeletePet(pet: Pet['View']) {
-    const {error} = await deletePet(pet.id);
-    if (error) return 
-    setPets((state) => {
+    const { error } = await deletePet(pet.id);
+    if (error) return;
+    setPets(state => {
       if (!state) return null;
-      return state.filter((item) => item.id !== pet.id);
+      return state.filter(item => item.id !== pet.id);
     });
   }
 
@@ -67,7 +67,7 @@ export function PetsContextProvider({
         pets,
         submitNewPet,
         submitUpdatePet,
-        submitDeletePet
+        submitDeletePet,
       }}
     >
       {children}

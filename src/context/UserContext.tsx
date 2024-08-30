@@ -31,7 +31,6 @@ export function UserContextProvider({
         return;
       }
       setUser(null);
-      return;
     })();
   }, []);
 

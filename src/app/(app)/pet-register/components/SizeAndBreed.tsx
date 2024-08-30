@@ -1,8 +1,13 @@
 'use client';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+} from '@/components/Breadcrump';
 import { Button } from '@/components/Button';
-import { ChangeEvent, useContext, useEffect, useState } from 'react';
-import { PetRegisterContext } from '../context/PetRegisterContext';
-import { usePetRegisterSteps } from './usePetRegisterSteps';
+import { ScrollArea } from '@/components/ScrollArea';
 import {
   Select,
   SelectContent,
@@ -11,16 +16,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/Select';
-import { ScrollArea } from '@/components/ScrollArea';
 import Image from 'next/image';
-import {
-  Breadcrumb,
-  BreadcrumbList,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbSeparator,
-} from '@/components/Breadcrump';
-import { Home } from 'lucide-react';
+import { useContext } from 'react';
+import { PetRegisterContext } from '../context/PetRegisterContext';
+import { usePetRegisterSteps } from './usePetRegisterSteps';
 
 export function SizeAndBreed() {
   const { newPet, breeds, sizes } = useContext(PetRegisterContext);
@@ -47,7 +46,7 @@ export function SizeAndBreed() {
   function handleOnChangeSize(value: string) {
     setError(false);
 
-    setPet((state) => ({
+    setPet(state => ({
       ...state,
       size: value,
     }));
@@ -56,7 +55,7 @@ export function SizeAndBreed() {
   function handleOnChangeBreed(value: string) {
     setError(false);
 
-    setPet((state) => ({
+    setPet(state => ({
       ...state,
       breedName: value,
     }));
@@ -67,35 +66,36 @@ export function SizeAndBreed() {
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
-            <BreadcrumbLink href="/">
-              <div className="flex items-center gap-2">
-                <Image src="/images/home.svg" height={15} width={15} alt='' /> Cadastro Pet
+            <BreadcrumbLink href='/'>
+              <div className='flex items-center gap-2'>
+                <Image src='/images/home.svg' height={15} width={15} alt='' />{' '}
+                Cadastro Pet
               </div>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbLink href="/">Raça</BreadcrumbLink>
+            <BreadcrumbLink href='/'>Raça</BreadcrumbLink>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <h3 className="text-xl font-medium text-left text-studio-600 w-full">
-        <span className="block">Nos conte mais!</span>
-        <span className="block">Qual a raça de {pet.petName}?</span>
+      <h3 className='text-xl font-medium text-left text-studio-600 w-full'>
+        <span className='block'>Nos conte mais!</span>
+        <span className='block'>Qual a raça de {pet.petName}?</span>
       </h3>
 
       {breeds && sizes && (
-        <div className="w-full flex flex-col gap-8 z-20">
-          <label className="flex flex-col gap-1">
+        <div className='w-full flex flex-col gap-8 z-20'>
+          <label className='flex flex-col gap-1'>
             <span>Porte</span>
             <Select onValueChange={handleOnChangeSize}>
               <SelectTrigger>
-                <SelectValue placeholder="Porte do seu pet" />
+                <SelectValue placeholder='Porte do seu pet' />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <ScrollArea className="h-[150px] mr-1">
-                    {sizes.map((size) => (
+                  <ScrollArea className='h-[150px] mr-1'>
+                    {sizes.map(size => (
                       <SelectItem key={size.id} value={size.name}>
                         {size.name}
                       </SelectItem>
@@ -107,16 +107,16 @@ export function SizeAndBreed() {
           </label>
 
           {/* TODO: Adicionar a opção de outros */}
-          <label className="flex flex-col gap-1">
+          <label className='flex flex-col gap-1'>
             <span>Raça</span>
             <Select onValueChange={handleOnChangeBreed}>
               <SelectTrigger>
-                <SelectValue placeholder="Porte do seu pet" />
+                <SelectValue placeholder='Porte do seu pet' />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <ScrollArea className="h-[150px] mr-1">
-                    {breeds.map((breed) => (
+                  <ScrollArea className='h-[150px] mr-1'>
+                    {breeds.map(breed => (
                       <SelectItem key={breed.id} value={breed.name}>
                         {breed.name}
                       </SelectItem>
@@ -137,37 +137,39 @@ export function SizeAndBreed() {
       )}
 
       {error && (
-        <span className="text-red-400 text-sm text-center">
+        <span className='text-red-400 text-sm text-center'>
           Selecione e preencha todas as informações
         </span>
       )}
 
-      <div className="flex justify-center h-[31vh]">
+      <div className='flex justify-center h-[31vh]'>
         <Image
-          src="./images/animals.svg"
+          src='./images/animals.svg'
           height={245}
           width={177}
-          alt="Pet Journal Logo"
-          className="absolute size-64 z-10"
+          alt='Pet Journal Logo'
+          className='absolute size-64 z-10'
         />
         <Image
-          src="./images/paws.svg"
+          src='./images/paws.svg'
           height={578}
           width={391}
-          alt="Pet Journal Logo"
-          className="absolute top-1/4"
+          alt='Pet Journal Logo'
+          className='absolute top-1/4'
         />
       </div>
 
-      <div className="mt-auto w-full flex justify-around z-40">
+      <div className='mt-auto w-full flex justify-around z-40'>
         <Button
-          variant="outline"
-          className="border-custom-purple text-custom-purple"
+          variant='outline'
+          className='font-bold'
           onClick={handleClickPreviousStep}
         >
           Voltar
         </Button>
-        <Button onClick={handleClickNextStep}>Continuar</Button>
+        <Button className='font-bold' onClick={handleClickNextStep}>
+          Continuar
+        </Button>
       </div>
     </>
   );

@@ -13,16 +13,16 @@ export function BottomTab() {
   }
 
   return (
-    <div className="fixed z-10 bottom-0 left-0 bg-custom-purple w-full p-4">
-      <ul className="flex w-full justify-around">
+    <div className='fixed z-10 bottom-0 left-0 bg-studio-600 w-full p-4'>
+      <ul className='flex w-full justify-around'>
         <li>
-          <BottomTabItem label="Home" to="/" />
+          <BottomTabItem label='Home' to='/' />
         </li>
         <li>
-          <BottomTabItem label="Pets" to="/pets" />
+          <BottomTabItem label='Pets' to='/pets' />
         </li>
         <li>
-          <BottomTabItem label="Tutor" to="/tutor" />
+          <BottomTabItem label='Tutor' to='/tutor' />
         </li>
       </ul>
     </div>

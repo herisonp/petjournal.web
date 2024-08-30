@@ -26,7 +26,7 @@ export function LogoutButton() {
     <Button
       onClick={handleSignOut}
       disabled={isLoading}
-      className="gap-2 py-0 px-0 font-normal disabled:opacity-45 disabled:border-none"
+      className='gap-2 py-0 px-0 font-normal disabled:opacity-45 disabled:border-none'
     >
       <span>Sair</span> <LogOut size={14} />
     </Button>
